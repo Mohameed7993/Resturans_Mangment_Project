@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BiteMeLoginController">
+   <children>
+      <ImageView fitHeight="562.0" fitWidth="743.0" layoutX="116.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/Password.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="305.0" fitWidth="188.0" layoutX="804.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/43-430460_png-food-top-view.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="Username" layoutX="372.0" layoutY="433.0" prefHeight="30.0" prefWidth="369.0" style="-fx-background-radius: 100;">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <PasswordField fx:id="Password" layoutX="372.0" layoutY="484.0" prefHeight="30.0" prefWidth="369.0" style="-fx-background-radius: 100;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="Loginbtn" layoutX="653.0" layoutY="539.0" mnemonicParsing="false" onAction="#LoginAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Sign In" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="Loginbtn1" layoutX="520.0" layoutY="539.0" mnemonicParsing="false" onAction="#LoginAction" prefHeight="41.0" prefWidth="121.0" style="-fx-background-radius: 100; -fx-background-color: #ffff;" text="Forget Password?" textFill="#353f4c">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="248.0" fitWidth="188.0" layoutX="-6.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../Images/139203-food-plate-top-nutrition-view.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
