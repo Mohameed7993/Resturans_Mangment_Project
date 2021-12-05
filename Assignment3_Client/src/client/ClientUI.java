@@ -14,7 +14,6 @@ public class ClientUI extends Application {
 
 		    launch(args);  
 	   } // end main 
-	//ana abrahem
 	 
 	
 	@Override
