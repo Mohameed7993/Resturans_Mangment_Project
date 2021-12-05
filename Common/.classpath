@@ -6,5 +6,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Assignment3_Client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Assignment3_Server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OCSF"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
