@@ -13,6 +13,6 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/OCSF"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
-	<classpathentry kind="lib" path="C:/Users/Win10/Desktop/הנדסת תוכנה/סמסטר 5/שיטות/פרויקט סמסטריאלי/מטלה 3/server_Client_3/Assignment3_Server/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Win10/Desktop/forMe_pojectsetot/Assignment2_Server/mysql-connector-java-8.0.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
