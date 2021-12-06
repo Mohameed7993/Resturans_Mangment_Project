@@ -37,17 +37,20 @@ public class BiteMeLoginController implements Initializable {
 
 	@FXML
 	void LoginAction(ActionEvent event) {
+		
 		if (Username.getText().equals("") || Password.getText().equals("")) {
 			Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("Error");
 			a.setHeaderText("Enter username and passWord");
 			a.showAndWait();
 		}
+		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		ClientUI.chat.accept(new Message(MessageType.login, Username.getText() + " " + Password.getText()));
 		if (ChatClient.u != null) {
 			switch (ChatClient.u.getType()) {
 			case Customer:
+				ClientUI.chat.accept("userconnected "+Username.getText()+" "+Password.getText()+" customer",null);
 				System.out.println(ChatClient.u.getPassWord() + "1");
 				break;
 			case CEO:

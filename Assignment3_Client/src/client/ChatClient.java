@@ -60,14 +60,13 @@ public class ChatClient extends AbstractClient {
 	 */
 	@SuppressWarnings("unchecked")
 	public void handleMessageFromServer(Object msg) {
+		
 		awaitResponse = false;
 		System.out.println("--> handleMessageFromServer");
 		Message m = (Message) msg;
 		//System.out.println((String) m.getObject());
 		if (m.getMessageType().equals(MessageType.login)) {
-			u = (User) m.getObject();
-			
-		}
+			u = (User) m.getObject(); }
 			
 
 	}

@@ -66,7 +66,7 @@ public class mysqlConnection {
 				return null;
 			user=new User(res.getString(1), res.getString(2),UserType.valueOf(res.getString(3)) , true);
 			ps = mysqlConnection.conn
-					.prepareStatement("UPDATE bitemedb.user SET isLoged =? where username=?");
+					.prepareStatement("UPDATE bitemedb.user SET isLogged =? where username=?");
 			ps.setInt(1, 1);
 			ps.setString(2, userName);
 			ps.execute();
