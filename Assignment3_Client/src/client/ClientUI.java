@@ -5,7 +5,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-
+/**Basel
+ * 
+ * @author win10
+ *
+ */
 public class ClientUI extends Application {
 	public static ClientController chat; //only one instance
 
