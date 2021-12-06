@@ -11,6 +11,7 @@ public class ClientUI extends Application {
 
 	public static void main( String args[] ) throws Exception
 	   { 
+		//abosale7
 		    launch(args);  
 	   } // end main 
 	
