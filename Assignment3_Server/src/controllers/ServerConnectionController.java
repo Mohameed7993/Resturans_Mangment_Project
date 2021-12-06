@@ -156,7 +156,7 @@ public class ServerConnectionController implements Initializable {
 		port_txt.setText("" + ServerUI.DEFAULT_PORT);
 		DBName_txt.setText("jdbc:mysql://localhost/bitemedb?serverTimezone=IST");
 		DBUser_txt.setText("root");
-		Password_txt.setText("Mohamed1499*");
+		Password_txt.setText("Mo315257881@123");
 		ip.setCellValueFactory(new PropertyValueFactory<Client, String>("Ip"));
 		host.setCellValueFactory(new PropertyValueFactory<Client, String>("Host"));
 		status.setCellValueFactory(new PropertyValueFactory<Client, String>("Status"));

@@ -6,13 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/OCSF"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
-	<classpathentry kind="lib" path="C:/Users/sbaan/OneDrive/Documents/GITREPO/project_shetot/project_shetot/Assignment3_Server/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Win10/Documents/GITREPO/project_shetot/Assignment3_Server/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OCSF"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
