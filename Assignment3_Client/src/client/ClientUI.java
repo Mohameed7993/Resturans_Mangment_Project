@@ -11,7 +11,6 @@ public class ClientUI extends Application {
 
 	public static void main( String args[] ) throws Exception
 	   { 
-System.out.println("   ");
 		    launch(args);  
 	   } // end main 
 	
