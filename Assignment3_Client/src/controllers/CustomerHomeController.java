@@ -47,17 +47,37 @@ public class CustomerHomeController implements Initializable {
 
     @FXML
     private ImageView Image5;
+    
+    @FXML
+    private Button MakeAnOrderButton;
+
+    @FXML
+    private Button MyOrderListButton;
+    
 
     @FXML
     void LogoutAction(ActionEvent event) {
+    
+    }
+    
+    @FXML
+    void MakeorderAction(ActionEvent event) {
 
     }
+
+    @FXML
+    void OrderListAction(ActionEvent event) {
+
+    }
+    
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		CustomerName.setText("Hello, "+ChatClient.u.getUserName());
 	}
 
+	
 	public void start(Stage stage) throws Exception{
 		// TODO Auto-generated method stub
 		Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerHome.fxml"));

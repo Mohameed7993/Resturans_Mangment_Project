@@ -30,7 +30,7 @@
             <Font size="17.0" />
          </font>
       </Button>
-      <TextField fx:id="Makeanorder" layoutX="248.0" layoutY="362.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
+      <TextField fx:id="Makeanorder" layoutX="248.0" layoutY="365.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
          <font>
             <Font size="14.0" />
          </font>
@@ -76,5 +76,7 @@
             <Image url="@../../../../../../Desktop/mosmos/000/139203-food-plate-top-nutrition-view.png" />
          </image>
       </ImageView>
+      <Button fx:id="MakeAnOrderButton" layoutX="234.0" layoutY="365.0" mnemonicParsing="false" onAction="#MakeorderAction" prefHeight="200.0" prefWidth="258.0" style="-fx-background-radius: 100; -fx-background-color: Clear;" />
+      <Button fx:id="MyOrderListButton" layoutX="507.0" layoutY="361.0" mnemonicParsing="false" onAction="#OrderListAction" prefHeight="200.0" prefWidth="243.0" style="-fx-background-radius: 100; -fx-background-color: Clear;" />
    </children>
 </AnchorPane>
