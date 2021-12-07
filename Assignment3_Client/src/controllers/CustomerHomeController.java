@@ -4,7 +4,10 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+import client.ChatClient;
+import client.ClientUI;
+import common.Message;
+import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,11 +52,16 @@ public class CustomerHomeController implements Initializable {
 
     @FXML
     void LogoutAction(ActionEvent event) {
+    	
+    	
 
     }
+    
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		CustomerName.setText("Hello, " + ChatClient.u.getUserName());
 		
 	}
 

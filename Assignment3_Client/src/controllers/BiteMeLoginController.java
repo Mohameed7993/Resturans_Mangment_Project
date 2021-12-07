@@ -93,7 +93,7 @@ public class BiteMeLoginController implements Initializable {
 		Parent root = FXMLLoader.load(getClass().getResource("/View/BiteMeLogin.fxml"));
 
 		Scene scene = new Scene(root);
-		primaryStage.setTitle("Server");
+		primaryStage.setTitle("BiteMeLogin");
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
