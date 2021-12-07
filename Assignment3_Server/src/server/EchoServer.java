@@ -73,8 +73,7 @@ public class EchoServer extends AbstractServer {
 			case login:
 				message = ((String) m.getObject()).split(" ");
 				User u=mysqlConnection.checkUserLogIn(message[0], message[1]);
-				
-				
+				System.out.println(message[0]+"  " +message[1]);
 				client.sendToClient(new Message(MessageType.login, u));
 				break;
 			default:

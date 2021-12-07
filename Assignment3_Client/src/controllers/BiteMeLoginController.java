@@ -50,8 +50,14 @@ public class BiteMeLoginController implements Initializable {
 		if (ChatClient.u != null) {
 			switch (ChatClient.u.getType()) {
 			case Customer:
-				ClientUI.chat.accept("userconnected "+Username.getText()+" "+Password.getText()+" customer",null);
-				System.out.println(ChatClient.u.getPassWord() + "1");
+			CustomerHomeController AFrame=new CustomerHomeController();
+				try {
+					AFrame.start(stage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				break;
 			case CEO:
 				System.out.println(ChatClient.u.getPassWord() + "2");

@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 
 
-public class CustomerHomeController {
+public class CustomerHomeController implements Initializable {
 
     @FXML
     private ImageView Image1;
@@ -51,20 +51,21 @@ public class CustomerHomeController {
     void LogoutAction(ActionEvent event) {
 
     }
-   
-    public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		
 	}
-    
-	public void start(Stage Stage) throws Exception{
+
+	public void start(Stage stage) throws Exception{
 		// TODO Auto-generated method stub
 		Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerHome.fxml"));
 		
 		Scene scene = new Scene(root);
-		Stage.setTitle("Server");
-		Stage.setScene(scene);
+		stage.setTitle("CoustomerHome");
+		stage.setScene(scene);
 		
-		Stage.show();
+		stage.show();
 		
 	}
 
