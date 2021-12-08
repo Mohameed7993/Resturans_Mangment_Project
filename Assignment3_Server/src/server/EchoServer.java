@@ -75,6 +75,11 @@ public class EchoServer extends AbstractServer {
 				User u=mysqlConnection.checkUserLogIn(message[0], message[1]);
 				System.out.println(message[0]+"  " +message[1]);
 				client.sendToClient(new Message(MessageType.login, u));
+				
+				ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
+				client.sendToClient(msg);
+				
+				
 				break;
 			default:
 				break;
@@ -83,6 +88,8 @@ public class EchoServer extends AbstractServer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 
 		/*
 		 * String s[] = m.getStr().split(" "); // System.out.println(m.getStr());
