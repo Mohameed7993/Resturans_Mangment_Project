@@ -15,6 +15,7 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import common.MessageType;
 import common.Order;
+import common.Resturants;
 import common.User;
 import common.UserType;
 
@@ -76,31 +77,28 @@ public class mysqlConnection {
 			e.printStackTrace();
 		}
 		return user;
-		
 	}
-	/*public static ArrayList<Order> getOrdersFromDB() {
-		ArrayList<Order> list = new ArrayList<Order>();
-		Order temp;
-		Statement stmt;
+	
+	public static ArrayList<Resturants> getResturantsListFromDB(){
+		ArrayList<Resturants> list = new ArrayList<Resturants>();
+		Resturants temp;
+		Statement statment;
 		ResultSet res;
 		try {
-			stmt = mysqlConnection.conn.createStatement();
-			res = stmt.executeQuery("SELECT * FROM assignement2db.order;");
+			statment=mysqlConnection.conn.createStatement();
+			res=statment.executeQuery("SELECT * FROM bitemedb.resturantslist");
 			while (res.next()) {
-				// System.out.println(res.getString(1)+res.getInt(2)+res.getString(3)+res.getString(4)+res.getString(5)+res.getString(6));
-				temp = new Order(res.getString(1), res.getInt(2), res.getTime(3).toString(), res.getString(4),
-						res.getString(5), res.getString(6));
+				temp=new Resturants(res.getString(1), res.getString(2),res.getString(3));
 				list.add(temp);
 			}
-
-			res.close();
+				res.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return list;
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	     }
+	       return list;
 	}
-
+	/*
 	public static void updateType(int orderNumber, String type) {
 		PreparedStatement ps;
 

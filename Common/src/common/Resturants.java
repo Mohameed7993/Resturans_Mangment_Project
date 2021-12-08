@@ -1,6 +1,10 @@
 package common;
 
-public class Resturants {
+import java.io.Serializable;
+
+public class Resturants implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private String ResturantName;
 	private String Status;
 	private String PhoneNumber;
