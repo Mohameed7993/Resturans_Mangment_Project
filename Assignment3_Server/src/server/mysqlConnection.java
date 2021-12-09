@@ -98,6 +98,7 @@ public class mysqlConnection {
 	     }
 	       return list;
 	}
+	
 	/*
 	public static void updateType(int orderNumber, String type) {
 		PreparedStatement ps;
