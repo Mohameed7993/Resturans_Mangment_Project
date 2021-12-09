@@ -64,7 +64,6 @@ public class EchoServer extends AbstractServer {
 				ServerConnectionController.clients_list.add(new Client(message[0], message[1], message[2]));
 				client.sendToClient(new Message(null, null));
 				break;
-				
 			case disconnect:
 				message = ((String) m.getObject()).split(" ");
 				ServerConnectionController.clients_list.add(new Client(message[0], message[1], message[2]));
@@ -75,13 +74,16 @@ public class EchoServer extends AbstractServer {
 				User u=mysqlConnection.checkUserLogIn(message[0], message[1]);
 				System.out.println(message[0]+"  " +message[1]);
 				client.sendToClient(new Message(MessageType.login, u));
+				//System.out.println(user.getW4C_QrCode());
+				break;
+			case scan:
 				
-				ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
-				client.sendToClient(msg);
 				
-				
+			//	User u=mysqlConnection
 				break;
 			default:
+				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
+				//client.sendToClient(msg);
 				break;
 			}
 		} catch (IOException e) {

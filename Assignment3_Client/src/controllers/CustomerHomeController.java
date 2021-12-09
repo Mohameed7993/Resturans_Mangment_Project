@@ -5,10 +5,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
+import client.ClientUI;
 import common.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -62,8 +64,17 @@ public class CustomerHomeController implements Initializable {
     
     @FXML
     void MakeorderAction(ActionEvent event) {
-
+    	
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	ScanerQrController AFrame=new ScanerQrController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+    
 
     @FXML
     void OrderListAction(ActionEvent event) {

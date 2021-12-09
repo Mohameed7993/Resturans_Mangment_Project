@@ -12,12 +12,21 @@ public class User implements Serializable{
 	private String passWord;
 	private UserType type;
 	private boolean isLoged;
-	public User(String userName, String passWord, UserType type, boolean isLoged) {
+	private String W4C_QrCode;
+	public User(String userName, String passWord, UserType type, boolean isLoged, String W4C_QrCode) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
 		this.type = type;
 		this.isLoged = isLoged;
+		this.W4C_QrCode=W4C_QrCode;
+	}
+	
+	public String getW4C_QrCode() {
+		return W4C_QrCode;
+	}
+	public void setW4C_QrCode(String w4c_QrCode) {
+		this.W4C_QrCode = w4c_QrCode;
 	}
 	public String getUserName() {
 		return userName;

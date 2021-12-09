@@ -65,9 +65,8 @@ public class mysqlConnection {
 			//	return null;
 			if(!res.next())
 				return null;
-			user=new User(res.getString(1), res.getString(2),UserType.valueOf(res.getString(3)) , true);
-			ps = mysqlConnection.conn
-					.prepareStatement("UPDATE bitemedb.user SET isLogged =? where username=?");
+			user=new User(res.getString(1), res.getString(2),UserType.valueOf(res.getString(3)) ,true, res.getString(5));
+			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.user SET isLogged =? where username=?");
 			ps.setInt(1, 1);
 			ps.setString(2, userName);
 			ps.execute();
@@ -76,10 +75,14 @@ public class mysqlConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return user;
 	}
 	
-	public static ArrayList<Resturants> getResturantsListFromDB(){
+	
+	
+	
+/*	public static ArrayList<Resturants> getResturantsListFromDB(){
 		ArrayList<Resturants> list = new ArrayList<Resturants>();
 		Resturants temp;
 		Statement statment;
@@ -97,7 +100,7 @@ public class mysqlConnection {
 		   e.printStackTrace();
 	     }
 	       return list;
-	}
+	}*/
 	
 	/*
 	public static void updateType(int orderNumber, String type) {
