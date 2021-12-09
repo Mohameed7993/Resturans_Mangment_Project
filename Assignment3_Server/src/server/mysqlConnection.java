@@ -13,6 +13,7 @@ import java.util.Calendar;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
+import common.Accounts;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
@@ -67,7 +68,7 @@ public class mysqlConnection {
 				return null;
 			user=new User(res.getString(1), res.getString(2),UserType.valueOf(res.getString(3)) ,true, res.getString(5));
 			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.user SET isLogged =? where username=?");
-			ps.setInt(1, 1);
+			ps.setInt(1, 0);
 			ps.setString(2, userName);
 			ps.execute();
 			return user;
@@ -79,7 +80,26 @@ public class mysqlConnection {
 		return user;
 	}
 	
-	
+		public static Accounts getAccountsListFromDB(String w4c_QrCode){
+	Accounts account=null;
+	PreparedStatement ps;
+	ResultSet res;
+	try {
+		
+	ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.accounts where W4C_QrCode=?");
+	ps.setString(1,w4c_QrCode );
+	ps.execute();
+	res=ps.getResultSet();
+	if(!res.next())
+		return null;
+	account =new Accounts(res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6),res.getString(7), res.getString(8));
+	return account;
+	} catch (SQLException e) {
+	   // TODO Auto-generated catch block
+	   e.printStackTrace();
+     }
+	return account;
+}
 	
 	
 /*	public static ArrayList<Resturants> getResturantsListFromDB(){

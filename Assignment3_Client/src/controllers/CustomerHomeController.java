@@ -60,7 +60,17 @@ public class CustomerHomeController implements Initializable {
     @FXML
     void LogoutAction(ActionEvent event) {
     
+     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	BiteMeLoginController AFrame=new BiteMeLoginController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+    	
+    
     
     @FXML
     void MakeorderAction(ActionEvent event) {

@@ -77,8 +77,10 @@ public class EchoServer extends AbstractServer {
 				//System.out.println(user.getW4C_QrCode());
 				break;
 			case scan:
-				
-				
+				message = ((String) m.getObject()).split(" ");
+				Accounts u1=mysqlConnection.getAccountsListFromDB(message[0]);
+				System.out.println(u1);
+				client.sendToClient(new Message(MessageType.scan, u1));
 			//	User u=mysqlConnection
 				break;
 			default:
