@@ -4,11 +4,15 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class ChooseResturantController implements Initializable {
 
@@ -56,6 +60,15 @@ public class ChooseResturantController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void start(Stage stage) throws Exception {
+		Parent root= FXMLLoader.load(getClass().getResource("/View/ChooseResturant(Costumer).fxml"));
+		Scene scene = new Scene(root);
+		stage.setTitle("Scaner Qr Code Home");
+		stage.setScene(scene);
+		
+		stage.show();
 	}
 
 }

@@ -89,6 +89,7 @@ public class mysqlConnection {
 	ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.accounts where W4C_QrCode=?");
 	ps.setString(1,w4c_QrCode );
 	ps.execute();
+	
 	res=ps.getResultSet();
 	if(!res.next())
 		return null;

@@ -6,6 +6,7 @@ package client;
 
 import ocsf.client.*;
 import client.*;
+import common.Accounts;
 import common.ChatIF;
 import common.Message;
 import common.MessageType;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
 	public static User u;
+	public static Accounts account;
+	
 	/**
 	 * The interface type variable. It allows the implementation of the display
 	 * method in the client.
@@ -67,6 +70,9 @@ public class ChatClient extends AbstractClient {
 		//System.out.println((String) m.getObject());
 		if (m.getMessageType().equals(MessageType.login)) {
 			u = (User) m.getObject(); }
+		if (m.getMessageType().equals(MessageType.scan)) {
+			account = (Accounts) m.getObject(); }
+		
 
 	}
 

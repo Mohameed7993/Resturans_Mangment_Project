@@ -78,10 +78,9 @@ public class EchoServer extends AbstractServer {
 				break;
 			case scan:
 				message = ((String) m.getObject()).split(" ");
-				Accounts u1=mysqlConnection.getAccountsListFromDB(message[0]);
-				System.out.println(u1);
-				client.sendToClient(new Message(MessageType.scan, u1));
-			//	User u=mysqlConnection
+				Accounts account=mysqlConnection.getAccountsListFromDB(message[0]);
+				//System.out.println(account);
+				client.sendToClient(new Message(MessageType.scan, account));
 				break;
 			default:
 				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();

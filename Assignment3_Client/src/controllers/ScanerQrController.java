@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -75,6 +76,14 @@ public class ScanerQrController implements Initializable {
 			a.showAndWait();
 		}
     	else if(ChatClient.u.getW4C_QrCode().equals(w4c_code.getText())) {
+    		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    		CustomerDetailsController AFrame=new CustomerDetailsController();
+			try {
+				AFrame.start(stage);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		
     	}
     	else {
@@ -96,7 +105,6 @@ public class ScanerQrController implements Initializable {
 	public void start(Stage stage) throws Exception{
 		// TODO Auto-generated method stub
 		Parent root= FXMLLoader.load(getClass().getResource("/View/ScanerQr.fxml"));
-		//Parent root = FXMLLoader.load(getClass().getResource("/View/ScanerQr.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Scaner Qr Code Home");
 		stage.setScene(scene);
