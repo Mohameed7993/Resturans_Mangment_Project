@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
+import common.Accounts;
 import common.Message;
 import common.MessageType;
 import common.Resturants;
@@ -29,8 +30,10 @@ public class ChooseResturantController implements Initializable {
 
 	ObservableList<Resturants> resturants;
 	
+	public static Resturants resturant;
+	
     @FXML
-    private TableView<Resturants> TablelistID;
+    public  TableView<Resturants> TablelistID;
 
     @FXML
     private TableColumn<Resturants, String> ResturanNameCol;
@@ -73,7 +76,14 @@ public class ChooseResturantController implements Initializable {
 
     @FXML
     void ViewMenuButtonAction(ActionEvent event) {
-    	
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	ResturantMenuController AFrame=new ResturantMenuController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	@Override
@@ -85,6 +95,15 @@ public class ChooseResturantController implements Initializable {
 		ClientUI.chat.accept(new Message(MessageType.ViewResturants,null));
 		resturants=FXCollections.observableArrayList(ChatClient.resturants);
 		TablelistID.setItems(resturants);
+		
+		TablelistID.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				resturant=TablelistID.getSelectionModel().getSelectedItem();
+			}
+			
+		});
 		
 	}
 

@@ -12,6 +12,7 @@ import common.Message;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
+import common.TybeMeal;
 import common.User;
 
 import java.io.*;
@@ -31,6 +32,7 @@ public class ChatClient extends AbstractClient {
 	public static User u;
 	public static Accounts account;
 	public static ArrayList<Resturants> resturants;
+	public static ArrayList<TybeMeal> tybemeal;
 	
 	
 	/**
@@ -79,6 +81,10 @@ public class ChatClient extends AbstractClient {
 		
 		if(m.getMessageType().equals(MessageType.ViewResturants)) {
 			resturants=(ArrayList<Resturants>)m.getObject();
+		}
+		
+		if(m.getMessageType().equals(MessageType.ViewTybeMeallist)) {
+			tybemeal=(ArrayList<TybeMeal>)m.getObject();
 		}
 		
 

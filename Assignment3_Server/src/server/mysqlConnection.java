@@ -17,6 +17,7 @@ import common.Accounts;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
+import common.TybeMeal;
 import common.User;
 import common.UserType;
 
@@ -80,7 +81,7 @@ public class mysqlConnection {
 		return user;
 	}
 	
-		public static Accounts getAccountsListFromDB(String w4c_QrCode){
+	public static Accounts getAccountsListFromDB(String w4c_QrCode){
 	Accounts account=null;
 	PreparedStatement ps;
 	ResultSet res;
@@ -101,6 +102,37 @@ public class mysqlConnection {
      }
 	return account;
 }
+	
+	   public static ArrayList<TybeMeal> getTybeMealListFromDB(String ResturantID){
+		   ArrayList<TybeMeal> tybemeal =new ArrayList<TybeMeal>();
+		   TybeMeal temp;
+		   PreparedStatement ps;
+			ResultSet res;
+			try {
+				
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.typemeal where ResturantId=?");
+				ps.setString(1,ResturantID);
+				ps.execute();
+				
+				res=ps.getResultSet();
+				while(res.next()) {
+				   temp=new TybeMeal(res.getString(1),res.getString(2),res.getString(3));
+				   tybemeal.add(temp);
+				}
+				res.close();
+				
+				
+			}catch (SQLException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			     }
+			return tybemeal;
+		   
+	   }
+	
+	
+	
+	
 		public static ArrayList<Resturants> getResturantsListFromDB(){
 		ArrayList<Resturants> list = new ArrayList<Resturants>();
 		Resturants temp;

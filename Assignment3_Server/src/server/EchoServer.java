@@ -64,11 +64,13 @@ public class EchoServer extends AbstractServer {
 				ServerConnectionController.clients_list.add(new Client(message[0], message[1], message[2]));
 				client.sendToClient(new Message(null, null));
 				break;
+				
 			case disconnect:
 				message = ((String) m.getObject()).split(" ");
 				ServerConnectionController.clients_list.add(new Client(message[0], message[1], message[2]));
 				client.sendToClient(new Message(null, null));
 				break;
+				
 			case login:
 				message = ((String) m.getObject()).split(" ");
 				User u=mysqlConnection.checkUserLogIn(message[0], message[1]);
@@ -76,17 +78,29 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message(MessageType.login, u));
 				//System.out.println(user.getW4C_QrCode());
 				break;
+				
 			case scan:
 				message = ((String) m.getObject()).split(" ");
 				Accounts account=mysqlConnection.getAccountsListFromDB(message[0]);
 				//System.out.println(account);
 				client.sendToClient(new Message(MessageType.scan, account));
 				break;
+				
 			case ViewResturants:
 				ArrayList<Resturants> resturant;
 				resturant =mysqlConnection.getResturantsListFromDB();
 				client.sendToClient(new Message(MessageType.ViewResturants, resturant));
 				break;
+				
+			case ViewTybeMeallist:
+				message = ((String) m.getObject()).split(" ");
+				ArrayList<TybeMeal> tybemeal;
+				System.out.println(message[0]);
+				tybemeal=mysqlConnection.getTybeMealListFromDB(message[0]);
+				System.out.println(tybemeal.size());
+				client.sendToClient(new Message(MessageType.ViewTybeMeallist,tybemeal));	
+				break;
+				
 			default:
 				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
 				//client.sendToClient(msg);
