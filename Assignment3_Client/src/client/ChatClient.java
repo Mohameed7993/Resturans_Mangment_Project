@@ -11,6 +11,7 @@ import common.ChatIF;
 import common.Message;
 import common.MessageType;
 import common.Order;
+import common.Resturants;
 import common.User;
 
 import java.io.*;
@@ -29,6 +30,8 @@ public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
 	public static User u;
 	public static Accounts account;
+	public static ArrayList<Resturants> resturants;
+	
 	
 	/**
 	 * The interface type variable. It allows the implementation of the display
@@ -70,8 +73,13 @@ public class ChatClient extends AbstractClient {
 		//System.out.println((String) m.getObject());
 		if (m.getMessageType().equals(MessageType.login)) {
 			u = (User) m.getObject(); }
+		
 		if (m.getMessageType().equals(MessageType.scan)) {
 			account = (Accounts) m.getObject(); }
+		
+		if(m.getMessageType().equals(MessageType.ViewResturants)) {
+			resturants=(ArrayList<Resturants>)m.getObject();
+		}
 		
 
 	}

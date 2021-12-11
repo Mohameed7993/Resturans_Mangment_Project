@@ -2,31 +2,44 @@ package controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import client.ChatClient;
+import client.ClientUI;
+import common.Message;
+import common.MessageType;
+import common.Resturants;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ChooseResturantController implements Initializable {
 
+	ObservableList<Resturants> resturants;
+	
     @FXML
-    private TableView<?> TablelistID;
+    private TableView<Resturants> TablelistID;
 
     @FXML
-    private TableColumn<?, ?> ResturanNameCol;
+    private TableColumn<Resturants, String> ResturanNameCol;
 
     @FXML
-    private TableColumn<?, ?> StatusCol;
+    private TableColumn<Resturants, String> StatusCol;
 
     @FXML
-    private TableColumn<?, ?> PhoneNumberCol;
+    private TableColumn<Resturants, String> PhoneNumberCol;
 
     @FXML
     private ImageView Image1;
@@ -48,27 +61,42 @@ public class ChooseResturantController implements Initializable {
 
     @FXML
     void BackButtonAction(ActionEvent event) {
-
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	CustomerDetailsController AFrame=new CustomerDetailsController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @FXML
     void ViewMenuButtonAction(ActionEvent event) {
-
+    	
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
+		ResturanNameCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("ResturantName"));
+		StatusCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Status"));
+		PhoneNumberCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("PhoneNumber"));
+		ClientUI.chat.accept(new Message(MessageType.ViewResturants,null));
+		resturants=FXCollections.observableArrayList(ChatClient.resturants);
+		TablelistID.setItems(resturants);
 		
 	}
 
-	public void start(Stage stage) throws Exception {
-		Parent root= FXMLLoader.load(getClass().getResource("/View/ChooseResturant(Costumer).fxml"));
+	public void start(Stage primaryStage) throws Exception {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/View/ChooseResturant.fxml"));
 		Scene scene = new Scene(root);
-		stage.setTitle("Scaner Qr Code Home");
-		stage.setScene(scene);
+		primaryStage.setTitle("Resturants List");
 		
-		stage.show();
+		primaryStage.setScene(scene);
+
+		primaryStage.show();
 	}
 
 }

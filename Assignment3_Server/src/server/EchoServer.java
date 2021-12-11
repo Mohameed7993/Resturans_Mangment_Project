@@ -82,6 +82,11 @@ public class EchoServer extends AbstractServer {
 				//System.out.println(account);
 				client.sendToClient(new Message(MessageType.scan, account));
 				break;
+			case ViewResturants:
+				ArrayList<Resturants> resturant;
+				resturant =mysqlConnection.getResturantsListFromDB();
+				client.sendToClient(new Message(MessageType.ViewResturants, resturant));
+				break;
 			default:
 				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
 				//client.sendToClient(msg);

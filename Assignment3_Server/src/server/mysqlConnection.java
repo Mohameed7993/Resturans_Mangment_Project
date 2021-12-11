@@ -101,18 +101,16 @@ public class mysqlConnection {
      }
 	return account;
 }
-	
-	
-/*	public static ArrayList<Resturants> getResturantsListFromDB(){
+		public static ArrayList<Resturants> getResturantsListFromDB(){
 		ArrayList<Resturants> list = new ArrayList<Resturants>();
 		Resturants temp;
 		Statement statment;
 		ResultSet res;
 		try {
 			statment=mysqlConnection.conn.createStatement();
-			res=statment.executeQuery("SELECT * FROM bitemedb.resturantslist");
+			res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
 			while (res.next()) {
-				temp=new Resturants(res.getString(1), res.getString(2),res.getString(3));
+				temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4));
 				list.add(temp);
 			}
 				res.close();
@@ -121,7 +119,9 @@ public class mysqlConnection {
 		   e.printStackTrace();
 	     }
 	       return list;
-	}*/
+	}
+		
+		
 	
 	/*
 	public static void updateType(int orderNumber, String type) {

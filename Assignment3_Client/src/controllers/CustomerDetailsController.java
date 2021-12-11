@@ -74,8 +74,10 @@ public class CustomerDetailsController implements Initializable {
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
+    	
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	ChooseResturantController AFrame=new ChooseResturantController();
+    	
 		try {
 			AFrame.start(stage);
 		} catch (Exception e) {
@@ -116,7 +118,7 @@ public class CustomerDetailsController implements Initializable {
 		// TODO Auto-generated method stub
 		Parent root= FXMLLoader.load(getClass().getResource("/View/CustomerDetails.fxml"));
 		Scene scene = new Scene(root);
-		stage.setTitle("Scaner Qr Code Home");
+		stage.setTitle("Coustomer Details");
 		stage.setScene(scene);
 		
 		stage.show();

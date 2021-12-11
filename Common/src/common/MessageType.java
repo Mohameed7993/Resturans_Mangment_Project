@@ -1,6 +1,6 @@
 package common;
 
 public enum MessageType {
-	login, connect, disconnect,scan
+	login, connect, disconnect,scan,ViewResturants
 	
 }
