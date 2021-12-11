@@ -99,6 +99,12 @@ public class EchoServer extends AbstractServer {
 				tybemeal=mysqlConnection.getTybeMealListFromDB(message[0]);
 				System.out.println(tybemeal.size());
 				client.sendToClient(new Message(MessageType.ViewTybeMeallist,tybemeal));	
+				
+				break;
+			case ViewDishList:
+				System.out.println(999);
+				message=((String)m.getObject()).split(" ");
+		    	System.out.println(message.toString());	
 				break;
 				
 			default:

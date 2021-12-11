@@ -10,7 +10,7 @@ public class TybeMeal implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String Resturant_ID;
 	private String TybeMeal_ID;
-	private String Tybe_Meal;
+	private Dish Tybe_Meal;
 	
 	
 	public String getResturant_ID() {
@@ -60,13 +60,13 @@ public class TybeMeal implements Serializable{
 	public void setTybeMeal_ID(String tybeMeal_ID) {
 		TybeMeal_ID = tybeMeal_ID;
 	}
-	public String getTybeMeal() {
+	public Dish getTybeMeal() {
 		return Tybe_Meal;
 	}
-	public void setTybeMeal(String tybeMeal) {
+	public void setTybeMeal(Dish tybeMeal) {
 		Tybe_Meal = tybeMeal;
 	}
-	public TybeMeal(String resturant_ID, String tybeMeal_ID, String tybeMeal) {
+	public TybeMeal(String resturant_ID, String tybeMeal_ID, Dish tybeMeal) {
 		super();
 		Resturant_ID = resturant_ID;
 		TybeMeal_ID = tybeMeal_ID;

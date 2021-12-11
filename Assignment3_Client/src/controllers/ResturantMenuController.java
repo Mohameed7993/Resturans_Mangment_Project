@@ -13,6 +13,7 @@ import common.TybeMeal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,12 +24,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ResturantMenuController  implements Initializable {
 
 	ObservableList<TybeMeal> tm;
+	String Id;
+	
     @FXML
     private ImageView Image1;
 
@@ -91,14 +95,27 @@ public class ResturantMenuController  implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	
+	TybeMeal tybemealchooseCombo;
+	 
 		ResturantName.setText(ChooseResturantController.resturant.getResturantName()+" Menu");
 		
 		TybeMealCom.getItems().clear();
 		ClientUI.chat.accept(new Message(MessageType.ViewTybeMeallist,ChooseResturantController.resturant.getResturantID())); //// sending id resturant to get tybe meal list.
 		tm=FXCollections.observableArrayList(ChatClient.tybemeal);
+		
 		for(TybeMeal t : tm)
 			TybeMealCom.getItems().add(t.getTybeMeal());
+		
+		TybeMealCom.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				Id=TybeMealCom.getSelectionModel().getSelectedItem();
+			}
+		});
+		
+		
+		ClientUI.chat.accept(new Message(MessageType.ViewDishList,Id));
 	
 	}
 
