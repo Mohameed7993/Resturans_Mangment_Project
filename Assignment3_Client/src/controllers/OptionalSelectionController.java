@@ -35,6 +35,7 @@ import javafx.stage.Stage;
 public class OptionalSelectionController implements Initializable{
 
     ObservableList<Selection> Sel;
+    public static Integer totalPrice;
     
     public static ArrayList<Selection> sel = new ArrayList<>(); 
 	
@@ -74,6 +75,7 @@ public class OptionalSelectionController implements Initializable{
     @FXML
     void BackButtonAction(ActionEvent event) {
     	sel.clear();
+    	totalPrice=0;
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	DishController AFrame=new DishController();
 		try {
@@ -134,13 +136,31 @@ public class OptionalSelectionController implements Initializable{
 
     @FXML
     void nextButtonAction(ActionEvent event) {
-
+    	for(int i=0;i<sel.size();i++)
+			totalPrice+=sel.get(i).getSelectionPrice();
+        	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+        	ItemDetailsController AFrame=new ItemDetailsController();
+    		try {
+    			AFrame.start(stage);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}	
+    		
+    	
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		totalPrice=DishController.dish.getDishPrice();
 		Selectbutton.setVisible(true);
-		UnSelectbutton.setVisible(false);
+		
+		if(sel.size()!=0)
+	     	UnSelectbutton.setVisible(true);
+		else
+			UnSelectbutton.setVisible(false);
+
         resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		SelectionsCol.setCellValueFactory(new PropertyValueFactory<Selection,String>("Selction"));
 		PriceCol.setCellValueFactory(new PropertyValueFactory<Selection,Integer>("SelectionPrice"));
