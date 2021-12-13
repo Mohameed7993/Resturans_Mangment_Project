@@ -18,9 +18,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -76,14 +78,24 @@ public class ChooseResturantController implements Initializable {
 
     @FXML
     void ViewMenuButtonAction(ActionEvent event) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-    	ResturantMenuController AFrame=new ResturantMenuController();
+    	if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) {
+    		
+    	Stage stage =new Stage();
+    	TybeMealController AFrame=new TybeMealController();
 		try {
 			AFrame.start(stage);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+  }
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+			a.setContentText("Error");
+			a.setHeaderText("This resturant is Close, Please choose one Open");
+			a.showAndWait();
+    	}
+    	
     }
 
 	@Override

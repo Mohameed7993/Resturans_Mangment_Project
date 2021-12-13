@@ -2,7 +2,7 @@ package common;
 
 import java.io.Serializable;
 
-public class Selction implements Serializable{
+public class Selection implements Serializable{
 
 	/**
 	 * 
@@ -11,7 +11,7 @@ public class Selction implements Serializable{
 	private String Dish_ID;
 	private String Selction_ID;
 	private String Selction;
-	public Selction(String dish_ID, String selction_ID, String selction) {
+	public Selection(String dish_ID, String selction_ID, String selction) {
 		super();
 		Dish_ID = dish_ID;
 		Selction_ID = selction_ID;
@@ -52,7 +52,7 @@ public class Selction implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Selction other = (Selction) obj;
+		Selection other = (Selection) obj;
 		if (Dish_ID == null) {
 			if (other.Dish_ID != null)
 				return false;

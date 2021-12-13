@@ -95,11 +95,25 @@ public class EchoServer extends AbstractServer {
 			case ViewTybeMeallist:
 				message = ((String) m.getObject()).split(" ");
 				ArrayList<TybeMeal> tybemeal;
-				System.out.println(message[0]);
 				tybemeal=mysqlConnection.getTybeMealListFromDB(message[0]);
-				System.out.println(tybemeal.size());
 				client.sendToClient(new Message(MessageType.ViewTybeMeallist,tybemeal));	
 				break;
+				
+			case ViewDishList:
+				message=((String)m.getObject()).split(" ");
+				ArrayList<Dish> Dish;
+				Dish=mysqlConnection.getDishListFromDB(message[0]);
+				client.sendToClient(new Message(MessageType.ViewDishList, Dish));
+				break;
+				
+			case ViewSelctionsList:
+				message=((String)m.getObject()).split(" ");
+				ArrayList<Selection> selection;
+			   	System.out.println(message[0]);	
+			   	selection=mysqlConnection.getSelectionListFromDB(message[0]);
+				client.sendToClient(new Message(MessageType.ViewSelctionsList, selection));
+				break;
+				
 				
 			default:
 				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();

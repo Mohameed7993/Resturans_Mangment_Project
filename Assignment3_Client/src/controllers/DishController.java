@@ -1,11 +1,11 @@
 package controllers;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
+import common.Dish;
 import common.Message;
 import common.MessageType;
 import common.Resturants;
@@ -29,17 +29,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class TybeMealController  implements Initializable {
+public class DishController implements Initializable {
 
-	ObservableList<TybeMeal> Meals;
+ObservableList<Dish> Dish;
 	
-	public static TybeMeal tybe_meal;
+	public static Dish dish;
 	
     @FXML
     private ImageView image;
 
     @FXML
-    private Button ExistButton;
+    private Button BackButton;
 
     @FXML
     private Button nextButton;
@@ -51,22 +51,29 @@ public class TybeMealController  implements Initializable {
     private Text TybeMealtxt;
 
     @FXML
-    private TableView<TybeMeal> TypeMealList;
+    private TableView<Dish> DishList;
 
     @FXML
-    private TableColumn<TybeMeal, String> TybeMealCol;
+    private TableColumn<Dish, String> DishCol;
 
     @FXML
-    void ExistButtonAction(ActionEvent event) {
-    	
-    	  ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+    void BackButtonAction(ActionEvent event) {
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	TybeMealController AFrame=new TybeMealController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch blocks
+			e.printStackTrace();
+		}
     }
+
 
     @FXML
     void nextButtonAction(ActionEvent event) {
+    	
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-
-    	DishController AFrame=new DishController();
+    	OptionalSelectionController AFrame=new OptionalSelectionController();
 		try {
 			AFrame.start(stage);
 		} catch (Exception e) {
@@ -75,40 +82,34 @@ public class TybeMealController  implements Initializable {
 		}
     }
 
-   
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		
-		TybeMealCol.setCellValueFactory(new PropertyValueFactory<TybeMeal,String>("TybeMeal"));
-		ClientUI.chat.accept(new Message(MessageType.ViewTybeMeallist,ChooseResturantController.resturant.getResturantID())); //// sending id resturant to get tybe meal list.
-		Meals=FXCollections.observableArrayList(ChatClient.tybemeal);
-		TypeMealList.setItems(Meals);
-		 
+		DishCol.setCellValueFactory(new PropertyValueFactory<Dish,String>("Dish"));
+		ClientUI.chat.accept(new Message(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMeal_ID()));
+		Dish=FXCollections.observableArrayList(ChatClient.dish);
+		DishList.setItems(Dish);
 		
-		TypeMealList.setOnMousePressed(new EventHandler<MouseEvent>() {
+		DishList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				tybe_meal=TypeMealList.getSelectionModel().getSelectedItem();
+				dish=DishList.getSelectionModel().getSelectedItem();
 			}
 		});
-		
 	
 	}
 
-	public void start(Stage stage)  throws Exception {
+		public void start(Stage stage)  throws Exception {
 		// TODO Auto-generated method stub
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/View/TybeMeal.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/View/Dish.fxml"));
 		Scene scene = new Scene(root);
-		stage.setTitle("TybeMeal");
+		stage.setTitle("Dishes");
 		stage.setScene(scene);
 
 		stage.show();
 	}
 
-
-
 }
-

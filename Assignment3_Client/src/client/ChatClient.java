@@ -8,10 +8,12 @@ import ocsf.client.*;
 import client.*;
 import common.Accounts;
 import common.ChatIF;
+import common.Dish;
 import common.Message;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
+import common.Selection;
 import common.TybeMeal;
 import common.User;
 
@@ -33,6 +35,8 @@ public class ChatClient extends AbstractClient {
 	public static Accounts account;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
+	public static ArrayList<Dish> dish;
+	public static ArrayList<Selection> selection;
 	
 	
 	/**
@@ -85,6 +89,12 @@ public class ChatClient extends AbstractClient {
 		
 		if(m.getMessageType().equals(MessageType.ViewTybeMeallist)) {
 			tybemeal=(ArrayList<TybeMeal>)m.getObject();
+		}
+		if(m.getMessageType().equals(MessageType.ViewDishList)) {
+			dish=(ArrayList<Dish>)m.getObject();
+		}
+		if(m.getMessageType().equals(MessageType.ViewSelctionsList)) {
+			selection=(ArrayList<Selection>)m.getObject();
 		}
 		
 

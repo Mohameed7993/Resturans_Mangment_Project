@@ -14,9 +14,11 @@ import java.util.Calendar;
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import common.Accounts;
+import common.Dish;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
+import common.Selection;
 import common.TybeMeal;
 import common.User;
 import common.UserType;
@@ -129,8 +131,61 @@ public class mysqlConnection {
 			return tybemeal;
 		   
 	   }
-	
-	
+	   
+	   
+	   public static ArrayList<Dish> getDishListFromDB(String TybeMealID){
+		   ArrayList<Dish> Dish =new ArrayList<Dish>();
+		   Dish temp;
+		   PreparedStatement ps;
+			ResultSet res;
+			try {
+				
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where TypemealId=?");
+				ps.setString(1,TybeMealID);
+				ps.execute();
+				
+				res=ps.getResultSet();
+				while(res.next()) {
+				   temp=new Dish(res.getString(1),res.getString(2),res.getString(3));
+				   Dish.add(temp);
+				}
+				res.close();
+				
+				
+			}catch (SQLException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			     }
+			return Dish;
+		   
+	   }
+	   
+	   public static ArrayList<Selection> getSelectionListFromDB(String DishID){
+		   ArrayList<Selection> selection =new ArrayList<Selection>();
+		   Selection temp;
+		   PreparedStatement ps;
+			ResultSet res;
+			try {
+				
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.selection where DishId=?");
+				ps.setString(1,DishID);
+				ps.execute();
+				
+				res=ps.getResultSet();
+				while(res.next()) {
+				   temp=new Selection(res.getString(1),res.getString(2),res.getString(3));
+				   selection.add(temp);
+				}
+				res.close();
+				
+				
+			}catch (SQLException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			     }
+			return selection;
+		   
+	   }
 	
 	
 		public static ArrayList<Resturants> getResturantsListFromDB(){
@@ -152,6 +207,7 @@ public class mysqlConnection {
 	     }
 	       return list;
 	}
+		
 		
 		
 	
