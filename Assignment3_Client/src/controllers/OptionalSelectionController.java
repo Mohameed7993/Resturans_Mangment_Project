@@ -6,11 +6,9 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Dish;
 import common.Message;
 import common.MessageType;
 import common.Selection;
-import common.TybeMeal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
