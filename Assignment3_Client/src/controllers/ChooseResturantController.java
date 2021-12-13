@@ -78,25 +78,34 @@ public class ChooseResturantController implements Initializable {
 
     @FXML
     void ViewMenuButtonAction(ActionEvent event) {
-    	if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) {
+    	if(TablelistID.getSelectionModel().getSelectedItem()!=null) {
+    	     if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) {
     		
-    	Stage stage =new Stage();
-    	TybeMealController AFrame=new TybeMealController();
-		try {
-			AFrame.start(stage);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  }
-    	else {
+    	        Stage stage =new Stage();
+    	         TybeMealController AFrame=new TybeMealController();
+		           try {
+			        AFrame.start(stage);
+		               } catch (Exception e) {
+			               // TODO Auto-generated catch block
+			                  e.printStackTrace();
+	                                    	 }
+    	                                     }
+              else {
     		Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("Error");
 			a.setHeaderText("This resturant is Close, Please choose one Open");
 			a.showAndWait();
+    	       }
+    	     }
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("should you Select a resturant:");
+            a.showAndWait();
+    	}
     	}
     	
-    }
+    	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

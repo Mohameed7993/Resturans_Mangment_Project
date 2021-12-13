@@ -38,7 +38,8 @@
       </Text>
       <TableView fx:id="DishList" layoutX="65.0" layoutY="155.0" prefHeight="266.0" prefWidth="315.0">
         <columns>
-          <TableColumn fx:id="DishCol" prefWidth="314.0" text="TheDish" />
+          <TableColumn fx:id="DishCol" prefWidth="213.0" text="TheDish" />
+            <TableColumn fx:id="PriceCol" prefWidth="101.0" text="Price" />
         </columns>
       </TableView>
    </children>

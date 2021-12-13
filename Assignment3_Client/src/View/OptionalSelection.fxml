@@ -36,10 +36,21 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <TableView fx:id="OptionalSelectionList" layoutX="65.0" layoutY="155.0" prefHeight="266.0" prefWidth="315.0">
+      <TableView fx:id="OptionalSelectionList" layoutX="69.0" layoutY="141.0" prefHeight="232.0" prefWidth="315.0">
          <columns>
-            <TableColumn fx:id="SelectionsCol" prefWidth="314.0" text="Selections" />
+            <TableColumn fx:id="SelectionsCol" prefWidth="224.0" text="Selections" />
+            <TableColumn fx:id="PriceCol" prefWidth="89.0" text="Price" />
          </columns>
       </TableView>
+      <Button fx:id="Selectbutton" layoutX="264.0" layoutY="383.0" mnemonicParsing="false" onAction="#SelectButtonAction" prefHeight="8.0" prefWidth="120.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Select">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="UnSelectbutton" layoutX="76.0" layoutY="383.0" mnemonicParsing="false" onAction="#UnSelectbuttonAction" prefHeight="8.0" prefWidth="120.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="UnSelect">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

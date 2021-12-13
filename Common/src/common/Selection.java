@@ -11,12 +11,26 @@ public class Selection implements Serializable{
 	private String Dish_ID;
 	private String Selction_ID;
 	private String Selction;
-	public Selection(String dish_ID, String selction_ID, String selction) {
+	private Integer SelectionPrice;
+	public Selection(String dish_ID, String selction_ID, String selction,Integer selectionprice) {
 		super();
 		Dish_ID = dish_ID;
 		Selction_ID = selction_ID;
 		Selction = selction;
+		SelectionPrice=selectionprice;
 	}
+	
+	public Integer getSelectionPrice() {
+		return SelectionPrice;
+	}
+	
+	public void setSelectionPrice(Integer selectionprice) {
+	    SelectionPrice=selectionprice;
+	}
+	
+	
+	
+	
 	public String getDish_ID() {
 		return Dish_ID;
 	}

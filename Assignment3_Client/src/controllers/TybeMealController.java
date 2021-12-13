@@ -20,9 +20,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -64,6 +66,7 @@ public class TybeMealController  implements Initializable {
 
     @FXML
     void nextButtonAction(ActionEvent event) {
+    	if(TypeMealList.getSelectionModel().getSelectedItem()!=null) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 
     	DishController AFrame=new DishController();
@@ -72,7 +75,15 @@ public class TybeMealController  implements Initializable {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+    	}
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("should you Select Your TybeMeal:");
+            a.showAndWait();
+    	}
+    	
     }
 
    
@@ -90,6 +101,7 @@ public class TybeMealController  implements Initializable {
 		TypeMealList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
+				if(TypeMealList.getSelectionModel().getSelectedItem()!=null)
 				tybe_meal=TypeMealList.getSelectionModel().getSelectedItem();
 			}
 		});

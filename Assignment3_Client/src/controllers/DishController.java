@@ -20,9 +20,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -54,6 +56,9 @@ ObservableList<Dish> Dish;
     private TableView<Dish> DishList;
 
     @FXML
+    private TableColumn<Dish, Integer> PriceCol;
+    
+    @FXML
     private TableColumn<Dish, String> DishCol;
 
     @FXML
@@ -71,7 +76,7 @@ ObservableList<Dish> Dish;
 
     @FXML
     void nextButtonAction(ActionEvent event) {
-    	
+    	if(DishList.getSelectionModel().getSelectedItem()!=null) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	OptionalSelectionController AFrame=new OptionalSelectionController();
 		try {
@@ -80,6 +85,13 @@ ObservableList<Dish> Dish;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("should you Select Your Dish:");
+            a.showAndWait();
+    	}
     }
 
 	@Override
@@ -88,6 +100,7 @@ ObservableList<Dish> Dish;
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		
 		DishCol.setCellValueFactory(new PropertyValueFactory<Dish,String>("Dish"));
+		PriceCol.setCellValueFactory(new PropertyValueFactory<Dish,Integer>("DishPrice"));
 		ClientUI.chat.accept(new Message(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMeal_ID()));
 		Dish=FXCollections.observableArrayList(ChatClient.dish);
 		DishList.setItems(Dish);
@@ -95,6 +108,7 @@ ObservableList<Dish> Dish;
 		DishList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
+				if(DishList.getSelectionModel().getSelectedItem()!=null)
 				dish=DishList.getSelectionModel().getSelectedItem();
 			}
 		});

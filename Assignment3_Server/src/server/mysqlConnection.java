@@ -146,7 +146,7 @@ public class mysqlConnection {
 				
 				res=ps.getResultSet();
 				while(res.next()) {
-				   temp=new Dish(res.getString(1),res.getString(2),res.getString(3));
+				   temp=new Dish(res.getString(1),res.getString(2),res.getString(3),res.getInt(4));
 				   Dish.add(temp);
 				}
 				res.close();
@@ -173,7 +173,7 @@ public class mysqlConnection {
 				
 				res=ps.getResultSet();
 				while(res.next()) {
-				   temp=new Selection(res.getString(1),res.getString(2),res.getString(3));
+				   temp=new Selection(res.getString(1),res.getString(2),res.getString(3),res.getInt(4));
 				   selection.add(temp);
 				}
 				res.close();

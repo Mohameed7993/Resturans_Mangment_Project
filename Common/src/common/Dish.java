@@ -11,16 +11,26 @@ public class Dish implements Serializable{
 	private String TybeMeal_ID;
 	private String Dish_ID;
 	private String Dish;
+	private Integer DishPrice;
 	
 	
-	public Dish(String tybeMeal_ID, String dish_ID, String dish) {
+	public Dish(String tybeMeal_ID, String dish_ID, String dish,int dishPrice) {
 		super();
 		TybeMeal_ID = tybeMeal_ID;
 		Dish_ID = dish_ID;
 		Dish = dish;
+		DishPrice=dishPrice;
 	}
 
-
+	public int getDishPrice() {
+		return DishPrice;
+	}
+	
+	public int setDishPrice() {
+		return DishPrice;
+	}
+	
+	
 	public String getTybeMeal_ID() {
 		return TybeMeal_ID;
 	}
