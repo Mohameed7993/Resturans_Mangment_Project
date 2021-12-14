@@ -56,7 +56,12 @@ public class CustomerHomeController implements Initializable {
     @FXML
     private Button MyOrderListButton;
     
+    @FXML
+    private Button MyCartButton;
 
+    @FXML
+    private ImageView Image6;
+    
     @FXML
     void LogoutAction(ActionEvent event) {
     
@@ -69,8 +74,29 @@ public class CustomerHomeController implements Initializable {
 			e.printStackTrace();
 		}
     }
+    @FXML
+    void MyCartAction(ActionEvent event) {
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	 MyCartController AFrame=new MyCartController();
+         try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     	
-    
+   /* @FXML
+    void MyCartAction(ActionEvent event) {
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+        MyCartController AFrame=new MyCartController();
+          try {
+	        AFrame.start(stage);
+              } catch (Exception e) {
+	               // TODO Auto-generated catch block
+	                  e.printStackTrace();
+                               	 }
+    }*/
     
     @FXML
     void MakeorderAction(ActionEvent event) {
@@ -96,6 +122,12 @@ public class CustomerHomeController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		CustomerName.setText("Hello, "+ChatClient.u.getUserName());
+		
+		if(ItemDetailsController.itemList.size()==0) {
+			MyCartButton.setVisible(false);
+		    Image6.setVisible(false);
+		}
+		else { MyCartButton.setVisible(true); Image6.setVisible(true);}
 	}
 
 	

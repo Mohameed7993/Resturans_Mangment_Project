@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -48,10 +49,16 @@ public static ItemInCart AdditemList;
     private Text extrastxt;
 
     @FXML
-    private Text totalpricetxt;
+    private Text totalpricetxt;//////
 
     @FXML
-    private Text tybemealfield;
+    private Text tybemealfield;//////
+    
+    @FXML
+    private Text Quantitytxt;
+
+    @FXML
+    private TextField QuantityField;
 
     @FXML
     private Text dishfield;

@@ -79,6 +79,7 @@ public class MyCartController implements Initializable {
 
     @FXML
     void AddAction(ActionEvent event) {
+    	if(ItemDetailsController.itemList.size()!=0) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	TybeMealController AFrame=new TybeMealController();
 		try {
@@ -86,7 +87,17 @@ public class MyCartController implements Initializable {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}}
+    	else {
+    		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+        	ChooseResturantController AFrame=new ChooseResturantController();
+    		try {
+    			AFrame.start(stage);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
     }
 
     @FXML
