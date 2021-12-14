@@ -86,18 +86,6 @@ public class CustomerHomeController implements Initializable {
 		}
     }
     	
-   /* @FXML
-    void MyCartAction(ActionEvent event) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-        MyCartController AFrame=new MyCartController();
-          try {
-	        AFrame.start(stage);
-              } catch (Exception e) {
-	               // TODO Auto-generated catch block
-	                  e.printStackTrace();
-                               	 }
-    }*/
-    
     @FXML
     void MakeorderAction(ActionEvent event) {
     	

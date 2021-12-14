@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import common.ItemInCart;
-import common.Resturants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -76,6 +75,9 @@ public class MyCartController implements Initializable {
 
     @FXML
     private TableColumn<ItemInCart,Integer> itempricecol;
+    
+    @FXML
+    private TableColumn<ItemInCart,Integer> QuantityCol;
 
     @FXML
     void AddAction(ActionEvent event) {
@@ -144,12 +146,13 @@ public class MyCartController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
     	resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
+    	
     	ItemNumbercol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("itemNumber"));
     	Tybemealcol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("TypeMeal"));
     	dishescol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("Dishes"));
     	extrascol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("Extras"));
     	 itempricecol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("TotalPrice"));
-    	 
+    	 QuantityCol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("quantity"));
     	 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
     	 CartList.setItems(ItemsList);
     	 

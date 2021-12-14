@@ -12,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,8 +24,9 @@ public class ItemDetailsController implements Initializable {
 	
 public static ArrayList<ItemInCart> itemList =new ArrayList<>();
 public static ItemInCart AdditemList;
+public Integer TotalPrice;
+public Integer Quantity;
 
-    public String TotalPrice;
     @FXML
     private ImageView image;
 
@@ -49,10 +52,7 @@ public static ItemInCart AdditemList;
     private Text extrastxt;
 
     @FXML
-    private Text totalpricetxt;//////
-
-    @FXML
-    private Text tybemealfield;//////
+    private Text tybemealfield;
     
     @FXML
     private Text Quantitytxt;
@@ -62,10 +62,6 @@ public static ItemInCart AdditemList;
 
     @FXML
     private Text dishfield;
-
-    @FXML
-    private Text totalpricefield;
-
 
     @FXML
     private Text extrasField;
@@ -84,15 +80,22 @@ public static ItemInCart AdditemList;
 
     @FXML
     void addButtonAction(ActionEvent event) {// add to cart
-    	//OptionalSelectionController.sel.clear();
+    	if(QuantityField.getText().matches("[a-zA-Z_]+")||QuantityField.getText().equals("")) {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("Quantity is Wrong!");
+            a.showAndWait();
+    	}
+    	else {
+    		Quantity=Integer.parseInt(QuantityField.getText());
     	MyCartController.numberitem++;
-    	
+    	TotalPrice=OptionalSelectionController.totalPrice*Quantity;
  if(OptionalSelectionController.sel.size()!=0) {
     	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
-    			,OptionalSelectionController.sel.toString(),OptionalSelectionController.totalPrice);}
+    			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity);}
  
  else {  AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
- 			,"No Extra",OptionalSelectionController.totalPrice);}
+ 			,"No Extra",TotalPrice,Quantity);}
     	
     	itemList.add(AdditemList);
     	OptionalSelectionController.totalPrice=0;
@@ -104,6 +107,7 @@ public static ItemInCart AdditemList;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	}
     	
     }
 
@@ -119,10 +123,6 @@ public static ItemInCart AdditemList;
 			extrasField.setText("No Extras");
 		
 		else extrasField.setText(OptionalSelectionController.sel.toString());
-		
-		 TotalPrice=String.valueOf(OptionalSelectionController.totalPrice);  
-		totalpricefield.setText(TotalPrice);
-		
 		
 	}
 

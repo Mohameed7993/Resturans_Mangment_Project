@@ -61,8 +61,9 @@
           <TableColumn fx:id="ItemNumbercol" prefWidth="90.0" text="Items Number" />
           <TableColumn fx:id="Tybemealcol" prefWidth="92.0" text="Tybes Meal" />
             <TableColumn fx:id="dishescol" minWidth="0.0" prefWidth="92.33334350585938" text="Dishes" />
-            <TableColumn fx:id="extrascol" prefWidth="252.33331298828125" text="Extras" />
-            <TableColumn fx:id="itempricecol" minWidth="0.0" prefWidth="103.66668701171875" text="Items Price" />
+            <TableColumn fx:id="extrascol" prefWidth="222.0" text="Extras" />
+            <TableColumn fx:id="itempricecol" minWidth="0.0" prefWidth="72.0" text="Price" />
+            <TableColumn fx:id="QuantityCol" minWidth="0.0" prefWidth="60.0" text="Quantity" />
         </columns>
       </TableView>
    </children>

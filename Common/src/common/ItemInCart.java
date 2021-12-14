@@ -13,7 +13,53 @@ public class ItemInCart implements Serializable {
 	private String Dishes;
 	private String Extras;
 	private Integer TotalPrice;
-	
+	private Integer quantity;
+	public ItemInCart(Integer itemNumber, String typeMeal, String dishes, String extras, Integer totalPrice,
+			Integer quantity) {
+		super();
+		this.itemNumber = itemNumber;
+		TypeMeal = typeMeal;
+		Dishes = dishes;
+		Extras = extras;
+		TotalPrice = totalPrice;
+		this.quantity = quantity;
+	}
+	public Integer getItemNumber() {
+		return itemNumber;
+	}
+	public void setItemNumber(Integer itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+	public String getTypeMeal() {
+		return TypeMeal;
+	}
+	public void setTypeMeal(String typeMeal) {
+		TypeMeal = typeMeal;
+	}
+	public String getDishes() {
+		return Dishes;
+	}
+	public void setDishes(String dishes) {
+		Dishes = dishes;
+	}
+	public String getExtras() {
+		return Extras;
+	}
+	public void setExtras(String extras) {
+		Extras = extras;
+	}
+	public Integer getTotalPrice() {
+		return TotalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		TotalPrice = totalPrice;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -23,6 +69,7 @@ public class ItemInCart implements Serializable {
 		result = prime * result + ((TotalPrice == null) ? 0 : TotalPrice.hashCode());
 		result = prime * result + ((TypeMeal == null) ? 0 : TypeMeal.hashCode());
 		result = prime * result + ((itemNumber == null) ? 0 : itemNumber.hashCode());
+		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		return result;
 	}
 	@Override
@@ -59,47 +106,12 @@ public class ItemInCart implements Serializable {
 				return false;
 		} else if (!itemNumber.equals(other.itemNumber))
 			return false;
+		if (quantity == null) {
+			if (other.quantity != null)
+				return false;
+		} else if (!quantity.equals(other.quantity))
+			return false;
 		return true;
 	}
-	public ItemInCart(Integer itemNumber, String typeMeal, String dishes, String extras, Integer totalPrice) {
-		super();
-		this.itemNumber = itemNumber;
-		TypeMeal = typeMeal;
-		Dishes = dishes;
-		Extras = extras;
-		TotalPrice = totalPrice;
-	}
-	public Integer getItemNumber() {
-		return itemNumber;
-	}
-	public void setItemNumber(Integer itemNumber) {
-		this.itemNumber = itemNumber;
-	}
-	public String getTypeMeal() {
-		return TypeMeal;
-	}
-	public void setTypeMeal(String typeMeal) {
-		TypeMeal = typeMeal;
-	}
-	public String getDishes() {
-		return Dishes;
-	}
-	public void setDishes(String dishes) {
-		Dishes = dishes;
-	}
-	public String getExtras() {
-		return Extras;
-	}
-	public void setExtras(String extras) {
-		Extras = extras;
-	}
-	public Integer getTotalPrice() {
-		return TotalPrice;
-	}
-	public void setTotalPrice(Integer totalPrice) {
-		TotalPrice = totalPrice;
-	}
 	
-	
-
 }

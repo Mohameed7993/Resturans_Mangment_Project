@@ -86,7 +86,7 @@ public class Selection implements Serializable{
 	}
 	
 	public String toString() {
-		return (Selction+", Price:"+SelectionPrice);
+		return (Selction+" Price:"+SelectionPrice);
 	}
 
 	
