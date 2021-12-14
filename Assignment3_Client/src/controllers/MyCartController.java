@@ -4,26 +4,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import common.ItemInCart;
+import common.Resturants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MyCartController implements Initializable {
-
+	
+	public static String yourOrderIsInResturant=null;
+	
 	ObservableList<ItemInCart> ItemsList; 
+	
+	public static ItemInCart ItemSelected;
 	
 	public static Integer numberitem=0;
     @FXML
@@ -70,7 +79,14 @@ public class MyCartController implements Initializable {
 
     @FXML
     void AddAction(ActionEvent event) {
-
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	TybeMealController AFrame=new TybeMealController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @FXML
@@ -93,13 +109,29 @@ public class MyCartController implements Initializable {
 
     @FXML
     void deleteAction(ActionEvent event) {
-    	numberitem--;
+    	if(CartList.getSelectionModel().getSelectedItem()!=null)
+    	{
+    		numberitem--;
+    		int itemnumber =CartList.getSelectionModel().getSelectedItem().getItemNumber();
+    		ItemDetailsController.itemList.remove(itemnumber-1);
+    		 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
+        	 CartList.setItems(ItemsList);
+    		
+    	}
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("should you Select The item that you want to delete");
+            a.showAndWait();
+    	}
+    	
+    	
     }
     
 
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	
+    	
     	resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
     	ItemNumbercol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("itemNumber"));
     	Tybemealcol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("TypeMeal"));
@@ -109,6 +141,17 @@ public class MyCartController implements Initializable {
     	 
     	 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
     	 CartList.setItems(ItemsList);
+    	 
+    	 CartList.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+    			@Override
+    			public void handle(MouseEvent arg0) {
+    				if(CartList.getSelectionModel().getSelectedItem()!=null)
+    				ItemSelected=CartList.getSelectionModel().getSelectedItem();
+    			}
+    			
+    		});
+    	 
 	}
 	
 

@@ -29,7 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ChooseResturantController implements Initializable {
-
+	
+	
 	ObservableList<Resturants> resturants;
 	
 	public static Resturants resturant;
@@ -79,8 +80,29 @@ public class ChooseResturantController implements Initializable {
     @FXML
     void ViewMenuButtonAction(ActionEvent event) {
     	if(TablelistID.getSelectionModel().getSelectedItem()!=null) {
-    	     if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) {
-    		
+    	     if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) 
+    	     {
+    	    	 if(ItemDetailsController.itemList.size()!=0) {
+    	    		 if(!(MyCartController.yourOrderIsInResturant.equals(resturant.getResturantName()))) {
+    	    			 Alert a = new Alert(AlertType.ERROR);
+    	    				a.setContentText("Error");
+    	    				a.setHeaderText("you Cant Orderd from Deffirent Returant!"+"you most finish your order from resturant:"
+    	    				+MyCartController.yourOrderIsInResturant);
+    	    				a.showAndWait();
+    	    		 } 
+    	    		 else {
+    	    				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	       	         TybeMealController AFrame=new TybeMealController();
+    	   		           try {
+    	   			        AFrame.start(stage);
+    	   		               } catch (Exception e) {
+    	   			               // TODO Auto-generated catch block
+    	   			                  e.printStackTrace();                    	 
+    	    		 }
+    	    	            }
+    	    	 }
+    	    		 else {
+    	    			MyCartController.yourOrderIsInResturant=TablelistID.getSelectionModel().getSelectedItem().getResturantName();
     	    		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	         TybeMealController AFrame=new TybeMealController();
 		           try {
@@ -90,6 +112,7 @@ public class ChooseResturantController implements Initializable {
 			                  e.printStackTrace();
 	                                    	 }
     	                                     }
+    	     }
               else {
     		Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("Error");
@@ -122,6 +145,7 @@ public class ChooseResturantController implements Initializable {
 			@Override
 			public void handle(MouseEvent arg0) {
 				resturant=TablelistID.getSelectionModel().getSelectedItem();
+				
 			}
 			
 		});

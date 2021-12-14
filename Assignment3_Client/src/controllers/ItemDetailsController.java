@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import common.ItemInCart;
-import common.Resturants;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,8 +80,12 @@ public static ItemInCart AdditemList;
     	//OptionalSelectionController.sel.clear();
     	MyCartController.numberitem++;
     	
+ if(OptionalSelectionController.sel.size()!=0) {
     	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
-    			,OptionalSelectionController.sel.toString(),OptionalSelectionController.totalPrice);
+    			,OptionalSelectionController.sel.toString(),OptionalSelectionController.totalPrice);}
+ 
+ else {  AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+ 			,"No Extra",OptionalSelectionController.totalPrice);}
     	
     	itemList.add(AdditemList);
     	OptionalSelectionController.totalPrice=0;
