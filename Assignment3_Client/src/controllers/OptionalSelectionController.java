@@ -32,10 +32,11 @@ import javafx.stage.Stage;
 
 public class OptionalSelectionController implements Initializable{
 
-    ObservableList<Selection> Sel;
+    ObservableList<Selection> Sel; //all the extras that we toke from DB
+    
     public static Integer totalPrice;
     
-    public static ArrayList<Selection> sel = new ArrayList<>(); 
+    public static ArrayList<Selection> sel;  //list for extras
 	
 	public static Selection selection;
 	
@@ -73,7 +74,6 @@ public class OptionalSelectionController implements Initializable{
     @FXML
     void BackButtonAction(ActionEvent event) {
     	sel.clear();
-    	totalPrice=0;
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	DishController AFrame=new DishController();
 		try {
@@ -150,7 +150,7 @@ public class OptionalSelectionController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		sel = new ArrayList<>();
 		totalPrice=DishController.dish.getDishPrice();
 		Selectbutton.setVisible(true);
 		

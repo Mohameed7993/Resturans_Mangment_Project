@@ -101,7 +101,7 @@ ObservableList<Dish> Dish;
 		
 		DishCol.setCellValueFactory(new PropertyValueFactory<Dish,String>("Dish"));
 		PriceCol.setCellValueFactory(new PropertyValueFactory<Dish,Integer>("DishPrice"));
-		ClientUI.chat.accept(new Message(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMeal_ID()));
+		ClientUI.chat.accept(new Message(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMealID()));
 		Dish=FXCollections.observableArrayList(ChatClient.dish);
 		DishList.setItems(Dish);
 		

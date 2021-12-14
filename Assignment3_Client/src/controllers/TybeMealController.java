@@ -60,8 +60,16 @@ public class TybeMealController  implements Initializable {
 
     @FXML
     void ExistButtonAction(ActionEvent event) {
-    	
-    	  ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+
+    	ChooseResturantController AFrame=new ChooseResturantController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  
     }
 
     @FXML
@@ -91,7 +99,7 @@ public class TybeMealController  implements Initializable {
 		
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		
-		TybeMealCol.setCellValueFactory(new PropertyValueFactory<TybeMeal,String>("TybeMeal"));
+		TybeMealCol.setCellValueFactory(new PropertyValueFactory<TybeMeal,String>("TypeMeal"));
 		ClientUI.chat.accept(new Message(MessageType.ViewTybeMeallist,ChooseResturantController.resturant.getResturantID())); //// sending id resturant to get tybe meal list.
 		Meals=FXCollections.observableArrayList(ChatClient.tybemeal);
 		TypeMealList.setItems(Meals);

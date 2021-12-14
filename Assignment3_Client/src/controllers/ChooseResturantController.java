@@ -81,7 +81,7 @@ public class ChooseResturantController implements Initializable {
     	if(TablelistID.getSelectionModel().getSelectedItem()!=null) {
     	     if(TablelistID.getSelectionModel().getSelectedItem().getStatus().equals("Open")) {
     		
-    	        Stage stage =new Stage();
+    	    		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	         TybeMealController AFrame=new TybeMealController();
 		           try {
 			        AFrame.start(stage);

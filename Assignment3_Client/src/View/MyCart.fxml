@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MyCartController">
+   <children>
+      <ImageView fx:id="image1" fitHeight="562.0" fitWidth="802.0" layoutX="125.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/Layer%204.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BackButton" layoutX="27.0" layoutY="641.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Text fill="#79a42b" layoutX="398.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="My Cart" textAlignment="CENTER" wrappingWidth="195.587890625">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="image2" fitHeight="305.0" fitWidth="188.0" layoutX="804.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/43-430460_png-food-top-view.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="image3" fitHeight="248.0" fitWidth="188.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/139203-food-plate-top-nutrition-view.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="paymentButton" layoutX="612.0" layoutY="617.0" mnemonicParsing="false" onAction="#PaymentAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Payment Process" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Text fx:id="resturantnametxt" fill="#353f4c" layoutX="141.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="173.33334350585938">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="DeleteButton" layoutX="299.0" layoutY="614.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="Addbutton" layoutX="216.0" layoutY="614.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="67.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <TableView fx:id="CartList" layoutX="180.0" layoutY="293.0" prefHeight="277.0" prefWidth="630.0">
+        <columns>
+          <TableColumn fx:id="ItemNumbercol" prefWidth="90.0" text="Items Number" />
+          <TableColumn fx:id="Tybemealcol" prefWidth="92.0" text="Tybes Meal" />
+            <TableColumn fx:id="dishescol" minWidth="0.0" prefWidth="92.33334350585938" text="Dishes" />
+            <TableColumn fx:id="extrascol" prefWidth="252.33331298828125" text="Extras" />
+            <TableColumn fx:id="itempricecol" minWidth="0.0" prefWidth="103.66668701171875" text="Items Price" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -8,21 +8,36 @@ public class TybeMeal implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String Resturant_ID;
-	private String TybeMeal_ID;
-	private String Tybe_Meal;
+	private String resturantID;
+	private String tybeMealID;
+	private String typeMeal;
 	
-	
-	public String getResturant_ID() {
-		return Resturant_ID;
+
+	public String getResturantID() {
+		return resturantID;
+	}
+	public void setResturantID(String resturantID) {
+		this.resturantID = resturantID;
+	}
+	public String getTybeMealID() {
+		return tybeMealID;
+	}
+	public void setTybeMealID(String tybeMealID) {
+		this.tybeMealID = tybeMealID;
+	}
+	public String getTypeMeal() {
+		return typeMeal;
+	}
+	public void setTypeMeal(String typeMeal) {
+		this.typeMeal = typeMeal;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Resturant_ID == null) ? 0 : Resturant_ID.hashCode());
-		result = prime * result + ((Tybe_Meal == null) ? 0 : Tybe_Meal.hashCode());
-		result = prime * result + ((TybeMeal_ID == null) ? 0 : TybeMeal_ID.hashCode());
+		result = prime * result + ((resturantID == null) ? 0 : resturantID.hashCode());
+		result = prime * result + ((typeMeal == null) ? 0 : typeMeal.hashCode());
+		result = prime * result + ((tybeMealID == null) ? 0 : tybeMealID.hashCode());
 		return result;
 	}
 	@Override
@@ -34,43 +49,29 @@ public class TybeMeal implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TybeMeal other = (TybeMeal) obj;
-		if (Resturant_ID == null) {
-			if (other.Resturant_ID != null)
+		if (resturantID == null) {
+			if (other.resturantID != null)
 				return false;
-		} else if (!Resturant_ID.equals(other.Resturant_ID))
+		} else if (!resturantID.equals(other.resturantID))
 			return false;
-		if (Tybe_Meal == null) {
-			if (other.Tybe_Meal != null)
+		if (typeMeal == null) {
+			if (other.typeMeal != null)
 				return false;
-		} else if (!Tybe_Meal.equals(other.Tybe_Meal))
+		} else if (!typeMeal.equals(other.typeMeal))
 			return false;
-		if (TybeMeal_ID == null) {
-			if (other.TybeMeal_ID != null)
+		if (tybeMealID == null) {
+			if (other.tybeMealID != null)
 				return false;
-		} else if (!TybeMeal_ID.equals(other.TybeMeal_ID))
+		} else if (!tybeMealID.equals(other.tybeMealID))
 			return false;
 		return true;
 	}
-	public void setResturant_ID(String resturant_ID) {
-		Resturant_ID = resturant_ID;
-	}
-	public String getTybeMeal_ID() {
-		return TybeMeal_ID;
-	}
-	public void setTybeMeal_ID(String tybeMeal_ID) {
-		TybeMeal_ID = tybeMeal_ID;
-	}
-	public String getTybeMeal() {
-		return Tybe_Meal;
-	}
-	public void setTybeMeal(String tybeMeal) {
-		Tybe_Meal = tybeMeal;
-	}
+
 	public TybeMeal(String resturant_ID, String tybeMeal_ID, String tybeMeal) {
 		super();
-		Resturant_ID = resturant_ID;
-		TybeMeal_ID = tybeMeal_ID;
-		Tybe_Meal = tybeMeal;
+		resturantID = resturant_ID;
+		tybeMealID = tybeMeal_ID;
+		typeMeal = tybeMeal;
 	}
 
 }

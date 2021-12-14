@@ -1,8 +1,12 @@
 package controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import common.ItemInCart;
+import common.Resturants;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +20,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ItemDetailsController implements Initializable {
+	
+public static ArrayList<ItemInCart> itemList =new ArrayList<>();
+public static ItemInCart AdditemList;
 
+    public String TotalPrice;
     @FXML
     private ImageView image;
 
@@ -70,19 +78,40 @@ public class ItemDetailsController implements Initializable {
     }
 
     @FXML
-    void addButtonAction(ActionEvent event) {
-
+    void addButtonAction(ActionEvent event) {// add to cart
+    	//OptionalSelectionController.sel.clear();
+    	MyCartController.numberitem++;
+    	
+    	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+    			,OptionalSelectionController.sel.toString(),OptionalSelectionController.totalPrice);
+    	
+    	itemList.add(AdditemList);
+    	OptionalSelectionController.totalPrice=0;
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	MyCartController AFrame=new MyCartController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
-		tybemealfield.setText(TybeMealController.tybe_meal.getTybeMeal());
+		
+		tybemealfield.setText(TybeMealController.tybe_meal.getTypeMeal());
+		
 		dishfield.setText(DishController.dish.getDish()+", Price:"+DishController.dish.getDishPrice());
+		
 		if(OptionalSelectionController.sel.size()==0)
 			extrasField.setText("No Extras");
+		
 		else extrasField.setText(OptionalSelectionController.sel.toString());
-		String TotalPrice=String.valueOf(OptionalSelectionController.totalPrice);  
+		
+		 TotalPrice=String.valueOf(OptionalSelectionController.totalPrice);  
 		totalpricefield.setText(TotalPrice);
 		
 		
