@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="974.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentMethodController">
+   <children>
+      <ImageView fx:id="image1" fitHeight="642.0" fitWidth="827.0" layoutX="74.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: 353f4c;">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/Layer%204.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BackButton" layoutX="23.0" layoutY="665.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="image2" fitHeight="305.0" fitWidth="188.0" layoutX="786.0" layoutY="449.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/43-430460_png-food-top-view.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="image3" fitHeight="248.0" fitWidth="188.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../../../../../../Desktop/mosmos/000/139203-food-plate-top-nutrition-view.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="deleiveryservicetxt" fill="#79a42b" layoutX="88.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Deleivery Service:" wrappingWidth="146.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="enterAdresstxt" fill="#79a42b" layoutX="467.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enter address Please:" wrappingWidth="166.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="CityField" layoutX="588.0" layoutY="341.0" prefHeight="37.0" prefWidth="166.0" promptText="City" />
+      <Text fx:id="streettxt" fill="#79a42b" layoutX="529.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="469.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="citytxt" fill="#79a42b" layoutX="548.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" wrappingWidth="35.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="streetField" layoutX="588.0" layoutY="389.0" prefHeight="38.0" prefWidth="166.0" promptText="Street" />
+      <TextArea fx:id="houseNumberField" layoutX="588.0" layoutY="443.0" prefHeight="0.0" prefWidth="166.0" promptText="House number" />
+      <Text fx:id="paymenttxt" fill="#79a42b" layoutX="363.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method:" wrappingWidth="146.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+    <Button fx:id="payprivatebutton" layoutX="656.0" layoutY="556.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="77.0" prefWidth="130.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Private Account" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="SharedDelButton" layoutX="90.0" layoutY="543.0" mnemonicParsing="false" onAction="#SharedDelButtonAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Shared-delivery " textAlignment="RIGHT" textFill="WHITE" />
+      <Button fx:id="takeawaybutton" layoutX="93.0" layoutY="460.0" mnemonicParsing="false" onAction="#takeawaybuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Take-away" textAlignment="RIGHT" textFill="WHITE" />
+    <Button fx:id="deleiveryButton" layoutX="93.0" layoutY="419.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Deleivery" textAlignment="RIGHT" textFill="#fffafa" />
+      <Button fx:id="paybussinessbutton" layoutX="509.0" layoutY="556.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="77.0" prefWidth="130.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Bussiness Account" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="robotbutton" layoutX="93.0" layoutY="500.0" mnemonicParsing="false" onAction="#robotbuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Robot" textAlignment="RIGHT" textFill="WHITE" />
+      <Text fx:id="requesteddatetxt" fill="#79a42b" layoutX="92.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requested order date:" wrappingWidth="174.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="orderdateField" layoutX="92.0" layoutY="327.0" prefHeight="29.0" prefWidth="99.0" promptText="Enter hour" />
+   </children>
+</AnchorPane>
