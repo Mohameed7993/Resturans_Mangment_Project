@@ -98,7 +98,7 @@ public class ScanerQrController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		w4c_code.setText(ChatClient.u.getW4C_QrCode());
 		
 	}
 	
