@@ -4,7 +4,6 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Accounts;
 import common.Message;
 import common.MessageType;
 import common.Resturants;

@@ -37,7 +37,7 @@ public class BiteMeLoginController implements Initializable {
 
 	@FXML
 	void LoginAction(ActionEvent event) {
-		
+	
 		if (Username.getText().equals("") || Password.getText().equals("")) {
 			Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("Error");
@@ -47,10 +47,12 @@ public class BiteMeLoginController implements Initializable {
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		ClientUI.chat.accept(new Message(MessageType.login, Username.getText() + " " + Password.getText()));
-		if (ChatClient.u != null) {
-			switch (ChatClient.u.getType()) {
+		///////////////////////////////////////////// llgersa alkdeme
+		if(ChatClient.userlogged!=null) {
+			switch(ChatClient.userlogged.getType()) {
 			case Customer:
-			CustomerHomeController AFrame=new CustomerHomeController();
+				ClientUI.chat.accept(new Message(MessageType.scan,ChatClient.userlogged.getId()));
+				CustomerHomeController AFrame=new CustomerHomeController();
 				try {
 					AFrame.start(stage);
 				} catch (Exception e) {
@@ -60,13 +62,13 @@ public class BiteMeLoginController implements Initializable {
 
 				break;
 			case CEO:
-				System.out.println(ChatClient.u.getPassWord() + "2");
+				System.out.println(ChatClient.userlogged.getPassWord() + "2");
 				break;
 			case BranchManager:
-				System.out.println(ChatClient.u.getPassWord() + "3");
+				System.out.println(ChatClient.userlogged.getPassWord() + "3");
 				break;
 			case Supplier:
-				System.out.println(ChatClient.u.getPassWord() + "4");
+				System.out.println(ChatClient.userlogged.getPassWord() + "4");
 				break;
 			default:
 				break;

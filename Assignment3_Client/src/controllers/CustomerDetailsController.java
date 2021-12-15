@@ -103,14 +103,15 @@ public class CustomerDetailsController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		YourDetailstxt.setText(ChatClient.u.getUserName()+" Details");
-		FirstNameField.setText(ChatClient.account.getFirstName());
-		LastNameField.setText(ChatClient.account.getLasName());
-		IDField.setText(ChatClient.account.getID());
-		PhoneNumberField.setText(ChatClient.account.getPhoneNumber());
-		EmailField.setText(ChatClient.account.getEmail());
-		CreditField.setText(ChatClient.account.getCreditCardNumber());
-		AccountField.setText(ChatClient.account.getAccoountTybe());
+		
+		YourDetailstxt.setText(ChatClient.userlogged.getUserName()+" Details");
+		FirstNameField.setText(ChatClient.accounts.getFirstName());
+		LastNameField.setText(ChatClient.accounts.getLasName());
+		IDField.setText(ChatClient.accounts.getID());
+		PhoneNumberField.setText(ChatClient.accounts.getPhoneNumber());
+		EmailField.setText(ChatClient.accounts.getEmail());
+		CreditField.setText(ChatClient.w4ccard.getCreditCardNumber());
+		AccountField.setText(ChatClient.w4ccard.getAccountType());
 		
 	}
 	

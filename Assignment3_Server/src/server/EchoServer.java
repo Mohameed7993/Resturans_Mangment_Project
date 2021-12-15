@@ -59,6 +59,7 @@ public class EchoServer extends AbstractServer {
 		String message[];
 		try {
 			switch (m.getMessageType()) {
+			
 			case connect:
 				message = ((String) m.getObject()).split(" ");
 				ServerConnectionController.clients_list.add(new Client(message[0], message[1], message[2]));
@@ -73,16 +74,20 @@ public class EchoServer extends AbstractServer {
 				
 			case login:
 				message = ((String) m.getObject()).split(" ");
-				User u=mysqlConnection.checkUserLogIn(message[0], message[1]);
+				Users user=mysqlConnection.checkUserLogIn(message[0], message[1]);
 				System.out.println(message[0]+"  " +message[1]);
-				client.sendToClient(new Message(MessageType.login, u));
-				//System.out.println(user.getW4C_QrCode());
+				client.sendToClient(new Message(MessageType.login, user));
+				break;
+				
+			case w4cCard:
+	            message = ((String) m.getObject()).split(" ");
+	            W4C_Card w4c=mysqlConnection.getW4cInformationfromDB(message[0]);
+	            client.sendToClient(new Message(MessageType.w4cCard, w4c));
 				break;
 				
 			case scan:
 				message = ((String) m.getObject()).split(" ");
-				Accounts account=mysqlConnection.getAccountsListFromDB(message[0]);
-				//System.out.println(account);
+				Account account=mysqlConnection.getAccountListFromDB(message[0]);
 				client.sendToClient(new Message(MessageType.scan, account));
 				break;
 				
@@ -116,8 +121,7 @@ public class EchoServer extends AbstractServer {
 				
 				
 			default:
-				//ArrayList<Resturants> rest =mysqlConnection.getResturantsListFromDB();
-				//client.sendToClient(msg);
+			
 				break;
 			}
 		} catch (IOException e) {

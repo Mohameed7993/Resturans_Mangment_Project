@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.Client;
+import common.Message;
+import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -109,7 +111,8 @@ public class CustomerHomeController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		CustomerName.setText("Hello, "+ChatClient.u.getUserName());
+		
+		CustomerName.setText("Hello, "+ChatClient.accounts.getFirstName()+" "+ChatClient.accounts.getLasName());
 		
 		if(ItemDetailsController.itemList.size()==0) {
 			MyCartButton.setVisible(false);

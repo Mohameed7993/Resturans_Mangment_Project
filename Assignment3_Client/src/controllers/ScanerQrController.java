@@ -67,15 +67,7 @@ public class ScanerQrController implements Initializable {
 
     @FXML
     void scanButtonAction(ActionEvent event) {
-    	
-    	ClientUI.chat.accept(new Message(MessageType.scan,w4c_code.getText()));
-    	if (w4c_code.getText().equals("")) {
-			Alert a = new Alert(AlertType.ERROR);
-			a.setContentText("Error");
-			a.setHeaderText("Enter your W4C Code");
-			a.showAndWait();
-		}
-    	else if(ChatClient.u.getW4C_QrCode().equals(w4c_code.getText())) {
+    	ClientUI.chat.accept(new Message(MessageType.w4cCard,ChatClient.accounts.getW4C_QrCode()));
     		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     		CustomerDetailsController AFrame=new CustomerDetailsController();
 			try {
@@ -86,19 +78,15 @@ public class ScanerQrController implements Initializable {
 			}
     		
     	}
-    	else {
-    		Alert a = new Alert(AlertType.ERROR);
-			a.setContentText("Error");
-			a.setHeaderText("the W4C code is woring");
-			a.showAndWait();
-    	}
+    
     	
 
-    }
+    
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		w4c_code.setText(ChatClient.u.getW4C_QrCode());
+	
+		w4c_code.setText(ChatClient.accounts.getW4C_QrCode());
 		
 	}
 	

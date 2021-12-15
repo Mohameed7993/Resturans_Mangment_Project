@@ -13,15 +13,16 @@ import java.util.Calendar;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
-import common.Accounts;
+import common.Account;
 import common.Dish;
 import common.MessageType;
 import common.Order;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
-import common.User;
 import common.UserType;
+import common.Users;
+import common.W4C_Card;
 
 
 
@@ -51,27 +52,23 @@ public class mysqlConnection {
 			System.out.println("SQL connection succeed");
 		
 	}
-
-	public static User checkUserLogIn(String userName,String passWord) {
-		
+ 
+	
+	public static Users checkUserLogIn(String userName,String passWord) {//////////////////////////////////////////////////////////////////////////////////////update
 		PreparedStatement ps;
 		ResultSet res;
-		User user=null;
+		Users user=null;
 		try {
-			
-			ps = mysqlConnection.conn
-					.prepareStatement("Select * From bitemedb.user where username=? and password=?");
+			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.users where username=? and password=?");
 			ps.setString(1, userName);
 			ps.setString(2, passWord);
 			ps.execute();
 			res=ps.getResultSet();
-			//if(res.getString(1)==null)
-			//	return null;
 			if(!res.next())
 				return null;
-			user=new User(res.getString(1), res.getString(2),UserType.valueOf(res.getString(3)) ,true, res.getString(5));
-			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.user SET isLogged =? where username=?");
-			ps.setInt(1, 0);
+			user=new Users(res.getString(1),res.getString(2),res.getString(3),true ,UserType.valueOf(res.getString(5)));
+			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET IsloggedIN =? where username=?");
+			ps.setInt(1, 0); //// changed to 1
 			ps.setString(2, userName);
 			ps.execute();
 			return user;
@@ -79,24 +76,42 @@ public class mysqlConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return user;
 	}
 	
-	public static Accounts getAccountsListFromDB(String w4c_QrCode){
-	Accounts account=null;
+	public static W4C_Card getW4cInformationfromDB (String w4c_code) {
+		PreparedStatement ps;
+		ResultSet res;
+		W4C_Card w4c=null;
+		try {
+			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.w4c_card where W4CCode=?");
+			ps.setString(1, w4c_code);
+			ps.execute();
+			res=ps.getResultSet();
+			if(!res.next())
+				return null;
+			w4c=new W4C_Card(res.getString(1),res.getString(2),res.getString(3));
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return w4c;
+	}
+	
+	public static Account getAccountListFromDB(String ID){
+	Account account=null;
 	PreparedStatement ps;
 	ResultSet res;
 	try {
 		
-	ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.accounts where W4C_QrCode=?");
-	ps.setString(1,w4c_QrCode );
+	ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.account where ID=?");
+	ps.setString(1,ID );
 	ps.execute();
 	
 	res=ps.getResultSet();
 	if(!res.next())
 		return null;
-	account =new Accounts(res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6),res.getString(7), res.getString(8));
+	account =new Account (res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6));
 	return account;
 	} catch (SQLException e) {
 	   // TODO Auto-generated catch block
@@ -104,6 +119,10 @@ public class mysqlConnection {
      }
 	return account;
 }
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
 	
 	   public static ArrayList<TybeMeal> getTybeMealListFromDB(String ResturantID){
 		   ArrayList<TybeMeal> tybemeal =new ArrayList<TybeMeal>();
@@ -209,26 +228,8 @@ public class mysqlConnection {
 	}
 		
 		
-		
 	
-	/*
-	public static void updateType(int orderNumber, String type) {
-		PreparedStatement ps;
-
-		try {
-			ps = mysqlConnection.conn
-					.prepareStatement("UPDATE assignement2db.order SET TypeOfOrder =? where OrderNumber=?");
-			ps.setString(1, type);
-			ps.setInt(2, orderNumber);
-			ps.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
-	public static void updateAddress(int orderNumber, String address) {
+	/*public static void updateAddress(int orderNumber, String address) {
 		PreparedStatement ps;
 
 		try {

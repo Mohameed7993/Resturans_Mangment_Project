@@ -6,7 +6,7 @@ package client;
 
 import ocsf.client.*;
 import client.*;
-import common.Accounts;
+import common.Account;
 import common.ChatIF;
 import common.Dish;
 import common.Message;
@@ -15,7 +15,8 @@ import common.Order;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
-import common.User;
+import common.Users;
+import common.W4C_Card;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ import java.util.ArrayList;
  */
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
-	public static User u;
-	public static Accounts account;
+	public static Users userlogged;
+	public static W4C_Card w4ccard;
+	public static Account accounts;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
@@ -76,12 +78,18 @@ public class ChatClient extends AbstractClient {
 		awaitResponse = false;
 		System.out.println("--> handleMessageFromServer");
 		Message m = (Message) msg;
+		
 		//System.out.println((String) m.getObject());
+
 		if (m.getMessageType().equals(MessageType.login)) {
-			u = (User) m.getObject(); }
+			userlogged = (Users) m.getObject(); }
 		
 		if (m.getMessageType().equals(MessageType.scan)) {
-			account = (Accounts) m.getObject(); }
+			accounts = (Account) m.getObject(); }
+		
+		if (m.getMessageType().equals(MessageType.w4cCard)) {
+			w4ccard = (W4C_Card) m.getObject(); }
+		
 		
 		if(m.getMessageType().equals(MessageType.ViewResturants)) {
 			resturants=(ArrayList<Resturants>)m.getObject();
