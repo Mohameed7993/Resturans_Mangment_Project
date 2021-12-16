@@ -7,6 +7,7 @@ package client;
 import ocsf.client.*;
 import client.*;
 import common.Account;
+import common.Business;
 import common.ChatIF;
 import common.Dish;
 import common.Message;
@@ -35,6 +36,7 @@ public class ChatClient extends AbstractClient {
 	public static Users userlogged;
 	public static W4C_Card w4ccard;
 	public static Account accounts;
+	public static Business bussiness;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
@@ -90,7 +92,6 @@ public class ChatClient extends AbstractClient {
 		if (m.getMessageType().equals(MessageType.w4cCard)) {
 			w4ccard = (W4C_Card) m.getObject(); }
 		
-		
 		if(m.getMessageType().equals(MessageType.ViewResturants)) {
 			resturants=(ArrayList<Resturants>)m.getObject();
 		}
@@ -103,6 +104,9 @@ public class ChatClient extends AbstractClient {
 		}
 		if(m.getMessageType().equals(MessageType.ViewSelctionsList)) {
 			selection=(ArrayList<Selection>)m.getObject();
+		}
+		if(m.getMessageType().equals(MessageType.bussinessAccounts)) {
+			bussiness=(Business)m.getObject();
 		}
 		
 

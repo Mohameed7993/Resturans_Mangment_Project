@@ -69,14 +69,14 @@
          </font>
       </Button>
       <Button fx:id="SharedDelButton" layoutX="90.0" layoutY="543.0" mnemonicParsing="false" onAction="#SharedDelButtonAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Shared-delivery " textAlignment="RIGHT" textFill="WHITE" />
-      <Button fx:id="takeawaybutton" layoutX="93.0" layoutY="460.0" mnemonicParsing="false" onAction="#takeawaybuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Take-away" textAlignment="RIGHT" textFill="WHITE" />
-    <Button fx:id="deleiveryButton" layoutX="93.0" layoutY="419.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Deleivery" textAlignment="RIGHT" textFill="#fffafa" />
+      <Button fx:id="takeawaybutton" layoutX="93.0" layoutY="418.0" mnemonicParsing="false" onAction="#takeawaybuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Take-away" textAlignment="RIGHT" textFill="WHITE" />
+    <Button fx:id="deleiveryButton" layoutX="93.0" layoutY="500.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Deleivery" textAlignment="RIGHT" textFill="#fffafa" />
       <Button fx:id="paybussinessbutton" layoutX="509.0" layoutY="556.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="77.0" prefWidth="130.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Bussiness Account" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="robotbutton" layoutX="93.0" layoutY="500.0" mnemonicParsing="false" onAction="#robotbuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Robot" textAlignment="RIGHT" textFill="WHITE" />
+      <Button fx:id="robotbutton" layoutX="93.0" layoutY="459.0" mnemonicParsing="false" onAction="#robotbuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Robot" textAlignment="RIGHT" textFill="WHITE" />
       <Text fx:id="requesteddatetxt" fill="#79a42b" layoutX="92.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requested order date:" wrappingWidth="174.0">
          <font>
             <Font name="System Bold" size="16.0" />

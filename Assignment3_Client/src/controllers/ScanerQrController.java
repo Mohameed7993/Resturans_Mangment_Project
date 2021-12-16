@@ -24,6 +24,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ScanerQrController implements Initializable {
+	
+	public static final Integer Ceiling = 500;
 
     @FXML
     private ImageView Image1;
@@ -68,6 +70,10 @@ public class ScanerQrController implements Initializable {
     @FXML
     void scanButtonAction(ActionEvent event) {
     	ClientUI.chat.accept(new Message(MessageType.w4cCard,ChatClient.accounts.getW4C_QrCode()));
+    	if(ChatClient.w4ccard.getAccountType().equals("business")) {
+    		ClientUI.chat.accept(new Message(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));
+    		ChatClient.bussiness.setCeiling(String.valueOf(Ceiling));
+    	}
     		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     		CustomerDetailsController AFrame=new CustomerDetailsController();
 			try {

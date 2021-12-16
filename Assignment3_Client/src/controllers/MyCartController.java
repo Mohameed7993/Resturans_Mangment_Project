@@ -117,7 +117,14 @@ public class MyCartController implements Initializable {
 
     @FXML
     void PaymentAction(ActionEvent event) {
-
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	PaymentMethodController AFrame=new PaymentMethodController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @FXML

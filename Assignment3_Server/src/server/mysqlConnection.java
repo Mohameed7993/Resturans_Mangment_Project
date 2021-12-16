@@ -14,6 +14,7 @@ import java.util.Calendar;
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import common.Account;
+import common.Business;
 import common.Dish;
 import common.MessageType;
 import common.Order;
@@ -77,6 +78,25 @@ public class mysqlConnection {
 			e.printStackTrace();
 		}
 		return user;
+	}
+	
+	public static Business getBussinessInformationfromDB (String w4c_code) {
+		PreparedStatement ps;
+		ResultSet res;
+		Business business=null;
+		try {
+			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.business where w4cCode=?");
+			ps.setString(1, w4c_code);
+			ps.execute();
+			res=ps.getResultSet();
+			if(!res.next())
+				return null;
+			business=new Business(res.getString(1),res.getString(2),res.getString(3),res.getString(4));
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return business;
 	}
 	
 	public static W4C_Card getW4cInformationfromDB (String w4c_code) {

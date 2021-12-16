@@ -119,6 +119,12 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message(MessageType.ViewSelctionsList, selection));
 				break;
 				
+			case bussinessAccounts:
+				message=((String)m.getObject()).split(" ");
+				Business bussiness=mysqlConnection.getBussinessInformationfromDB(message[0]);
+				client.sendToClient(bussiness);
+				break;
+				
 				
 			default:
 			
