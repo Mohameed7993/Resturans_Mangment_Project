@@ -1,6 +1,8 @@
 package controllers;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
@@ -22,11 +24,24 @@ import javafx.stage.Stage;
 
 public class PaymentMethodController implements Initializable{
 	
-	public static int OrderDate;
+	
 	
 	public static String DeleiveryType=null;
 	
+	public static Integer pricedeleivery;
+	
+	public static Integer orderPrice;
+	
 	public static Address address;
+	
+	public static String orderTime;
+	
+	public int flagDate; //0-> other, 1->now
+	
+	/*public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");  
+	public static LocalDateTime now = LocalDateTime.now();  
+	  // System.out.println(dtf.format(now));  */
+	
 	
     @FXML
     private ImageView image1; 
@@ -90,10 +105,51 @@ public class PaymentMethodController implements Initializable{
 
     @FXML
     private TextArea orderdateField;
+    
+    @FXML
+    private Button nowbutton;
+    
+    @FXML
+    private Button otherbutton;
 
     @FXML
-    void BackButtonAction(ActionEvent event) {
+    private Text walletTxt;
+    
+    @FXML
+    private Text Wallettxt;
+    
+    @FXML
+    private Text txt3;
+
+    @FXML
+    private Text txt1;
+
+    @FXML
+    private Text txt2;
+
+    @FXML
+    private Text txt4;
+    
+    @FXML
+    void otherbuttonAction(ActionEvent event) {
+    	orderdateField.setVisible(true);
+    	flagDate=0;
+    	orderTime=orderdateField.getText();
     	
+
+    }
+    
+
+    @FXML
+    void nowbuttonAction(ActionEvent event) {
+    	orderdateField.setVisible(false);
+    	flagDate=1;
+    	orderTime="Now";
+    	
+    	
+    }
+    @FXML
+    void BackButtonAction(ActionEvent event) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	MyCartController AFrame=new MyCartController();
 		try {
@@ -114,6 +170,7 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(true);
 		streetField.setVisible(true);
 		houseNumberField.setVisible(true);
+		
     }
 
     @FXML
@@ -130,41 +187,16 @@ public class PaymentMethodController implements Initializable{
     }
 
     @FXML
-    void paybussinessbuttonAction(ActionEvent event) {
-    	if(orderdateField.getText().equals("")||CityField.getText().equals("")||streetField.getText().equals("")||
-    			houseNumberField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")||
-    			CityField.getText().matches("[a-zA-Z_]+")||streetField.getText().matches("[a-zA-Z_]+")||
-    			houseNumberField.getText().matches("[a-zA-Z_]+")) {
-       
-    	    Alert a = new Alert(AlertType.ERROR);
-            a.setContentText("Error");
-            a.setHeaderText("your details that you insert is Wrong!");
-            a.showAndWait();
-    		}
-    		}
- 
-    	
-
-    @FXML
-    void payprivatebuttonAction(ActionEvent event) {
-    	if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) {
-    		 Alert a = new Alert(AlertType.ERROR);
-             a.setContentText("Error");
-             a.setHeaderText("your details that you insert is Wrong!");
-             a.showAndWait();
-    	}
-    }
-
-    @FXML
     void robotbuttonAction(ActionEvent event) {
     	DeleiveryType=("Robot");
-    	enterAdresstxt.setVisible(false);
-		citytxt.setVisible(false);
-		streettxt.setVisible(false);
-		housenumbertxt.setVisible(false);
-		CityField.setVisible(false);
-		streetField.setVisible(false);
-		houseNumberField.setVisible(false);
+    	enterAdresstxt.setVisible(true);
+		citytxt.setVisible(true);
+		streettxt.setVisible(true);
+		housenumbertxt.setVisible(true);
+		CityField.setVisible(true);
+		streetField.setVisible(true);
+		houseNumberField.setVisible(true);
+		
     }
 
     @FXML
@@ -178,13 +210,138 @@ public class PaymentMethodController implements Initializable{
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
     }
+    
+    @FXML
+    void paybussinessbuttonAction(ActionEvent event) {
+    	if(DeleiveryType==null)
+    	{
+    		 Alert a = new Alert(AlertType.ERROR);
+	            a.setContentText("Error");
+	            a.setHeaderText("Choose deleivery service");
+	            a.showAndWait();
+    	}
+    	else {
+    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("Shared-deleivery"))
+    	{
+    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
+    			 Alert a = new Alert(AlertType.ERROR);
+		            a.setContentText("Error");
+		            a.setHeaderText("your details that you insert is Wrong!");
+		            a.showAndWait();
+    		}
+    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
+    	}
+    	if(flagDate==0) {
+    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")||
+    		    	Float.valueOf(orderdateField.getText())<0||Float.valueOf(orderdateField.getText())>23) {
+    				  Alert a = new Alert(AlertType.ERROR);
+    		            a.setContentText("Error");
+    		            a.setHeaderText("your details that you insert is Wrong!");
+    		            a.showAndWait();
+    		    		}
+    			 }
+   
+    		switch (DeleiveryType) {
+			case "Deleivery":
+				pricedeleivery=25;
+				break;
+			case "Shared-deleivery":
+				pricedeleivery=25;
+				break;
+			default:
+				pricedeleivery=0;
+				break;
+			}
+    		
+    		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
+    			   Alert a = new Alert(AlertType.ERROR);
+    	            a.setContentText("Error");
+    	            a.setHeaderText("there is no enough money in your bussiness wallet ");
+    	            a.showAndWait();
+    		}
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	OrdersDetailsController AFrame=new OrdersDetailsController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		}
+    }
+    
+    @FXML
+    void payprivatebuttonAction(ActionEvent event) {
+    	if(DeleiveryType==null)
+    	{
+    		 Alert a = new Alert(AlertType.ERROR);
+	            a.setContentText("Error");
+	            a.setHeaderText("Choose deleivery service");
+	            a.showAndWait();
+    	}
+    	else {
+    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
+    	{
+    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
+    			 Alert a = new Alert(AlertType.ERROR);
+		            a.setContentText("Error");
+		            a.setHeaderText("your details that you insert is Wrong!");
+		            a.showAndWait();
+    		}
+    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
+    	}
+    	if(flagDate==0) {
+    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")||
+    		    	Float.valueOf(orderdateField.getText())<0||Float.valueOf(orderdateField.getText())>23) {
+    				  Alert a = new Alert(AlertType.ERROR);
+    		            a.setContentText("Error");
+    		            a.setHeaderText("your details that you insert is Wrong!");
+    		            a.showAndWait();
+    		    		}
+    			 }
+    	switch (DeleiveryType) {
+		case "Deleivery":
+			pricedeleivery=25;
+			break;
+		case "Shared-deleivery":
+			pricedeleivery=25;
+			break;
+		default:
+			pricedeleivery=0;
+			break;
+		}
+    	orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	OrdersDetailsController AFrame=new OrdersDetailsController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		}
+    }
+
+ 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		if(ChatClient.w4ccard.getAccountType().equals("business")) {
+		ScanerQrController.Wallet=ChatClient.bussiness.getCeiling();
+		walletTxt.setText(": "+ScanerQrController.Wallet+"$");
+		}
+		
+		orderdateField.setVisible(false);
 		if(ChatClient.w4ccard.getAccountType().equals("private")) {
 			SharedDelButton.setVisible(false);
 			paybussinessbutton.setVisible(false);
+			Wallettxt.setVisible(false);
+			walletTxt.setVisible(false);
+			txt4.setVisible(false);
 		}
+		
 		enterAdresstxt.setVisible(false);
 		citytxt.setVisible(false);
 		streettxt.setVisible(false);
@@ -192,12 +349,6 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(false);
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
-		
-		OrderDate=Integer.valueOf(orderdateField.getText());
-		address.setCity(CityField.getText());
-		address.setStreet(streetField.getText());
-		address.setHouseNumber(houseNumberField.getText());
-		
 		
 	}
 

@@ -3,6 +3,10 @@ package server;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -121,8 +125,10 @@ public class EchoServer extends AbstractServer {
 				
 			case bussinessAccounts:
 				message=((String)m.getObject()).split(" ");
+				System.out.println(message[0]);
 				Business bussiness=mysqlConnection.getBussinessInformationfromDB(message[0]);
-				client.sendToClient(bussiness);
+				System.out.println(bussiness.getCeiling());
+				client.sendToClient(new Message(MessageType.bussinessAccounts, bussiness));
 				break;
 				
 				

@@ -24,7 +24,7 @@ public class ItemDetailsController implements Initializable {
 	
 public static ArrayList<ItemInCart> itemList =new ArrayList<>();
 public static ItemInCart AdditemList;
-public Integer TotalPrice;
+public  static Integer TotalPrice;
 public Integer Quantity;
 
     @FXML

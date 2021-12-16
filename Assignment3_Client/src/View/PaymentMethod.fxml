@@ -58,30 +58,62 @@
       </Text>
       <TextArea fx:id="streetField" layoutX="588.0" layoutY="389.0" prefHeight="38.0" prefWidth="166.0" promptText="Street" />
       <TextArea fx:id="houseNumberField" layoutX="588.0" layoutY="443.0" prefHeight="0.0" prefWidth="166.0" promptText="House number" />
-      <Text fx:id="paymenttxt" fill="#79a42b" layoutX="363.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method:" wrappingWidth="146.0">
+      <Text fx:id="paymenttxt" fill="#79a42b" layoutX="341.0" layoutY="616.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method:" wrappingWidth="146.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-    <Button fx:id="payprivatebutton" layoutX="656.0" layoutY="556.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="77.0" prefWidth="130.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Private Account" textFill="WHITE">
+    <Button fx:id="payprivatebutton" layoutX="654.0" layoutY="622.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #353f4c;" text="Private Account" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="SharedDelButton" layoutX="90.0" layoutY="543.0" mnemonicParsing="false" onAction="#SharedDelButtonAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Shared-delivery " textAlignment="RIGHT" textFill="WHITE" />
-      <Button fx:id="takeawaybutton" layoutX="93.0" layoutY="418.0" mnemonicParsing="false" onAction="#takeawaybuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Take-away" textAlignment="RIGHT" textFill="WHITE" />
-    <Button fx:id="deleiveryButton" layoutX="93.0" layoutY="500.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Deleivery" textAlignment="RIGHT" textFill="#fffafa" />
-      <Button fx:id="paybussinessbutton" layoutX="509.0" layoutY="556.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="77.0" prefWidth="130.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;" text="Bussiness Account" textFill="WHITE">
+      <Button fx:id="SharedDelButton" layoutX="90.0" layoutY="575.0" mnemonicParsing="false" onAction="#SharedDelButtonAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #353f4c;" text="Shared-delivery " textAlignment="RIGHT" textFill="WHITE" />
+      <Button fx:id="takeawaybutton" layoutX="93.0" layoutY="418.0" mnemonicParsing="false" onAction="#takeawaybuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c;" text="Take-away" textAlignment="RIGHT" textFill="WHITE" />
+    <Button fx:id="deleiveryButton" layoutX="93.0" layoutY="521.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c;" text="Deleivery" textAlignment="RIGHT" textFill="#fffafa" />
+      <Button fx:id="paybussinessbutton" layoutX="507.0" layoutY="622.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #353f4c;" text="Bussiness Account" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="robotbutton" layoutX="93.0" layoutY="459.0" mnemonicParsing="false" onAction="#robotbuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c; -fx-background-radius: 100;" text="Robot" textAlignment="RIGHT" textFill="WHITE" />
+      <Button fx:id="robotbutton" layoutX="93.0" layoutY="468.0" mnemonicParsing="false" onAction="#robotbuttonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #353f4c;" text="Robot" textAlignment="RIGHT" textFill="WHITE" />
       <Text fx:id="requesteddatetxt" fill="#79a42b" layoutX="92.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requested order date:" wrappingWidth="174.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <TextArea fx:id="orderdateField" layoutX="92.0" layoutY="327.0" prefHeight="29.0" prefWidth="99.0" promptText="Enter hour" />
+      <TextArea fx:id="orderdateField" layoutX="227.0" layoutY="327.0" prefHeight="29.0" prefWidth="99.0" promptText="Enter hour" />
+      <Button fx:id="nowbutton" layoutX="93.0" layoutY="327.0" mnemonicParsing="false" onAction="#nowbuttonAction" prefHeight="37.0" prefWidth="43.0" style="-fx-background-color: #353f4c;" text="Now" textAlignment="RIGHT" textFill="WHITE" />
+      <Button fx:id="otherbutton" layoutX="149.0" layoutY="327.0" mnemonicParsing="false" onAction="#otherbuttonAction" prefHeight="37.0" prefWidth="50.0" style="-fx-background-color: #353f4c;" text="Other" textAlignment="RIGHT" textFill="WHITE" />
+      <Text fx:id="walletTxt" fill="#353f4c" layoutX="689.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="64.5">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="Wallettxt" fill="#79a42b" layoutX="535.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bussiness Wallet:" wrappingWidth="130.5">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="txt3" fill="RED" layoutX="102.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="postage +25$" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Text>
+      <Text fx:id="txt1" fill="RED" layoutX="104.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Free" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Text>
+      <Text fx:id="txt2" fill="RED" layoutX="100.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Free" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Text>
+      <Text fx:id="txt4" fill="RED" layoutX="104.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="postage +25$ for the First one" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
