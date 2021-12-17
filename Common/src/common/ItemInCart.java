@@ -14,8 +14,9 @@ public class ItemInCart implements Serializable {
 	private String Extras;
 	private Integer TotalPrice;
 	private Integer quantity;
+	private String IdIteam;
 	public ItemInCart(Integer itemNumber, String typeMeal, String dishes, String extras, Integer totalPrice,
-			Integer quantity) {
+			Integer quantity, String idIteam) {
 		super();
 		this.itemNumber = itemNumber;
 		TypeMeal = typeMeal;
@@ -23,6 +24,7 @@ public class ItemInCart implements Serializable {
 		Extras = extras;
 		TotalPrice = totalPrice;
 		this.quantity = quantity;
+		IdIteam = idIteam;
 	}
 	public Integer getItemNumber() {
 		return itemNumber;
@@ -60,12 +62,19 @@ public class ItemInCart implements Serializable {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	public String getIdIteam() {
+		return IdIteam;
+	}
+	public void setIdIteam(String idIteam) {
+		IdIteam = idIteam;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((Dishes == null) ? 0 : Dishes.hashCode());
 		result = prime * result + ((Extras == null) ? 0 : Extras.hashCode());
+		result = prime * result + ((IdIteam == null) ? 0 : IdIteam.hashCode());
 		result = prime * result + ((TotalPrice == null) ? 0 : TotalPrice.hashCode());
 		result = prime * result + ((TypeMeal == null) ? 0 : TypeMeal.hashCode());
 		result = prime * result + ((itemNumber == null) ? 0 : itemNumber.hashCode());
@@ -91,6 +100,11 @@ public class ItemInCart implements Serializable {
 				return false;
 		} else if (!Extras.equals(other.Extras))
 			return false;
+		if (IdIteam == null) {
+			if (other.IdIteam != null)
+				return false;
+		} else if (!IdIteam.equals(other.IdIteam))
+			return false;
 		if (TotalPrice == null) {
 			if (other.TotalPrice != null)
 				return false;
@@ -113,5 +127,5 @@ public class ItemInCart implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

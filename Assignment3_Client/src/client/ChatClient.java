@@ -12,6 +12,7 @@ import common.ChatIF;
 import common.Dish;
 import common.Message;
 import common.MessageType;
+import common.Orders;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -36,6 +37,7 @@ public class ChatClient extends AbstractClient {
 	public static W4C_Card w4ccard;
 	public static Account accounts;
 	public static Business bussiness;
+	public static Orders order;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
@@ -106,6 +108,9 @@ public class ChatClient extends AbstractClient {
 		}
 		if(m.getMessageType().equals(MessageType.bussinessAccounts)) {
 			bussiness=(Business)m.getObject();
+		}
+		if(m.getMessageType().equals(MessageType.OrdersListToDataBase)) {
+			order=(Orders)m.getObject();
 		}
 		
 

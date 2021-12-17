@@ -17,6 +17,7 @@ import common.Account;
 import common.Business;
 import common.Dish;
 import common.MessageType;
+import common.Orders;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -116,7 +117,29 @@ public class mysqlConnection {
 		}
 		return w4c;
 	}
-	
+	public static void setOrderinDB(String resturantID,String customerID,String itemsID,String requestedDate,
+			String OrderedDate,String totalPrice,String accountType,String accountpayment,String address,String deleiveryService) {
+		PreparedStatement ps;
+		try {
+			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.orders Values (?,?,?,?,?,?,?,?,?,?)");
+			ps.setString(1,resturantID );
+			ps.setString(2,customerID );
+			ps.setString(3,itemsID );
+			ps.setString(4, requestedDate);
+			ps.setString(5, OrderedDate);
+			ps.setString(6, totalPrice);
+			ps.setString(7,accountType );
+			ps.setString(8, accountpayment);
+			ps.setString(9,address );
+			ps.setString(10,deleiveryService );
+			ps.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public static Account getAccountListFromDB(String ID){
 	Account account=null;
 	PreparedStatement ps;

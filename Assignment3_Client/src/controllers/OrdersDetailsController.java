@@ -1,9 +1,14 @@
 package controllers;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
+import client.ClientUI;
+import common.Message;
+import common.MessageType;
+import common.Orders;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +22,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class OrdersDetailsController implements Initializable {
+	public static Orders orders=null;
+	public static LocalDateTime now = LocalDateTime.now();  
+	
 public int orderPrice;
     @FXML
     private ImageView image;
@@ -110,7 +118,22 @@ public int orderPrice;
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
-
+    	if(!PaymentMethodController.DeleiveryType.equals("Take-Away")&&!PaymentMethodController.DeleiveryType.equals("Robot")) {
+    	orders=new Orders(ChooseResturantController.resturant.getResturantID(),ChatClient.userlogged.getId(),ItemDetailsController.AdditemList.getIdIteam(),
+    			PaymentMethodController.orderTime, PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),ChatClient.w4ccard.getAccountType(),
+    			PaymentMethodController.accountpayment,PaymentMethodController.address.toString(), PaymentMethodController.DeleiveryType);
+    	}
+    	else {
+    		orders=new Orders(ChooseResturantController.resturant.getResturantID(),ChatClient.userlogged.getId(),ItemDetailsController.AdditemList.getIdIteam(),
+        			PaymentMethodController.orderTime, PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),ChatClient.w4ccard.getAccountType(),
+        			PaymentMethodController.accountpayment,"NoAddress", PaymentMethodController.DeleiveryType);
+    	}
+    	
+    	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase,orders.getResturantID()+ " " + orders.getCustomerID()+ " " + orders.getItemsID()+ " " + 
+    	orders.getRequestedDate()+ " " + orders.getOrderedDate()+ " " + orders.getTotalPrice()
+    	+ " " + orders.getAccountType()+ " " + orders.getAccountpayment()+ " " + orders.getAddress()+ " " + orders.getDeleiveryService()));
+    	
+    	//ItemDetailsController.itemList
     }
 
 	@Override

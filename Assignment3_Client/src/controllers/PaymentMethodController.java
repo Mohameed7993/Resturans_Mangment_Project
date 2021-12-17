@@ -36,10 +36,11 @@ public class PaymentMethodController implements Initializable{
 	
 	public static String orderTime;
 	
+	public static String accountpayment;
+	
 	public int flagDate; //0-> other, 1->now
 	
-	/*public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");  
-	public static LocalDateTime now = LocalDateTime.now();  
+	public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
 	  // System.out.println(dtf.format(now));  */
 	
 	
@@ -144,7 +145,7 @@ public class PaymentMethodController implements Initializable{
     void nowbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(false);
     	flagDate=1;
-    	orderTime="Now";
+    	orderTime=dtf.format(OrdersDetailsController.now);
     	
     	
     }
@@ -213,6 +214,7 @@ public class PaymentMethodController implements Initializable{
     
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
+    	accountpayment="BussinessAccount";
     	if(DeleiveryType==null)
     	{
     		 Alert a = new Alert(AlertType.ERROR);
@@ -273,6 +275,7 @@ public class PaymentMethodController implements Initializable{
     
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
+    	accountpayment="PrivateAccount";
     	if(DeleiveryType==null)
     	{
     		 Alert a = new Alert(AlertType.ERROR);

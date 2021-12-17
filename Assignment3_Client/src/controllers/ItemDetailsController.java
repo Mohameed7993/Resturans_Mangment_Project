@@ -92,12 +92,18 @@ public Integer Quantity;
     	TotalPrice=OptionalSelectionController.totalPrice*Quantity;
  if(OptionalSelectionController.sel.size()!=0) {
     	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
-    			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity);}
+    			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity,"121314");}
  
  else {  AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
- 			,"No Extra",TotalPrice,Quantity);}
+ 			,"No Extra",TotalPrice,Quantity,"121314");}
+ itemList.add(AdditemList);
+ TotalPrice=0;
+ for(int i=0;i<itemList.size();i++)
+ {
+	 TotalPrice+=itemList.get(i).getTotalPrice();
+	 
+ }
     	
-    	itemList.add(AdditemList);
     	OptionalSelectionController.totalPrice=0;
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	MyCartController AFrame=new MyCartController();

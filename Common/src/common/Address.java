@@ -71,6 +71,9 @@ public class Address implements Serializable{
 			return false;
 		return true;
 	}
+	public String toString() {
+		return (City+","+Street+","+HouseNumber);
+	}
 	
 	
 
