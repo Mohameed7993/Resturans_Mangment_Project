@@ -132,12 +132,14 @@ public class EchoServer extends AbstractServer {
 				break;
 			case OrdersListToDataBase:
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]+111111);
 				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7], message[8], message[9]);
 				client.sendToClient(new Message(MessageType.OrdersListToDataBase, null));
-				
 				break;
-				
+			case itemsListtoDataBase:
+				message=((String)m.getObject()).split(" ");
+				System.out.println(message[0]+message[1]+ message[2]+ message[3]);
+				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], message[3]);
+				client.sendToClient(new Message(MessageType.itemsListtoDataBase, null));
 			default:
 			
 				break;

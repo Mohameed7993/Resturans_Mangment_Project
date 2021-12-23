@@ -117,6 +117,23 @@ public class mysqlConnection {
 		}
 		return w4c;
 	}
+	
+	public static void SetItemsOfOrderinDB(String itemID ,String typesmeal, String dishes, String Extras) {
+		PreparedStatement ps;
+		try
+		{
+			ps=mysqlConnection.conn.prepareStatement("Insert into bitemedb.items values (?,?,?,?)");
+			ps.setString(1, itemID);
+			ps.setString(2, typesmeal);
+			ps.setString(3, dishes);
+			ps.setString(4, Extras);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public static void setOrderinDB(String resturantID,String customerID,String itemsID,String requestedDate,
 			String OrderedDate,String totalPrice,String accountType,String accountpayment,String address,String deleiveryService) {
 		PreparedStatement ps;

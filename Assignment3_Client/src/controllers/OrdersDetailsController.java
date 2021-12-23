@@ -132,6 +132,11 @@ public int orderPrice;
     	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase,orders.getResturantID()+ " " + orders.getCustomerID()+ " " + orders.getItemsID()+ " " + 
     	orders.getRequestedDate()+ " " + orders.getOrderedDate()+ " " + orders.getTotalPrice()
     	+ " " + orders.getAccountType()+ " " + orders.getAccountpayment()+ " " + orders.getAddress()+ " " + orders.getDeleiveryService()));
+    	for(int i=0;i<ItemDetailsController.itemList.size();i++)
+    	{
+    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, orders.getItemsID()+" "+ItemDetailsController.itemList.get(i).getIdIteam()+" "+
+    	ItemDetailsController.itemList.get(i).getDishes()+" "+ItemDetailsController.itemList.get(i).getExtras()));
+    	}
     	
     	//ItemDetailsController.itemList
     }

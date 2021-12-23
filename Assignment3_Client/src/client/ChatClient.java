@@ -10,6 +10,7 @@ import common.Account;
 import common.Business;
 import common.ChatIF;
 import common.Dish;
+import common.ItemInCart;
 import common.Message;
 import common.MessageType;
 import common.Orders;
@@ -38,6 +39,7 @@ public class ChatClient extends AbstractClient {
 	public static Account accounts;
 	public static Business bussiness;
 	public static Orders order;
+	public static ItemInCart items;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
@@ -112,7 +114,9 @@ public class ChatClient extends AbstractClient {
 		if(m.getMessageType().equals(MessageType.OrdersListToDataBase)) {
 			order=(Orders)m.getObject();
 		}
-		
+		if(m.getMessageType().equals(MessageType.itemsListtoDataBase)) {
+			items=(ItemInCart)m.getObject();
+		}
 
 	}
 
