@@ -17,7 +17,6 @@ import common.Account;
 import common.Business;
 import common.Dish;
 import common.MessageType;
-import common.Orders;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -118,15 +117,22 @@ public class mysqlConnection {
 		return w4c;
 	}
 	
-	public static void SetItemsOfOrderinDB(String itemID ,String typesmeal, String dishes, String Extras) {
+	public static void SetItemsOfOrderinDB( String theMeal, String theDish, String ingredient, Integer quantity, Integer price,
+			String packageID,String itemID) {
 		PreparedStatement ps;
 		try
 		{
-			ps=mysqlConnection.conn.prepareStatement("Insert into bitemedb.items values (?,?,?,?)");
-			ps.setString(1, itemID);
-			ps.setString(2, typesmeal);
-			ps.setString(3, dishes);
-			ps.setString(4, Extras);
+			//System.out.println(itemID+" "+theMeal+" "+theDish+" "+ingredient+" "+quantity+" "+price+" "+packageID);
+			ps=mysqlConnection.conn.prepareStatement("Insert into bitemedb.item_list values (?,?,?,?,?,?,?)");
+			System.out.println(1111);
+			ps.setString(1, theMeal);
+			ps.setString(2, theDish);
+			ps.setString(3, ingredient);
+			ps.setInt(4, quantity);
+			ps.setInt(5, price);
+			ps.setString(6, packageID);
+			ps.setString(7, itemID);
+			ps.execute();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -134,21 +140,23 @@ public class mysqlConnection {
 		}
 		
 	}
-	public static void setOrderinDB(String resturantID,String customerID,String itemsID,String requestedDate,
-			String OrderedDate,String totalPrice,String accountType,String accountpayment,String address,String deleiveryService) {
+	public static void setOrderinDB(String customer_ID, String resturant, String orderPackageNumber, String requestDate,
+			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
+			String arrivalTime, String approvalRecieving) {
 		PreparedStatement ps;
 		try {
-			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.orders Values (?,?,?,?,?,?,?,?,?,?)");
-			ps.setString(1,resturantID );
-			ps.setString(2,customerID );
-			ps.setString(3,itemsID );
-			ps.setString(4, requestedDate);
-			ps.setString(5, OrderedDate);
+			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.order_list Values (?,?,?,?,?,?,?,?,?,?,?)");
+			ps.setString(1,customer_ID );
+			ps.setString(2,resturant );
+			ps.setString(3,orderPackageNumber );
+			ps.setString(4, requestDate);
+			ps.setString(5, orderedDate);
 			ps.setString(6, totalPrice);
-			ps.setString(7,accountType );
-			ps.setString(8, accountpayment);
-			ps.setString(9,address );
-			ps.setString(10,deleiveryService );
+			ps.setString(7,address );
+			ps.setString(8, deleiveryService);
+			ps.setString(9,status );
+			ps.setString(10,arrivalTime );
+			ps.setString(11,approvalRecieving);
 			ps.execute();
 			
 		} catch (SQLException e) {

@@ -84,10 +84,11 @@ public class Selection implements Serializable{
 			return false;
 		return true;
 	}
-	
+	@Override
 	public String toString() {
-		return (Selction+" Price:"+SelectionPrice);
+		return (Selction+"-Price:"+SelectionPrice);
 	}
+	
 
 	
 }

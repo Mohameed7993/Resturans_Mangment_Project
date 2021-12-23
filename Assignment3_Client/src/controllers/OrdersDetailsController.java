@@ -1,14 +1,22 @@
 package controllers;
 
 import java.net.URL;
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
+import common.Approvedtype;
+import common.ItemList;
 import common.Message;
 import common.MessageType;
-import common.Orders;
+
+import common.OrdersList;
+import common.StatusType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +30,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class OrdersDetailsController implements Initializable {
-	public static Orders orders=null;
-	public static LocalDateTime now = LocalDateTime.now();  
+	public static OrdersList orders=null;
+	public static LocalDateTime now = LocalDateTime.now();
+	public LocalDateTime ArrivalTime;
 	
-public int orderPrice;
+	
+	
+    public int orderPrice;
     @FXML
     private ImageView image;
 
@@ -118,24 +129,31 @@ public int orderPrice;
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
-    	if(!PaymentMethodController.DeleiveryType.equals("Take-Away")&&!PaymentMethodController.DeleiveryType.equals("Robot")) {
-    	orders=new Orders(ChooseResturantController.resturant.getResturantID(),ChatClient.userlogged.getId(),ItemDetailsController.AdditemList.getIdIteam(),
-    			PaymentMethodController.orderTime, PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),ChatClient.w4ccard.getAccountType(),
-    			PaymentMethodController.accountpayment,PaymentMethodController.address.toString(), PaymentMethodController.DeleiveryType);
+   
+    	//ArrivalTime=1+Integer.valueOf(PaymentMethodController.orderTime);
+    	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),ItemDetailsController.orderPackageNumber,PaymentMethodController.orderTime
+    				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
+    				,"UnReady","0","UnApproved");
+ 
     	}
     	else {
-    		orders=new Orders(ChooseResturantController.resturant.getResturantID(),ChatClient.userlogged.getId(),ItemDetailsController.AdditemList.getIdIteam(),
-        			PaymentMethodController.orderTime, PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),ChatClient.w4ccard.getAccountType(),
-        			PaymentMethodController.accountpayment,"NoAddress", PaymentMethodController.DeleiveryType);
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),ItemDetailsController.orderPackageNumber,PaymentMethodController.orderTime
+    				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
+    				,"UnReady","0","UnApproved");
     	}
     	
-    	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase,orders.getResturantID()+ " " + orders.getCustomerID()+ " " + orders.getItemsID()+ " " + 
-    	orders.getRequestedDate()+ " " + orders.getOrderedDate()+ " " + orders.getTotalPrice()
-    	+ " " + orders.getAccountType()+ " " + orders.getAccountpayment()+ " " + orders.getAddress()+ " " + orders.getDeleiveryService()));
-    	for(int i=0;i<ItemDetailsController.itemList.size();i++)
+    		
+    	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
+    	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
+    	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()));
+    
+    	
+    	for(int i=0;i<ItemDetailsController.Items.size();i++)
     	{
-    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, orders.getItemsID()+" "+ItemDetailsController.itemList.get(i).getIdIteam()+" "+
-    	ItemDetailsController.itemList.get(i).getDishes()+" "+ItemDetailsController.itemList.get(i).getExtras()));
+    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, ItemDetailsController.Items.get(i).getTheMeal()+" "+ ItemDetailsController.Items.get(i).getTheDish()+" "+
+    				 ItemDetailsController.Items.get(i).getIngredient()+" "+ ItemDetailsController.Items.get(i).getQuantity()+" "+ ItemDetailsController.Items.get(i).getPrice()
+    	+" "+ ItemDetailsController.Items.get(i).getPackageID()+" "+ ItemDetailsController.Items.get(i).getItemID()));
     	}
     	
     	//ItemDetailsController.itemList
@@ -151,7 +169,7 @@ public int orderPrice;
 		orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
 		totalpricefield.setText(String.valueOf(orderPrice));
 		
-		if(PaymentMethodController.DeleiveryType.equals("Take-Away")||PaymentMethodController.DeleiveryType.equals("Robot")) {
+		if(PaymentMethodController.DeleiveryType.equals("TakeAway")||PaymentMethodController.DeleiveryType.equals("Robot")) {
 			addresstxt.setVisible(false);
 			Citytxt.setVisible(false);
 			streettxt.setVisible(false);

@@ -1,8 +1,11 @@
 package controllers;
 
 import java.net.URL;
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
@@ -135,7 +138,7 @@ public class PaymentMethodController implements Initializable{
     void otherbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(true);
     	flagDate=0;
-    	orderTime=orderdateField.getText();
+    	orderTime= orderdateField.getText();
     	
 
     }
@@ -163,7 +166,7 @@ public class PaymentMethodController implements Initializable{
 
     @FXML
     void SharedDelButtonAction(ActionEvent event) {
-    	DeleiveryType=("Shared-deleivery");
+    	DeleiveryType=("SharedDeleivery");
     	enterAdresstxt.setVisible(true);
 		citytxt.setVisible(true);
 		streettxt.setVisible(true);
@@ -202,7 +205,7 @@ public class PaymentMethodController implements Initializable{
 
     @FXML
     void takeawaybuttonAction(ActionEvent event) {
-    	DeleiveryType=("Take-Away");
+    	DeleiveryType=("TakeAway");
     	enterAdresstxt.setVisible(false);
 		citytxt.setVisible(false);
 		streettxt.setVisible(false);

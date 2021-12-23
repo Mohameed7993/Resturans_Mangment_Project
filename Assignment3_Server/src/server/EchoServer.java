@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import common.*;
@@ -132,13 +133,13 @@ public class EchoServer extends AbstractServer {
 				break;
 			case OrdersListToDataBase:
 				message=((String)m.getObject()).split(" ");
-				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7], message[8], message[9]);
+				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7],message[8], message[9], message[10]);
 				client.sendToClient(new Message(MessageType.OrdersListToDataBase, null));
 				break;
 			case itemsListtoDataBase:
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]+message[1]+ message[2]+ message[3]);
-				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], message[3]);
+				System.out.println(message[0]+" "+message[1]+" "+ message[2]+" "+message[3]+" "+message[4]+" "+message[5]+" "+message[6]);
+				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5],message[6]);
 				client.sendToClient(new Message(MessageType.itemsListtoDataBase, null));
 			default:
 			

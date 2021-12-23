@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
@@ -36,10 +37,11 @@ public class OptionalSelectionController implements Initializable{
     
     public static Integer totalPrice;
     
-    public static ArrayList<Selection> sel;  //list for extras
+    public static ArrayList<Selection> sel;  //list for extras 
 	
 	public static Selection selection;
 	
+
 	
     @FXML
     private ImageView image;
