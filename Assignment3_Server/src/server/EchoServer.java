@@ -141,6 +141,18 @@ public class EchoServer extends AbstractServer {
 				System.out.println(message[0]+" "+message[1]+" "+ message[2]+" "+message[3]+" "+message[4]+" "+message[5]+" "+message[6]);
 				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5],message[6]);
 				client.sendToClient(new Message(MessageType.itemsListtoDataBase, null));
+				
+			case OrderListBuild:
+				ArrayList<OrdersList> Order_list;
+				Order_list=mysqlConnection.BuildOrderTable();
+				client.sendToClient(new Message(MessageType.OrderListBuild, Order_list));
+				break;
+			case ItemList:
+				String message1;
+				ArrayList<ItemList> Item_list;
+				message1 = ((String) m.getObject());
+				Item_list=mysqlConnection.BuildItemList(message1);
+				client.sendToClient(new Message(MessageType.ItemList, Item_list));
 			default:
 			
 				break;

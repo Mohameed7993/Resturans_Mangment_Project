@@ -104,8 +104,16 @@ public class CustomerHomeController implements Initializable {
 
     @FXML
     void OrderListAction(ActionEvent event) {
-
+       	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	MyOrderListController AFrame=new MyOrderListController();
+		try {
+			AFrame.start(stage); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+    
     
     
 	@Override

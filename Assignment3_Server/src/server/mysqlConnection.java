@@ -16,7 +16,9 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 import common.Account;
 import common.Business;
 import common.Dish;
+import common.ItemList;
 import common.MessageType;
+import common.OrdersList;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -28,7 +30,7 @@ import common.W4C_Card;
 
 public class mysqlConnection {
 	static Connection conn;
-
+	private static Users user=null;
 	public static String db_name;
 	public static String db_user;
 	public static String db_pass;
@@ -57,7 +59,7 @@ public class mysqlConnection {
 	public static Users checkUserLogIn(String userName,String passWord) {//////////////////////////////////////////////////////////////////////////////////////update
 		PreparedStatement ps;
 		ResultSet res;
-		Users user=null;
+		//Users user=null;
 		try {
 			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.users where username=? and password=?");
 			ps.setString(1, userName);
@@ -294,8 +296,60 @@ public class mysqlConnection {
 	       return list;
 	}
 		
-		
+		public static ArrayList<OrdersList> BuildOrderTable() {
+			   //TABLE VIEW AND DATA
+			ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
+			PreparedStatement ps;
+			ResultSet res;
+
+			try {
+
+				ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
+				ps.setString(1, user.getId());
+				ps.execute();
+				res=ps.getResultSet();
+				while(res.next()) {
+					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getString(3),
+							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
+								res.getString(8),res.getString(9),res.getString(10),res.getString(11)));
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return Order_list;
+		}
 	
+		public static ArrayList<ItemList> BuildItemList(String OrderPackageNumber) {
+			ArrayList<ItemList> Item_list = new ArrayList<ItemList>(); 
+			ResultSet res;
+			Connection conn;
+			String PackageID;
+			try {
+				conn = mysqlConnection.conn;
+				res=conn.createStatement().executeQuery("Select * from  bitemedb.item_list");
+				while(res.next()) {
+					PackageID=(res.getString(6));
+					if(PackageID.equals(OrderPackageNumber)) {
+					Item_list.add(new ItemList( res.getString(1), res.getString(2), res.getString(3), 
+							Integer.parseInt(res.getString(4)), Integer.parseInt(res.getString(5)),
+							(res.getString(6)),(res.getString(7))));
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return Item_list;
+		}
+		
+		
+		
+		
+		
 	/*public static void updateAddress(int orderNumber, String address) {
 		PreparedStatement ps;
 

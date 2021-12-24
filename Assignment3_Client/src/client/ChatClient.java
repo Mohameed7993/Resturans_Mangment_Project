@@ -35,6 +35,7 @@ import java.util.ArrayList;
  */
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
+	
 	public static Users userlogged;
 	public static W4C_Card w4ccard;
 	public static Account accounts;
@@ -45,6 +46,8 @@ public class ChatClient extends AbstractClient {
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
 	public static ArrayList<Selection> selection;
+	public static ArrayList<OrdersList> OrderBuild ;
+	public static ArrayList<ItemList> ItemBuild ;
 	
 	
 	/**
@@ -118,7 +121,13 @@ public class ChatClient extends AbstractClient {
 		if(m.getMessageType().equals(MessageType.itemsListtoDataBase)) {
 			items=(ItemList)m.getObject();
 		}
-
+		
+		if (m.getMessageType().equals(MessageType.OrderListBuild)) {
+			OrderBuild = (ArrayList<OrdersList>)m.getObject();
+		}
+		if (m.getMessageType().equals(MessageType.ItemList)) {
+			ItemBuild = (ArrayList<ItemList>)m.getObject();
+		}
 	}
 
 	/**
