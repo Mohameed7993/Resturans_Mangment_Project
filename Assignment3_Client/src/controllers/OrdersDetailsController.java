@@ -3,6 +3,7 @@ package controllers;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,8 +33,9 @@ import javafx.stage.Stage;
 public class OrdersDetailsController implements Initializable {
 	public static OrdersList orders=null;
 	public static LocalDateTime now = LocalDateTime.now();
+	public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");  
 	public LocalDateTime ArrivalTime;
-	
+	public static Date orderTime;
 	public static Integer orderPackageNumber;
 	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
@@ -133,16 +135,21 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
+    	if(PaymentMethodController.flagDate==1)
+    	orderTime=dtf.format(now);
+    	else 
+    		orderTime=PaymentMethodController.Time;
+    	
     	orderPackageNumber=null;
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,PaymentMethodController.orderTime
-    				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
+    				,dtf.format(now),String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
  
     	}
     	else {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,PaymentMethodController.orderTime
-    				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
+    				,dtf.format(now),String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
     	}
     		
@@ -196,10 +203,11 @@ public class OrdersDetailsController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		creditfield.setText(ChatClient.w4ccard.getCreditCardNumber());
 		
 		resturantfield.setText(ChooseResturantController.resturant.getResturantName());
-		requesteddatefield.setText(PaymentMethodController.orderTime);
+		requesteddatefield.setText(orderTime);
 		delevfield.setText(PaymentMethodController.DeleiveryType);
 		orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
 		totalpricefield.setText(String.valueOf(orderPrice));

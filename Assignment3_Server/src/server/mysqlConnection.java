@@ -143,13 +143,11 @@ public class mysqlConnection {
 			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
 			String arrivalTime, String approvalRecieving) {
 		PreparedStatement ps;
-		ResultSet res;
 		try {
 			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.order_list (Customer_ID, Resturant, RequestDate,"
 					+ " OrderDate, TotalPrice, Address, DeleiveryService, Status, ArrivalTime, ApprovalRecieving) Values (?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1,customer_ID );
 			ps.setString(2,resturant );
-			//ps.setString(3,orderPackageNumber );
 			ps.setString(3, requestDate);
 			ps.setString(4, orderedDate);
 			ps.setString(5, totalPrice);

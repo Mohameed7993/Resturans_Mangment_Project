@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -37,13 +38,14 @@ public class PaymentMethodController implements Initializable{
 	
 	public static Address address;
 	
-	public static String orderTime;
+	public static Date Time;
 	
 	public static String accountpayment;
+	public static Date HelpTime;
 	
-	public int flagDate; //0-> other, 1->now
+	public static int flagDate; //0-> other, 1->now
 	
-	public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
+
 	  // System.out.println(dtf.format(now));  */
 	
 	
@@ -138,7 +140,7 @@ public class PaymentMethodController implements Initializable{
     void otherbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(true);
     	flagDate=0;
-    	orderTime= orderdateField.getText();
+    	
     	
 
     }
@@ -148,7 +150,7 @@ public class PaymentMethodController implements Initializable{
     void nowbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(false);
     	flagDate=1;
-    	orderTime=dtf.format(OrdersDetailsController.now);
+    	
     	
     	
     }
@@ -217,6 +219,20 @@ public class PaymentMethodController implements Initializable{
     
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
+    //	Time= orderdateField.getText();
+    	Time =(Date) orderdateField.getUserData();
+    	System.out.println(orderdateField.getText());
+    	System.out.println(OrdersDetailsController.dtf.format(OrdersDetailsController.now));
+    	System.out.println(Time);
+    	//System.out.println(HelpTime).compareTo(Time));
+    	
+    	/*if(Time.compareTo(OrdersDetailsController.dtf.format(OrdersDetailsController.now))>2) {
+    		Alert a = new Alert(AlertType.ERROR);
+        a.setContentText("Error");
+        a.setHeaderText("you have to insert at least after two houer from now");
+        a.showAndWait();}*/
+    	 {
+    	
     	accountpayment="BussinessAccount";
     	if(DeleiveryType==null)
     	{
@@ -274,6 +290,7 @@ public class PaymentMethodController implements Initializable{
 			e.printStackTrace();
 		}
     		}
+    	}
     }
     
     @FXML
@@ -355,6 +372,12 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(false);
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
+		
+		
+		Calendar cal = Calendar.getInstance(); // creates calendar
+		cal.setTime(new Date());               // sets calendar time/date
+		cal.add(Calendar.HOUR_OF_DAY, 2);      // adds one hour
+		HelpTime=cal.getTime();    
 		
 	}
 
