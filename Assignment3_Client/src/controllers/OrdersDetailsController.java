@@ -193,10 +193,10 @@ public class OrdersDetailsController implements Initializable {
     	ItemDetailsController.itemList.clear();
     	Items.clear();
     
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
     	CustomerHomeController AFrame=new CustomerHomeController();
 		try {
-			AFrame.start(stage);
+			AFrame.start(CustomerHomeController.stage1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

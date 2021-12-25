@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 public class CustomerHomeController implements Initializable {
-
+    public static Stage stage1 ;
     @FXML
     private ImageView Cart;
 
@@ -94,7 +94,7 @@ public class CustomerHomeController implements Initializable {
 	public void start(Stage stage) throws Exception{
 		// TODO Auto-generated method stub
 		Parent root = FXMLLoader.load(getClass().getResource("/View/HomeCustomerV2.fxml"));
-		
+		stage1=stage;
 		Scene scene = new Scene(root);
 		stage.setTitle("CoustomerHome");
 		stage.setScene(scene);
