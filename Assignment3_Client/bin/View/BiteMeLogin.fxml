@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BiteMeLoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BiteMeLoginController">
    <children>
       <ImageView fitHeight="562.0" fitWidth="743.0" layoutX="116.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/Password.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="305.0" fitWidth="188.0" layoutX="804.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="244.0" fitWidth="254.0" layoutX="755.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/43-430460_png-food-top-view.png" />
+            <Image url="@../Images/Pizza.png" />
          </image>
       </ImageView>
       <TextField fx:id="Username" layoutX="372.0" layoutY="433.0" prefHeight="30.0" prefWidth="369.0" style="-fx-background-radius: 100;">
@@ -44,9 +44,9 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <ImageView fitHeight="248.0" fitWidth="188.0" layoutX="-6.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fitHeight="376.0" fitWidth="289.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/139203-food-plate-top-nutrition-view.png" />
+            <Image url="@../Images/Spaggati.png" />
          </image>
       </ImageView>
    </children>

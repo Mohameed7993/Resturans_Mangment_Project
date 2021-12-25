@@ -80,7 +80,6 @@ public class EchoServer extends AbstractServer {
 			case login:
 				message = ((String) m.getObject()).split(" ");
 				Users user=mysqlConnection.checkUserLogIn(message[0], message[1]);
-				System.out.println(message[0]+"  " +message[1]);
 				client.sendToClient(new Message(MessageType.login, user));
 				break;
 				
@@ -118,17 +117,14 @@ public class EchoServer extends AbstractServer {
 				
 			case ViewSelctionsList:
 				message=((String)m.getObject()).split(" ");
-				ArrayList<Selection> selection;
-			   	System.out.println(message[0]);	
+				ArrayList<Selection> selection;	
 			   	selection=mysqlConnection.getSelectionListFromDB(message[0]);
 				client.sendToClient(new Message(MessageType.ViewSelctionsList, selection));
 				break;
 				
 			case bussinessAccounts:
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]);
 				Business bussiness=mysqlConnection.getBussinessInformationfromDB(message[0]);
-				System.out.println(bussiness.getCeiling());
 				client.sendToClient(new Message(MessageType.bussinessAccounts, bussiness));
 				break;
 			case OrdersListToDataBase:
@@ -138,21 +134,28 @@ public class EchoServer extends AbstractServer {
 				break;
 			case itemsListtoDataBase:
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]+" "+message[1]+" "+ message[2]+" "+message[3]+" "+message[4]+" "+message[5]+" "+message[6]);
-				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5],message[6]);
+				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5]);
 				client.sendToClient(new Message(MessageType.itemsListtoDataBase, null));
-				
+				break;
 			case OrderListBuild:
 				ArrayList<OrdersList> Order_list;
 				Order_list=mysqlConnection.BuildOrderTable();
 				client.sendToClient(new Message(MessageType.OrderListBuild, Order_list));
 				break;
 			case ItemList:
-				String message1;
+				Integer message1;
 				ArrayList<ItemList> Item_list;
-				message1 = ((String) m.getObject());
+				message1 =(Integer)m.getObject();
 				Item_list=mysqlConnection.BuildItemList(message1);
 				client.sendToClient(new Message(MessageType.ItemList, Item_list));
+				break;
+			case GetOrder:
+				message=((String)m.getObject()).split(" ");
+				OrdersList order;
+				order =mysqlConnection.getOrder(message[0]);
+				System.out.println(order.getOrderPackageNumber());
+				client.sendToClient(new Message(MessageType.GetOrder, order));
+				break;
 			default:
 			
 				break;
@@ -162,35 +165,6 @@ public class EchoServer extends AbstractServer {
 			e.printStackTrace();
 		}
 		
-		
-
-		/*
-		 * String s[] = m.getStr().split(" "); // System.out.println(m.getStr());
-		 * 
-		 * if (s[0].equals("view")) { System.out.println(); orders =
-		 * mysqlConnection.getOrdersFromDB(); this.sendToAllClients(new Message("list",
-		 * orders)); // client.sendToClient(orders); } else if (s[0].equals("connect"))
-		 * { System.out.println(s[0]); ServerConnectionController.clients_list.add(new
-		 * Client(s[1], s[2], s[3])); this.sendToAllClients(new Message("connect",
-		 * null)); }
-		 * 
-		 * else if (s[0].equals("disconnect")) { System.out.println(s[0]);
-		 * ServerConnectionController.clients_list.add(new Client(s[1], s[2], s[3]));
-		 * this.sendToAllClients(new Message("disconnect", null)); } else if
-		 * (s[0].equals("updateType")) {
-		 * 
-		 * if (!s[2].equals("")) { mysqlConnection.updateType(Integer.parseInt(s[1]),
-		 * s[2]);
-		 * 
-		 * this.sendToAllClients(new Message("updated", null)); }
-		 * 
-		 * } else if (s[0].equals("updateAddress")) {
-		 * 
-		 * mysqlConnection.updateAddress(Integer.parseInt(s[1]), s[2]);
-		 * this.sendToAllClients(new Message("updated", null));
-		 * 
-		 * }
-		 */
 
 	}
 

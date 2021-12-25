@@ -8,29 +8,21 @@ public class ItemList implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String ItemID;
 	private String TheMeal;
 	private String TheDish;
 	private String Ingredient;
 	private Integer Quantity;
 	private Integer Price;
-	private String PackageID;
-	public ItemList( String theMeal, String theDish, String ingredient, Integer quantity, Integer price,
-			String packageID,String itemID) {
+	private Integer PackageID;
+	public ItemList(String theMeal, String theDish, String ingredient, Integer quantity, Integer price,
+			Integer packageID) {
 		super();
-		ItemID = itemID;
 		TheMeal = theMeal;
 		TheDish = theDish;
 		Ingredient = ingredient;
 		Quantity = quantity;
 		Price = price;
 		PackageID = packageID;
-	}
-	public String getItemID() {
-		return ItemID;
-	}
-	public void setItemID(String itemID) {
-		ItemID = itemID;
 	}
 	public String getTheMeal() {
 		return TheMeal;
@@ -62,10 +54,10 @@ public class ItemList implements Serializable {
 	public void setPrice(Integer price) {
 		Price = price;
 	}
-	public String getPackageID() {
+	public Integer getPackageID() {
 		return PackageID;
 	}
-	public void setPackageID(String packageID) {
+	public void setPackageID(Integer packageID) {
 		PackageID = packageID;
 	}
 	@Override
@@ -73,7 +65,6 @@ public class ItemList implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((Ingredient == null) ? 0 : Ingredient.hashCode());
-		result = prime * result + ((ItemID == null) ? 0 : ItemID.hashCode());
 		result = prime * result + ((PackageID == null) ? 0 : PackageID.hashCode());
 		result = prime * result + ((Price == null) ? 0 : Price.hashCode());
 		result = prime * result + ((Quantity == null) ? 0 : Quantity.hashCode());
@@ -94,11 +85,6 @@ public class ItemList implements Serializable {
 			if (other.Ingredient != null)
 				return false;
 		} else if (!Ingredient.equals(other.Ingredient))
-			return false;
-		if (ItemID == null) {
-			if (other.ItemID != null)
-				return false;
-		} else if (!ItemID.equals(other.ItemID))
 			return false;
 		if (PackageID == null) {
 			if (other.PackageID != null)
@@ -127,7 +113,8 @@ public class ItemList implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 	
 	
 }

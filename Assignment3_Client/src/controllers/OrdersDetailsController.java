@@ -34,7 +34,11 @@ public class OrdersDetailsController implements Initializable {
 	public static LocalDateTime now = LocalDateTime.now();
 	public LocalDateTime ArrivalTime;
 	
+	public static Integer orderPackageNumber;
 	
+	public static ArrayList<ItemList> Items=new ArrayList<>();
+
+	public static ItemList AddItem;
 	
     public int orderPrice;
     @FXML
@@ -129,34 +133,67 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
-   
+    	orderPackageNumber=null;
     	//ArrivalTime=1+Integer.valueOf(PaymentMethodController.orderTime);
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),ItemDetailsController.orderPackageNumber,PaymentMethodController.orderTime
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,PaymentMethodController.orderTime
     				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
  
     	}
     	else {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),ItemDetailsController.orderPackageNumber,PaymentMethodController.orderTime
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,PaymentMethodController.orderTime
     				,PaymentMethodController.dtf.format(now),String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
     	}
-    	
     		
+    	System.out.println(orders.getOrderPackageNumber());
+    	
     	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
     	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
     	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()));
     
+    	ClientUI.chat.accept(new Message(MessageType.GetOrder,ChatClient.userlogged.getId()));
     	
-    	for(int i=0;i<ItemDetailsController.Items.size();i++)
-    	{
-    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, ItemDetailsController.Items.get(i).getTheMeal()+" "+ ItemDetailsController.Items.get(i).getTheDish()+" "+
-    				 ItemDetailsController.Items.get(i).getIngredient()+" "+ ItemDetailsController.Items.get(i).getQuantity()+" "+ ItemDetailsController.Items.get(i).getPrice()
-    	+" "+ ItemDetailsController.Items.get(i).getPackageID()+" "+ ItemDetailsController.Items.get(i).getItemID()));
+    	System.out.println(111111);
+    	if(OptionalSelectionController.sel.size()!=0) {
+            AddItem=new ItemList( TybeMealController.tybe_meal.getTypeMeal(), DishController.dish.getDish(),OptionalSelectionController.sel.toString().replaceAll(" ","")
+    			,ItemDetailsController.Quantity, ItemDetailsController.TotalPrice,ChatClient.order2.getOrderPackageNumber());
+    	}
+    	else {
+    		AddItem=new ItemList( TybeMealController.tybe_meal.getTypeMeal(), DishController.dish.getDish(),"NoExtra"
+    				,ItemDetailsController.Quantity, ItemDetailsController.TotalPrice,ChatClient.order2.getOrderPackageNumber());
     	}
     	
-    	//ItemDetailsController.itemList
+    	 Items.add(AddItem);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	for(int i=0;i<Items.size();i++)
+    	{
+    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, Items.get(i).getTheMeal()+" "+ Items.get(i).getTheDish()+" "+
+    				Items.get(i).getIngredient()+" "+ Items.get(i).getQuantity()+" "+ Items.get(i).getPrice()
+    	+" "+ Items.get(i).getPackageID()));
+    	}
+    	
+    	
+    	MyCartController.numberitem=0;
+    	ItemDetailsController.itemList.clear();
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	CustomerHomeController AFrame=new CustomerHomeController();
+		try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+ 
     }
 
 	@Override

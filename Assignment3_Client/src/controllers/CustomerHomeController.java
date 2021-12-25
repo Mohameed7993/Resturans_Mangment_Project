@@ -1,73 +1,47 @@
 package controllers;
 
-import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import client.ChatClient;
-import client.ClientUI;
-import common.Client;
-import common.Message;
-import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import client.ChatClient;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
+import javafx.scene.Node;
 
 public class CustomerHomeController implements Initializable {
 
     @FXML
-    private ImageView Image1;
+    private ImageView Cart;
 
     @FXML
-    private Text CustomerName;
+    private Button Logoutbtn;
 
     @FXML
-    private Button LogOutbtn;
+    private Button MakeAnOrderBTN;
 
-    @FXML
-    private TextField Makeanorder;
-
-    @FXML
-    private TextField myorderlist;
-
-    @FXML
-    private ImageView Image2;
-
-    @FXML
-    private ImageView Image3;
-
-    @FXML
-    private ImageView Image4;
-
-    @FXML
-    private ImageView Image5;
-    
-    @FXML
-    private Button MakeAnOrderButton;
-
-    @FXML
-    private Button MyOrderListButton;
-    
     @FXML
     private Button MyCartButton;
 
     @FXML
-    private ImageView Image6;
+    private Button MyOrderBTN;
+
+    @FXML
+    private Button MyOrderListBTN;
+
+    @FXML
+    private Text User;
+
     
     @FXML
     void LogoutAction(ActionEvent event) {
-    
-     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	BiteMeLoginController AFrame=new BiteMeLoginController();
 		try {
 			AFrame.start(stage);
@@ -76,21 +50,14 @@ public class CustomerHomeController implements Initializable {
 			e.printStackTrace();
 		}
     }
+    
     @FXML
-    void MyCartAction(ActionEvent event) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-    	 MyCartController AFrame=new MyCartController();
-         try {
-			AFrame.start(stage);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    void MyOrder(ActionEvent event) {
+    	MyOrderList(event);
     }
-    	
+    
     @FXML
-    void MakeorderAction(ActionEvent event) {
-    	
+    void MakeAnOrder(ActionEvent event) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	ScanerQrController AFrame=new ScanerQrController();
 		try {
@@ -101,9 +68,19 @@ public class CustomerHomeController implements Initializable {
 		}
     }
     
-
     @FXML
-    void OrderListAction(ActionEvent event) {
+    void MyCartAction(ActionEvent event) {
+    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+   	 MyCartController AFrame=new MyCartController();
+        try {
+			AFrame.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    @FXML
+    void MyOrderList(ActionEvent event) {
        	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	MyOrderListController AFrame=new MyOrderListController();
 		try {
@@ -113,33 +90,27 @@ public class CustomerHomeController implements Initializable {
 			e.printStackTrace();
 		}
     }
-    
-    
-    
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-		CustomerName.setText("Hello, "+ChatClient.accounts.getFirstName()+" "+ChatClient.accounts.getLasName());
-		
-		if(ItemDetailsController.itemList.size()==0) {
-			MyCartButton.setVisible(false);
-		    Image6.setVisible(false);
-		}
-		else { MyCartButton.setVisible(true); Image6.setVisible(true);}
-	}
 
-	
 	public void start(Stage stage) throws Exception{
 		// TODO Auto-generated method stub
-		Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerHome.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/View/HomeCustomerV2.fxml"));
 		
 		Scene scene = new Scene(root);
 		stage.setTitle("CoustomerHome");
 		stage.setScene(scene);
-		
+		stage.setX(300);
+		//stage.setY(0);
 		stage.show();
 		
 	}
 
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		User.setText(ChatClient.userlogged.getUserName());
+		if(ItemDetailsController.itemList.size()==0) {
+			MyCartButton.setVisible(false);
+		    Cart.setVisible(false);
+		}
+		else { MyCartButton.setVisible(true); Cart.setVisible(true);}
+	}
 }

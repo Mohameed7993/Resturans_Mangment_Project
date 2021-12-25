@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,27 +9,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerHomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerHomeController">
    <children>
-      <ImageView fx:id="Image1" fitHeight="562.0" fitWidth="743.0" layoutX="125.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="562.0" fitWidth="743.0" layoutX="125.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/Layer%204.png" />
+            <Image url="@../Images/Layer%204.png" />
          </image>
       </ImageView>
-      <Text fx:id="CustomerName" fill="#79a42b" layoutX="369.0" layoutY="276.0" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" textAlignment="CENTER" wrappingWidth="202.76171875">
+      <TextField layoutX="248.0" layoutY="362.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font size="14.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Text>
-      <Button fx:id="LogOutbtn" layoutX="25.0" layoutY="633.0" mnemonicParsing="false" onAction="#LogoutAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Logout" textFill="WHITE">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Button fx:id="Logoutbtn" layoutX="39.0" layoutY="639.0" mnemonicParsing="false" onAction="#LogoutAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Logout" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <TextField fx:id="Makeanorder" layoutX="248.0" layoutY="365.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
+      <Text fill="#79a42b" layoutX="296.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="Welcome Back :">
+         <font>
+            <Font name="Stencil" size="26.0" />
+         </font>
+      </Text>
+      <TextField layoutX="513.0" layoutY="362.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
          <font>
             <Font size="14.0" />
          </font>
@@ -43,46 +47,43 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <TextField fx:id="myorderlist" layoutX="513.0" layoutY="362.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: #353f4c;">
-         <font>
-            <Font size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </TextField>
       <Text fill="#79a42b" layoutX="572.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="My order list" textAlignment="CENTER" wrappingWidth="111.087890625">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <ImageView fx:id="Image2" fitHeight="49.0" fitWidth="59.0" layoutX="598.0" layoutY="407.0">
+      <ImageView fitHeight="49.0" fitWidth="59.0" layoutX="598.0" layoutY="407.0">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/Layer%203.png" />
+            <Image url="@../Images/Layer%203.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Image3" fitHeight="68.0" fitWidth="51.0" layoutX="337.0" layoutY="397.0">
+      <ImageView fitHeight="68.0" fitWidth="51.0" layoutX="337.0" layoutY="397.0">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/2.png" />
+            <Image url="@../Images/2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Image4" fitHeight="305.0" fitWidth="188.0" layoutX="805.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="231.0" fitWidth="241.0" layoutX="743.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/43-430460_png-food-top-view.png" />
+            <Image url="@../Images/Pizza.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Image5" fitHeight="248.0" fitWidth="188.0" layoutX="-2.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fitHeight="354.0" fitWidth="272.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/139203-food-plate-top-nutrition-view.png" />
+            <Image url="@../Images/Spaggati.png" />
          </image>
       </ImageView>
-      <Button fx:id="MakeAnOrderButton" layoutX="234.0" layoutY="365.0" mnemonicParsing="false" onAction="#MakeorderAction" prefHeight="200.0" prefWidth="258.0" style="-fx-background-radius: 100; -fx-background-color: Clear;" />
-      <Button fx:id="MyOrderListButton" layoutX="507.0" layoutY="361.0" mnemonicParsing="false" onAction="#OrderListAction" prefHeight="200.0" prefWidth="243.0" style="-fx-background-radius: 100; -fx-background-color: Clear;" />
-      <ImageView fx:id="Image6" fitHeight="74.0" fitWidth="55.0" layoutX="798.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="MakeAnOrderBTN" layoutX="248.0" layoutY="362.0" mnemonicParsing="false" onAction="#MakeAnOrder" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: clear;" />
+      <Button fx:id="MyOrderListBTN" layoutX="513.0" layoutY="362.0" mnemonicParsing="false" onAction="#MyOrderList" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: clear;" />
+      <Text fx:id="User" fill="#79a42b" layoutX="508.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" wrappingWidth="240.6190643310547">
+         <font>
+            <Font name="Stencil" size="26.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="Image6" fitHeight="55.0" fitWidth="52.0" layoutX="784.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/Cart.jpg.png" />
          </image>
       </ImageView>
-      <Button fx:id="MyCartButton" layoutX="800.0" layoutY="104.0" mnemonicParsing="false" onAction="#MyCartAction" prefHeight="41.0" prefWidth="52.0" style="-fx-background-color: Clear;" />
+      <Button fx:id="MyCartButton" layoutX="784.0" layoutY="94.0" mnemonicParsing="false" onAction="#MyCartAction" prefHeight="41.0" prefWidth="52.0" style="-fx-background-color: Clear;" />
    </children>
 </AnchorPane>

@@ -7,106 +7,106 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="716.0" prefWidth="925.0" style="-fx-background-color: #fffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerDetailsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" style="-fx-background-color: #fffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerDetailsController">
    <children>
       <Button fx:id="Exitbutton" layoutX="39.0" layoutY="639.0" mnemonicParsing="false" onAction="#ExitbuttonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <ImageView fx:id="Image" fitHeight="563.0" fitWidth="794.0" layoutX="65.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Image" fitHeight="562.0" fitWidth="743.0" layoutX="125.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Desktop/mosmos/000/Layer%204.png" />
+            <Image url="@../Images/Layer%204.png" />
          </image>
       </ImageView>
-      <Button fx:id="ConfirmButton" layoutX="367.0" layoutY="586.0" mnemonicParsing="false" onAction="#ConfirmButtonAction" prefHeight="63.0" prefWidth="151.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="confirm" textFill="WHITE">
+      <Button fx:id="ConfirmButton" layoutX="349.0" layoutY="611.0" mnemonicParsing="false" onAction="#ConfirmButtonAction" prefHeight="41.0" prefWidth="297.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="confirm" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <Text fx:id="IDtxt" fill="#79a42b" layoutX="123.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="52.60546875">
+      <Text fx:id="IDtxt" fill="#343434" layoutX="349.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="52.60546875">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="FirstNametxt" fill="#79a42b" layoutX="123.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" wrappingWidth="91.21484375">
+      <Text fx:id="FirstNametxt" fill="#343434" layoutX="349.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" wrappingWidth="91.21484375">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="LastNametxt" fill="#79a42b" layoutX="123.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName">
+      <Text fx:id="LastNametxt" fill="#343434" layoutX="349.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="PhoneNumbertxt" fill="#79a42b" layoutX="123.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PhoneNumber">
+      <Text fx:id="PhoneNumbertxt" fill="#343434" layoutX="349.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PhoneNumber">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="Emailtxt" fill="#79a42b" layoutX="124.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+      <Text fx:id="Emailtxt" fill="#343434" layoutX="349.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="Credittxt" fill="#79a42b" layoutX="123.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CreditCardNumber">
+      <Text fx:id="Credittxt" fill="#343434" layoutX="350.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CreditCardNumber">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="AccountTybetxt" fill="#79a42b" layoutX="123.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AccountTybe">
+      <Text fx:id="AccountTybetxt" fill="#343434" layoutX="350.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AccountTybe">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="FirstNameField" fill="#79a42b" layoutX="285.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
+      <Text fx:id="FirstNameField" fill="#79a42b" layoutX="559.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Gabriola" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="LastNameField" fill="#79a42b" layoutX="285.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
+      <Text fx:id="LastNameField" fill="#79a42b" layoutX="559.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Gabriola" size="23.0" />
          </font>
       </Text>
-      <Text fx:id="IDField" fill="#79a42b" layoutX="285.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
+      <Text fx:id="IDField" fill="#79a42b" layoutX="559.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Sakkal Majalla" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="PhoneNumberField" fill="#79a42b" layoutX="285.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="165.34375">
+      <Text fx:id="PhoneNumberField" fill="#79a42b" layoutX="559.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="165.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Sakkal Majalla" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="EmailField" fill="#79a42b" layoutX="285.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="221.34375">
+      <Text fx:id="EmailField" fill="#79a42b" layoutX="559.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="221.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Gabriola" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="AccountField" fill="#79a42b" layoutX="285.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
+      <Text fx:id="CreditField" fill="#79a42b" layoutX="559.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Sakkal Majalla" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="CreditField" fill="#79a42b" layoutX="285.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
+      <Text fx:id="AccountField" fill="#79a42b" layoutX="559.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.34375">
          <font>
-            <Font size="17.0" />
+            <Font name="Gabriola" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="YourDetailstxt" fill="#79a42b" layoutX="356.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="151.38134765625">
+      <Text fx:id="YourDetailstxt" fill="#79a42b" layoutX="420.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="151.38134765625">
          <font>
-            <Font name="System Bold" size="25.0" />
+            <Font name="Tw Cen MT Condensed Extra Bold" size="25.0" />
          </font>
       </Text>
-      <ImageView fitHeight="305.0" fitWidth="188.0" layoutX="737.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="231.0" fitWidth="241.0" layoutX="743.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/43-430460_png-food-top-view.png" />
+            <Image url="@../Images/Pizza.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="248.0" fitWidth="188.0" layoutX="1.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="354.0" fitWidth="272.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/139203-food-plate-top-nutrition-view.png" />
+            <Image url="@../Images/Spaggati.png" />
          </image>
       </ImageView>
    </children>

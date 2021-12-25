@@ -9,19 +9,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="471.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DishController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="471.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DishController">
    <children>
       <ImageView fx:id="image" fitHeight="552.0" fitWidth="478.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/sub.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="BackButton" layoutX="21.0" layoutY="473.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="95.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+      <Button fx:id="BackButton" layoutX="43.0" layoutY="474.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="nextButton" layoutX="345.0" layoutY="473.0" mnemonicParsing="false" onAction="#nextButtonAction" prefHeight="41.0" prefWidth="95.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Next" textFill="WHITE">
+      <Button fx:id="nextButton" layoutX="241.0" layoutY="474.0" mnemonicParsing="false" onAction="#nextButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Next" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -36,7 +36,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <TableView fx:id="DishList" layoutX="65.0" layoutY="155.0" prefHeight="266.0" prefWidth="315.0">
+      <TableView fx:id="DishList" layoutX="82.0" layoutY="155.0" prefHeight="266.0" prefWidth="315.0">
         <columns>
           <TableColumn fx:id="DishCol" prefWidth="213.0" text="TheDish" />
             <TableColumn fx:id="PriceCol" prefWidth="101.0" text="Price" />

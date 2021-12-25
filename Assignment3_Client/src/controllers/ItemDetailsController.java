@@ -26,9 +26,7 @@ public class ItemDetailsController implements Initializable {
 	
 public static ArrayList<ItemInCart> itemList =new ArrayList<>();
 
-public static ArrayList<ItemList> Items=new ArrayList<>();
 
-public static ItemList AddItem;
 
 public static ItemInCart AdditemList;
 
@@ -36,12 +34,8 @@ public  static Integer TotalPrice;
 
 public static Integer Quantity;
 
-public static String orderPackageNumber;
 
 
-public String replaceAll(String regex, String replacement) {  
-    return Pattern.compile(regex).matcher((CharSequence) this).replaceAll(replacement);  
-}
 
     @FXML
     private ImageView image;
@@ -96,10 +90,10 @@ public String replaceAll(String regex, String replacement) {
 
     @FXML
     void addButtonAction(ActionEvent event) {// add to cart
-    	/////////////////////////////////////
-    	orderPackageNumber="12586";
-    	//////////////////////////////////////
-    	OptionalSelectionController.sel.remove("");
+    //	long pid = ProcessHandle.current().pid();
+    	
+    		//	String.valueOf(pid); 
+    	
     	if(QuantityField.getText().matches("[a-zA-Z_]+")||QuantityField.getText().equals("")) {
     		Alert a = new Alert(AlertType.ERROR);
             a.setContentText("Error");
@@ -113,22 +107,15 @@ public String replaceAll(String regex, String replacement) {
  if(OptionalSelectionController.sel.size()!=0) {
 	 
     	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
-    			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity,"121314");
-
-    	
-    	AddItem=new ItemList( TybeMealController.tybe_meal.getTypeMeal(), DishController.dish.getDish(),OptionalSelectionController.sel.toString().replaceAll(" ","")
-    			,ItemDetailsController.Quantity, ItemDetailsController.TotalPrice,orderPackageNumber,"11");
-    	
+    			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity);
  }
  
  else {  AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
- 			,"No Extra",TotalPrice,Quantity,"121314");
-    AddItem=new ItemList( TybeMealController.tybe_meal.getTypeMeal(), DishController.dish.getDish(),"NoExtra"
-			,ItemDetailsController.Quantity, ItemDetailsController.TotalPrice,orderPackageNumber,"11");
+ 			,"No Extra",TotalPrice,Quantity);
  }
 
  itemList.add(AdditemList);
- Items.add(AddItem);
+
  
  TotalPrice=0;
  for(int i=0;i<itemList.size();i++)
@@ -137,10 +124,12 @@ public String replaceAll(String regex, String replacement) {
  }
     	
     	OptionalSelectionController.totalPrice=0;
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+   // Stage stage =   (Stage)
+    	((Node) event.getSource()).getScene().getWindow().hide();// get stage
+    	
     	MyCartController AFrame=new MyCartController();
 		try {
-			AFrame.start(stage);
+			AFrame.start(ChooseResturantController.stage1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -120,20 +120,17 @@ public class mysqlConnection {
 	}
 	
 	public static void SetItemsOfOrderinDB( String theMeal, String theDish, String ingredient, Integer quantity, Integer price,
-			String packageID,String itemID) {
+			String packageID) {
 		PreparedStatement ps;
 		try
 		{
-			//System.out.println(itemID+" "+theMeal+" "+theDish+" "+ingredient+" "+quantity+" "+price+" "+packageID);
-			ps=mysqlConnection.conn.prepareStatement("Insert into bitemedb.item_list values (?,?,?,?,?,?,?)");
-			System.out.println(1111);
+			ps=mysqlConnection.conn.prepareStatement("Insert into bitemedb.item_list values (?,?,?,?,?,?)");
 			ps.setString(1, theMeal);
 			ps.setString(2, theDish);
 			ps.setString(3, ingredient);
 			ps.setInt(4, quantity);
 			ps.setInt(5, price);
 			ps.setString(6, packageID);
-			ps.setString(7, itemID);
 			ps.execute();
 			
 		} catch (SQLException e) {
@@ -146,20 +143,26 @@ public class mysqlConnection {
 			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
 			String arrivalTime, String approvalRecieving) {
 		PreparedStatement ps;
+		ResultSet res;
 		try {
-			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.order_list Values (?,?,?,?,?,?,?,?,?,?,?)");
+			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.order_list (Customer_ID, Resturant, RequestDate,"
+					+ " OrderDate, TotalPrice, Address, DeleiveryService, Status, ArrivalTime, ApprovalRecieving) Values (?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1,customer_ID );
 			ps.setString(2,resturant );
-			ps.setString(3,orderPackageNumber );
-			ps.setString(4, requestDate);
-			ps.setString(5, orderedDate);
-			ps.setString(6, totalPrice);
-			ps.setString(7,address );
-			ps.setString(8, deleiveryService);
-			ps.setString(9,status );
-			ps.setString(10,arrivalTime );
-			ps.setString(11,approvalRecieving);
+			//ps.setString(3,orderPackageNumber );
+			ps.setString(3, requestDate);
+			ps.setString(4, orderedDate);
+			ps.setString(5, totalPrice);
+			ps.setString(6,address );
+			ps.setString(7, deleiveryService);
+			ps.setString(8,status );
+			ps.setString(9,arrivalTime );
+			ps.setString(10,approvalRecieving);
 			ps.execute();
+			
+			//res=ps.getResultSet();
+			//System.out.println();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -167,6 +170,38 @@ public class mysqlConnection {
 		}
 		
 	}
+	
+	public static  OrdersList getOrder(String CustomerId) {
+		PreparedStatement ps;
+		ResultSet res;
+		int max=0;
+		OrdersList order=null;
+		try {
+				ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.order_list where Customer_ID=?");
+				ps.setString(1, CustomerId);
+				ps.execute();
+				
+				res=ps.getResultSet();
+				while(res.next()) {
+					if(res.getInt(3)>max)
+						max=res.getInt(3);
+				}
+				
+				ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.order_list where OrderPackageNumber=?");
+				ps.setInt(1,max);
+				ps.execute();
+				res=ps.getResultSet();
+				res.next();
+				order=new OrdersList(res.getString(1),res.getString(2),res.getInt(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7)
+						,res.getString(8),res.getString(9),res.getString(10),res.getString(11));
+				return order;
+		}catch (SQLException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		     }
+		return order;
+	}
+	
 	public static Account getAccountListFromDB(String ID){
 	Account account=null;
 	PreparedStatement ps;
@@ -296,6 +331,7 @@ public class mysqlConnection {
 	       return list;
 	}
 		
+		
 		public static ArrayList<OrdersList> BuildOrderTable() {
 			   //TABLE VIEW AND DATA
 			ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
@@ -309,7 +345,7 @@ public class mysqlConnection {
 				ps.execute();
 				res=ps.getResultSet();
 				while(res.next()) {
-					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getString(3),
+					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
 							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
 								res.getString(8),res.getString(9),res.getString(10),res.getString(11)));
 
@@ -322,7 +358,7 @@ public class mysqlConnection {
 			return Order_list;
 		}
 	
-		public static ArrayList<ItemList> BuildItemList(String OrderPackageNumber) {
+		public static ArrayList<ItemList> BuildItemList(Integer OrderPackageNumber) {
 			ArrayList<ItemList> Item_list = new ArrayList<ItemList>(); 
 			ResultSet res;
 			Connection conn;
@@ -332,10 +368,8 @@ public class mysqlConnection {
 				res=conn.createStatement().executeQuery("Select * from  bitemedb.item_list");
 				while(res.next()) {
 					PackageID=(res.getString(6));
-					if(PackageID.equals(OrderPackageNumber)) {
-					Item_list.add(new ItemList( res.getString(1), res.getString(2), res.getString(3), 
-							Integer.parseInt(res.getString(4)), Integer.parseInt(res.getString(5)),
-							(res.getString(6)),(res.getString(7))));
+					if(PackageID.equals(String.valueOf(OrderPackageNumber))) {
+					Item_list.add(new ItemList( res.getString(1), res.getString(2), res.getString(3),Integer.parseInt(res.getString(4)), Integer.parseInt(res.getString(5)),(res.getInt(6))));
 					}
 				}
 			} catch (SQLException e) {

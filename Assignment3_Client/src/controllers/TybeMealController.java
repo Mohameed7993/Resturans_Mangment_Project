@@ -60,15 +60,16 @@ public class TybeMealController  implements Initializable {
 
     @FXML
     void ExistButtonAction(ActionEvent event) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    //	Stage stage = (Stage)
+    			((Node) event.getSource()).getScene().getWindow().hide();// get stage
 
-    	ChooseResturantController AFrame=new ChooseResturantController();
+    /*	ChooseResturantController AFrame=new ChooseResturantController();
 		try {
 			AFrame.start(stage);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
     	  
     }
 
@@ -122,6 +123,7 @@ public class TybeMealController  implements Initializable {
 		Parent root = FXMLLoader.load(getClass().getResource("/View/TybeMeal.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("TybeMeal");
+		stage.setX(1000);
 		stage.setScene(scene);
 
 		stage.show();

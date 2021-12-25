@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 
 public class ChooseResturantController implements Initializable {
 	
+	public static Stage stage1;
 	
 	ObservableList<Resturants> resturants;
 	
@@ -108,7 +109,7 @@ public class ChooseResturantController implements Initializable {
     	    				a.showAndWait();
     	    		 } 
     	    		 else {
-    	    				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	    				Stage stage =new Stage();
     	       	         TybeMealController AFrame=new TybeMealController();
     	   		           try {
     	   			        AFrame.start(stage);
@@ -120,7 +121,8 @@ public class ChooseResturantController implements Initializable {
     	    	 }
     	    		 else {
     	    			MyCartController.yourOrderIsInResturant=TablelistID.getSelectionModel().getSelectedItem().getResturantName();
-    	    		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	    		//Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	    			Stage stage=new Stage();
     	         TybeMealController AFrame=new TybeMealController();
 		           try {
 			        AFrame.start(stage);
@@ -174,7 +176,7 @@ public class ChooseResturantController implements Initializable {
 	}
 
 	public void start(Stage primaryStage) throws Exception {
-
+        stage1=primaryStage;
 		Parent root = FXMLLoader.load(getClass().getResource("/View/ChooseResturant.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Resturants List");

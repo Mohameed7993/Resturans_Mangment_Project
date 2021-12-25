@@ -41,6 +41,7 @@ public class ChatClient extends AbstractClient {
 	public static Account accounts;
 	public static Business bussiness;
 	public static OrdersList order;
+	public static OrdersList order2;
 	public static ItemList items;
 	public static ArrayList<Resturants> resturants;
 	public static ArrayList<TybeMeal> tybemeal;
@@ -117,6 +118,9 @@ public class ChatClient extends AbstractClient {
 		}
 		if(m.getMessageType().equals(MessageType.OrdersListToDataBase)) {
 			order=(OrdersList)m.getObject();
+		}
+		if(m.getMessageType().equals(MessageType.GetOrder)) {
+			order2=(OrdersList)m.getObject();
 		}
 		if(m.getMessageType().equals(MessageType.itemsListtoDataBase)) {
 			items=(ItemList)m.getObject();

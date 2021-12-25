@@ -117,6 +117,7 @@ public class MyCartController implements Initializable {
 
     @FXML
     void PaymentAction(ActionEvent event) {
+    //	if(ItemDetailsController.itemList)
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	PaymentMethodController AFrame=new PaymentMethodController();
 		try {
@@ -131,9 +132,10 @@ public class MyCartController implements Initializable {
     void deleteAction(ActionEvent event) {
     	if(CartList.getSelectionModel().getSelectedItem()!=null)
     	{
-    		numberitem--;
+    		
     		int itemnumber =CartList.getSelectionModel().getSelectedItem().getItemNumber();
     		ItemDetailsController.itemList.remove(itemnumber-1);
+    		numberitem--;
     		 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
         	 CartList.setItems(ItemsList);
     		
@@ -153,6 +155,7 @@ public class MyCartController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
     	resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
+    	
     	
     	ItemNumbercol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("itemNumber"));
     	Tybemealcol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("TypeMeal"));
