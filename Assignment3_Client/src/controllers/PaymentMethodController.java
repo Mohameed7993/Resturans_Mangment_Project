@@ -38,10 +38,10 @@ public class PaymentMethodController implements Initializable{
 	
 	public static Address address;
 	
-	public static Date Time;
+	public static String Time;
 	
 	public static String accountpayment;
-	public static Date HelpTime;
+	public static String HelpTime;
 	
 	public static int flagDate; //0-> other, 1->now
 	
@@ -219,19 +219,19 @@ public class PaymentMethodController implements Initializable{
     
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
-    //	Time= orderdateField.getText();
-    	Time =(Date) orderdateField.getUserData();
+    	Time= orderdateField.getText();
     	System.out.println(orderdateField.getText());
     	System.out.println(OrdersDetailsController.dtf.format(OrdersDetailsController.now));
     	System.out.println(Time);
-    	//System.out.println(HelpTime).compareTo(Time));
     	
-    	/*if(Time.compareTo(OrdersDetailsController.dtf.format(OrdersDetailsController.now))>2) {
+    	System.out.println().compareTo(Time));
+    	
+    	if(Time.compareTo(OrdersDetailsController.dtf.format(OrdersDetailsController.now))>2) {
     		Alert a = new Alert(AlertType.ERROR);
         a.setContentText("Error");
         a.setHeaderText("you have to insert at least after two houer from now");
-        a.showAndWait();}*/
-    	 {
+        a.showAndWait();}
+    	else {
     	
     	accountpayment="BussinessAccount";
     	if(DeleiveryType==null)
@@ -377,7 +377,7 @@ public class PaymentMethodController implements Initializable{
 		Calendar cal = Calendar.getInstance(); // creates calendar
 		cal.setTime(new Date());               // sets calendar time/date
 		cal.add(Calendar.HOUR_OF_DAY, 2);      // adds one hour
-		HelpTime=cal.getTime();    
+		(Date)HelpTime=cal.getTime();    
 		
 	}
 

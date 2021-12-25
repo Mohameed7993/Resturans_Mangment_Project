@@ -35,7 +35,7 @@ public class OrdersDetailsController implements Initializable {
 	public static LocalDateTime now = LocalDateTime.now();
 	public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");  
 	public LocalDateTime ArrivalTime;
-	public static Date orderTime;
+	public static String orderTime;
 	public static Integer orderPackageNumber;
 	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
