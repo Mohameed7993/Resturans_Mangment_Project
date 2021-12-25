@@ -82,7 +82,7 @@ public class MyCartController implements Initializable {
     @FXML
     void AddAction(ActionEvent event) {
     	if(ItemDetailsController.itemList.size()!=0) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+    	Stage stage = new Stage() ;//((Node) event.getSource()).getScene().getWindow();// get stage
     	TybeMealController AFrame=new TybeMealController();
 		try {
 			AFrame.start(stage);
