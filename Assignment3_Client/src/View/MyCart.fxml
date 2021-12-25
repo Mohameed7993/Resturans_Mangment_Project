@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -41,10 +42,6 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" text="My Orders">
                <graphic>
@@ -57,12 +54,8 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../../CSS/bin/application/style1.css" text="Customers">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" text="Customers">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -85,10 +78,6 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" text="Packages">
                <graphic>
@@ -101,10 +90,6 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" text="Settings">
                <graphic>
@@ -117,10 +102,6 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" text="Sign Out">
                <graphic>
@@ -133,10 +114,6 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
-               <stylesheets>
-                  <URL value="@../../Downloads/RestaurantMgtSampleUI-master/RestaurantMgtSampleUI-master/src/home/style.css" />
-                  <URL value="@../../../CSS/bin/application/style1.css" />
-               </stylesheets>
             </Button>
          </children>
       </VBox>
@@ -155,10 +132,20 @@
             <TableColumn fx:id="QuantityCol" minWidth="0.0" prefWidth="107.0" text="Quantity" />
         </columns>
       </TableView>
-      <Button fx:id="BackButton" layoutX="303.0" layoutY="656.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+      <Button fx:id="BackButton" layoutX="303.0" layoutY="656.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Back" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fill="#79a42b" layoutX="683.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="My Cart" textAlignment="CENTER" wrappingWidth="195.587890625">
          <font>
@@ -179,21 +166,51 @@
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fill="#353f4c" layoutX="141.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="173.33334350585938">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <Button fx:id="DeleteButton" layoutX="788.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
+      <Button fx:id="DeleteButton" layoutX="794.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="1.0" green="0.09259258955717087" blue="0.09259258955717087" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Button fx:id="Addbutton" layoutX="579.0" layoutY="616.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fx:id="resturantnametxt" fill="#343434" layoutX="694.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="173.33334350585938">
          <font>

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="471.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrdersDetailsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="471.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrdersDetailsController">
    <children>
       <ImageView fx:id="image" fitHeight="552.0" fitWidth="478.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -18,11 +20,39 @@
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
       <Button fx:id="ConfirmButton" layoutX="134.0" layoutY="443.0" mnemonicParsing="false" onAction="#ConfirmButtonAction" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Confirm The order" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fx:id="Orderdetailstxt" fill="#79a42b" layoutX="124.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Details" textAlignment="CENTER" wrappingWidth="229.3671875">
          <font>

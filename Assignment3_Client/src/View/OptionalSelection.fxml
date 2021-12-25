@@ -3,9 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -16,22 +18,50 @@
             <Image url="@../Images/sub.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="BackButton" layoutX="21.0" layoutY="457.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+      <Button fx:id="BackButton" layoutX="42.0" layoutY="474.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button fx:id="nextButton" layoutX="218.0" layoutY="458.0" mnemonicParsing="false" onAction="#nextButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Next" textFill="WHITE">
+      <Button fx:id="nextButton" layoutX="242.0" layoutY="474.0" mnemonicParsing="false" onAction="#nextButtonAction" prefHeight="41.0" prefWidth="193.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Next" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fx:id="resturantnametxt" fill="#79a42b" layoutX="121.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="229.3671875">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="Optionaltxt" fill="#79a42b" layoutX="21.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Optional selection:" wrappingWidth="229.3671875">
+      <Text fx:id="Optionaltxt" fill="#79a42b" layoutX="21.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Optional selection:" textAlignment="CENTER" wrappingWidth="229.3671875">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -42,15 +72,43 @@
             <TableColumn fx:id="PriceCol" prefWidth="89.0" text="Price" />
          </columns>
       </TableView>
-      <Button fx:id="Selectbutton" layoutX="367.0" layoutY="352.0" mnemonicParsing="false" onAction="#SelectButtonAction" prefHeight="20.0" prefWidth="81.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Select">
+      <Button fx:id="Selectbutton" layoutX="367.0" layoutY="352.0" mnemonicParsing="false" onAction="#SelectButtonAction" prefHeight="20.0" prefWidth="81.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Select" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button fx:id="UnSelectbutton" layoutX="367.0" layoutY="391.0" mnemonicParsing="false" onAction="#UnSelectbuttonAction" prefHeight="24.0" prefWidth="81.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="UnSelect">
+      <Button fx:id="UnSelectbutton" layoutX="367.0" layoutY="392.0" mnemonicParsing="false" onAction="#UnSelectbuttonAction" prefHeight="24.0" prefWidth="81.0" style="-fx-background-color: #dd0202; -fx-background-radius: 100;" text="UnSelect" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.8666666746139526" green="0.007843137718737125" blue="0.007843137718737125" />
+               </color>
+               <input>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
       </Button>
    </children>
 </AnchorPane>

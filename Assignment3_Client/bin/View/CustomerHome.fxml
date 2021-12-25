@@ -3,13 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerHomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerHomeController">
    <children>
       <ImageView fitHeight="562.0" fitWidth="743.0" layoutX="125.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -24,10 +26,20 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Button fx:id="Logoutbtn" layoutX="39.0" layoutY="639.0" mnemonicParsing="false" onAction="#LogoutAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Logout" textFill="WHITE">
+      <Button fx:id="Logoutbtn" layoutX="39.0" layoutY="639.0" mnemonicParsing="false" onAction="#LogoutAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Logout" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fill="#79a42b" layoutX="296.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="Welcome Back :">
          <font>
@@ -74,7 +86,7 @@
       </ImageView>
       <Button fx:id="MakeAnOrderBTN" layoutX="248.0" layoutY="362.0" mnemonicParsing="false" onAction="#MakeAnOrder" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: clear;" />
       <Button fx:id="MyOrderListBTN" layoutX="513.0" layoutY="362.0" mnemonicParsing="false" onAction="#MyOrderList" prefHeight="200.0" prefWidth="230.0" style="-fx-background-radius: 100; -fx-background-color: clear;" />
-      <Text fx:id="User" fill="#79a42b" layoutX="508.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" wrappingWidth="240.6190643310547">
+      <Text fx:id="User" fill="#79a42b" layoutX="514.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="Hello,MyName!">
          <font>
             <Font name="Stencil" size="26.0" />
          </font>

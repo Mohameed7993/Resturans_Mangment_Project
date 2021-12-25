@@ -100,11 +100,9 @@ public class ScanerQrController implements Initializable {
 		Parent root= FXMLLoader.load(getClass().getResource("/View/ScanerQr.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Scaner Qr Code Home");
-		stage.setX(500);
 		stage.setScene(scene);
-		
+		stage.setX(500);
 		stage.show();
-		
+	}
 	}
 
-}

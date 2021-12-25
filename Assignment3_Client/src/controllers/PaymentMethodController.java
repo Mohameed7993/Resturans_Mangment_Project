@@ -2,6 +2,8 @@ package controllers;
 
 import java.net.URL;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +32,10 @@ public class PaymentMethodController implements Initializable{
 	
 	
 	
+	public  static LocalDateTime now = LocalDateTime.now();
+	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+	public  static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+	
 	public static String DeleiveryType=null;
 	
 	public static Integer pricedeleivery;
@@ -43,7 +49,14 @@ public class PaymentMethodController implements Initializable{
 	public static String accountpayment;
 	public static String HelpTime;
 	
-	public static int flagDate; //0-> other, 1->now
+	public long differenceInMilliSeconds ;
+	public long differenceInHours;
+	public long differenceInMinutes;
+	
+	public static int flagDate=1; //0-> other, 1->now
+	
+	public Date date1;
+	public Date date2;
 	
 
 	  // System.out.println(dtf.format(now));  */
@@ -137,20 +150,50 @@ public class PaymentMethodController implements Initializable{
     private Text txt4;
     
     @FXML
+    private ImageView Visa;
+    
+    @FXML
+    private ImageView Pick1;
+
+    @FXML
+    private ImageView Pick2;
+
+    @FXML
+    private ImageView Pick3;
+
+    @FXML
+    private ImageView Pick4;
+    
+    @FXML
+    private Button Shadow;
+
+    @FXML
+    private Button Shadow1;
+    
+    @FXML
+    private Text Star;
+    
+    @FXML
+    private Button payprivatebutton1;
+    
+    @FXML
     void otherbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(true);
     	flagDate=0;
+    	Shadow.setVisible(false);
+		Shadow1.setVisible(true);
+		Star.setVisible(true);
     	
-    	
-
     }
+  
     
-
     @FXML
     void nowbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(false);
     	flagDate=1;
-    	
+    	Shadow.setVisible(true);
+		Shadow1.setVisible(false);
+		Star.setVisible(false);
     	
     	
     }
@@ -169,6 +212,11 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void SharedDelButtonAction(ActionEvent event) {
     	DeleiveryType=("SharedDeleivery");
+    	Visa.setVisible(false);
+    	Pick1.setVisible(false);
+    	Pick2.setVisible(false);
+    	Pick3.setVisible(false);
+    	Pick4.setVisible(true);
     	enterAdresstxt.setVisible(true);
 		citytxt.setVisible(true);
 		streettxt.setVisible(true);
@@ -182,6 +230,11 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void deleiveryButtonAction(ActionEvent event) {
     	DeleiveryType=("Deleivery");
+    	Visa.setVisible(false);
+    	Pick1.setVisible(false);
+    	Pick2.setVisible(false);
+    	Pick3.setVisible(true);
+    	Pick4.setVisible(false);
     	enterAdresstxt.setVisible(true);
 		citytxt.setVisible(true);
 		streettxt.setVisible(true);
@@ -195,6 +248,11 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void robotbuttonAction(ActionEvent event) {
     	DeleiveryType=("Robot");
+    	Visa.setVisible(false);
+    	Pick1.setVisible(false);
+    	Pick2.setVisible(true);
+    	Pick3.setVisible(false);
+    	Pick4.setVisible(false);
     	enterAdresstxt.setVisible(true);
 		citytxt.setVisible(true);
 		streettxt.setVisible(true);
@@ -208,6 +266,11 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void takeawaybuttonAction(ActionEvent event) {
     	DeleiveryType=("TakeAway");
+    	Pick1.setVisible(true);
+    	Pick2.setVisible(false);
+    	Pick3.setVisible(false);
+    	Pick4.setVisible(false);
+    	Visa.setVisible(true);
     	enterAdresstxt.setVisible(false);
 		citytxt.setVisible(false);
 		streettxt.setVisible(false);
@@ -217,85 +280,139 @@ public class PaymentMethodController implements Initializable{
 		houseNumberField.setVisible(false);
     }
     
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    void TimerMath (Date data1,Date data2) {
+    	   differenceInMilliSeconds = Math.abs(date2.getTime() - date1.getTime());
+		   differenceInHours = (differenceInMilliSeconds / (60 * 60 * 1000))  % 24;
+      // Calculating the difference in Minutes
+		   differenceInMinutes= (differenceInMilliSeconds / (60 * 1000)) % 60;
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
-    	Time= orderdateField.getText();
-    	System.out.println(orderdateField.getText());
-    	System.out.println(OrdersDetailsController.dtf.format(OrdersDetailsController.now));
-    	System.out.println(Time);
-    	
-    	System.out.println().compareTo(Time));
-    	
-    	if(Time.compareTo(OrdersDetailsController.dtf.format(OrdersDetailsController.now))>2) {
-    		Alert a = new Alert(AlertType.ERROR);
-        a.setContentText("Error");
-        a.setHeaderText("you have to insert at least after two houer from now");
-        a.showAndWait();}
-    	else {
-    	
-    	accountpayment="BussinessAccount";
-    	if(DeleiveryType==null)
-    	{
+
+    	 if(flagDate==0) 
+    	 {
+    		
+			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) {
+				  Alert a = new Alert(AlertType.ERROR);
+		            a.setContentText("Error");
+		            a.setHeaderText("your details that you insert is Wrong!");
+		            a.showAndWait();   
+			 } else {
+					Time= orderdateField.getText();
+	    	    	 try {
+	    				date1=simpleDateFormat.parse(Time);
+	    			    date2=simpleDateFormat.parse(dtf.format(now));
+	    			    TimerMath( date1,date2);
+	    			} catch (ParseException e1) {
+	    				// TODO Auto-generated catch block
+	    				e1.printStackTrace();
+	    			}
+			      if((differenceInHours<2)) 
+	              {
+	    		    Alert a = new Alert(AlertType.ERROR);
+	                 a.setContentText("Error");
+	                 a.setHeaderText("you have to insert at least after two houer from now");
+	                 a.showAndWait();
+	             }  
+			     }
+       }
+    	 
+    	if(DeleiveryType==null){
     		 Alert a = new Alert(AlertType.ERROR);
 	            a.setContentText("Error");
 	            a.setHeaderText("Choose deleivery service");
 	            a.showAndWait();
-    	}
-    	else {
-    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("Shared-deleivery"))
-    	{
-    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
-    			 Alert a = new Alert(AlertType.ERROR);
-		            a.setContentText("Error");
-		            a.setHeaderText("your details that you insert is Wrong!");
-		            a.showAndWait();
-    		}
-    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
-    	}
-    	if(flagDate==0) {
-    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")||
-    		    	Float.valueOf(orderdateField.getText())<0||Float.valueOf(orderdateField.getText())>23) {
-    				  Alert a = new Alert(AlertType.ERROR);
-    		            a.setContentText("Error");
-    		            a.setHeaderText("your details that you insert is Wrong!");
-    		            a.showAndWait();
-    		    		}
-    			 }
-   
-    		switch (DeleiveryType) {
-			case "Deleivery":
-				pricedeleivery=25;
-				break;
-			case "Shared-deleivery":
-				pricedeleivery=25;
-				break;
-			default:
-				pricedeleivery=0;
-				break;
-			}
-    		
-    		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-    		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
-    			   Alert a = new Alert(AlertType.ERROR);
-    	            a.setContentText("Error");
-    	            a.setHeaderText("there is no enough money in your bussiness wallet ");
-    	            a.showAndWait();
-    		}
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-    	OrdersDetailsController AFrame=new OrdersDetailsController();
-		try {
-			AFrame.start(stage);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    		}
-    	}
-    }
-    
+    	   }
+    	
+       else {
+    	       if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("Shared-deleivery"))
+    	             {
+    		             if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
+    			          Alert a = new Alert(AlertType.ERROR);
+		                  a.setContentText("Error");
+		                  a.setHeaderText("your details that you insert is Wrong!");
+		                  a.showAndWait();
+    	                                 	}
+    		             else {
+    		            	 address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+    		            	   }
+    	                }
+    	       else{
+    	    	     switch (DeleiveryType) {
+    				  case "Deleivery":
+    					  pricedeleivery=25;
+    					  break;
+    			      case "Shared-deleivery":
+    					  pricedeleivery=25;
+    					  break;
+    				   default:
+    					  pricedeleivery=0;
+    					  break;
+    				                        }
+    	    			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	        		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
+    	        			   Alert a = new Alert(AlertType.ERROR);
+    	        	            a.setContentText("Error");
+    	        	            a.setHeaderText("there is no enough money in your bussiness wallet ");
+    	        	            a.showAndWait();
+    	        		}
+    	        		else {
+    	        			if(flagDate==0&&!orderdateField.getText().equals("")) {
+    	        			
+    	        				 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+ 	    	      	        	OrdersDetailsController AFrame=new OrdersDetailsController();
+ 	    	      	    		try {
+ 	    	      	    			AFrame.start(stage);
+ 	    	      	    		} catch (Exception e) {
+ 	    	      	    			// TODO Auto-generated catch block
+ 	    	      	    			e.printStackTrace();}
+    	        			}
+    	        			
+    	        		}
+    	        			
+    	        		}
+    	       }
+    	 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+        	OrdersDetailsController AFrame=new OrdersDetailsController();
+    		try {
+    			AFrame.start(stage);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();}
+    	
+       }
+    	
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
-    	accountpayment="PrivateAccount";
+    	Time= orderdateField.getText();
+   	 try {
+			date1=simpleDateFormat.parse(Time);
+		    date2=simpleDateFormat.parse(dtf.format(now));
+		    TimerMath( date1,date2);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+   	if(flagDate==0) {
+		 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) {
+			  Alert a = new Alert(AlertType.ERROR);
+	            a.setContentText("Error");
+	            a.setHeaderText("your details that you insert is Wrong!");
+	            a.showAndWait();
+	    		}
+		 if((differenceInHours<2)) 
+	      {
+		    Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("you have to insert at least after two houer from now");
+            a.showAndWait();}
+		 }
+   	else {
+   	 //////////////////////////////////////////////////////////
     	if(DeleiveryType==null)
     	{
     		 Alert a = new Alert(AlertType.ERROR);
@@ -314,15 +431,7 @@ public class PaymentMethodController implements Initializable{
     		}
     		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
     	}
-    	if(flagDate==0) {
-    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")||
-    		    	Float.valueOf(orderdateField.getText())<0||Float.valueOf(orderdateField.getText())>23) {
-    				  Alert a = new Alert(AlertType.ERROR);
-    		            a.setContentText("Error");
-    		            a.setHeaderText("your details that you insert is Wrong!");
-    		            a.showAndWait();
-    		    		}
-    			 }
+    	
     	switch (DeleiveryType) {
 		case "Deleivery":
 			pricedeleivery=25;
@@ -346,18 +455,29 @@ public class PaymentMethodController implements Initializable{
 		}
     		}
     }
-
+    }
  
 
-	@Override
+    @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Shadow.setVisible(false);
+		Shadow1.setVisible(false);
+		Star.setVisible(false);
+		Pick1.setVisible(false);
+    	Pick2.setVisible(false);
+    	Pick3.setVisible(false);
+    	Pick4.setVisible(false);
 		if(ChatClient.w4ccard.getAccountType().equals("business")) {
+		payprivatebutton1.setVisible(false);
+		payprivatebutton.setVisible(true);
+		paybussinessbutton.setVisible(true);
 		ScanerQrController.Wallet=ChatClient.bussiness.getCeiling();
 		walletTxt.setText(": "+ScanerQrController.Wallet+"$");
 		}
 		
 		orderdateField.setVisible(false);
 		if(ChatClient.w4ccard.getAccountType().equals("private")) {
+			payprivatebutton.setVisible(false);
 			SharedDelButton.setVisible(false);
 			paybussinessbutton.setVisible(false);
 			Wallettxt.setVisible(false);
@@ -373,14 +493,7 @@ public class PaymentMethodController implements Initializable{
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
 		
-		
-		Calendar cal = Calendar.getInstance(); // creates calendar
-		cal.setTime(new Date());               // sets calendar time/date
-		cal.add(Calendar.HOUR_OF_DAY, 2);      // adds one hour
-		(Date)HelpTime=cal.getTime();    
-		
 	}
-
 	public void start(Stage stage)  throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -393,4 +506,3 @@ public class PaymentMethodController implements Initializable{
 	}
 
 }
-

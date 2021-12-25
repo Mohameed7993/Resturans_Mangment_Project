@@ -117,7 +117,7 @@ public class MyCartController implements Initializable {
 
     @FXML
     void PaymentAction(ActionEvent event) {
-    //	if(ItemDetailsController.itemList)
+    	if(ItemDetailsController.itemList.size()!=0) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	PaymentMethodController AFrame=new PaymentMethodController();
 		try {
@@ -126,6 +126,13 @@ public class MyCartController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Error");
+            a.setHeaderText("make you Items");
+            a.showAndWait();
+    	}
     }
 
     @FXML

@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,11 +33,12 @@ import javafx.stage.Stage;
 
 public class OrdersDetailsController implements Initializable {
 	public static OrdersList orders=null;
-	public static LocalDateTime now = LocalDateTime.now();
-	public static   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");  
+	
+	
 	public LocalDateTime ArrivalTime;
 	public static String orderTime;
 	public static Integer orderPackageNumber;
+	public String time;
 	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
 
@@ -135,21 +137,23 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
+    	time=PaymentMethodController.dtf.format(PaymentMethodController.now);
     	if(PaymentMethodController.flagDate==1)
-    	orderTime=dtf.format(now);
+    		
+    	orderTime=(time);
     	else 
     		orderTime=PaymentMethodController.Time;
     	
     	orderPackageNumber=null;
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
-    				,dtf.format(now),String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
+    				,time,String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
  
     	}
     	else {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
-    				,dtf.format(now),String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
+    				,time,String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
     				,"UnReady","0","UnApproved");
     	}
     		

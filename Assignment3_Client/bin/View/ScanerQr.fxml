@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -15,19 +17,29 @@
             <Image url="@../Images/Layer%204.png" />
          </image>
       </ImageView>
-      <Button fx:id="BackButton" layoutX="25.0" layoutY="633.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+      <Button fx:id="BackButton" layoutX="39.0" layoutY="639.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <ImageView fx:id="Image2" fitHeight="305.0" fitWidth="188.0" layoutX="805.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Image2" fitHeight="231.0" fitWidth="241.0" layoutX="743.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/43-430460_png-food-top-view.png" />
+            <Image url="@../Images/Pizza.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Image4" fitHeight="248.0" fitWidth="188.0" layoutX="-2.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fx:id="Image4" fitHeight="354.0" fitWidth="272.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/139203-food-plate-top-nutrition-view.png" />
+            <Image url="@../Images/Spaggati.png" />
          </image>
       </ImageView>
       <ImageView fx:id="Image3" fitHeight="226.0" fitWidth="302.0" layoutX="338.0" layoutY="297.0">
@@ -35,10 +47,20 @@
             <Image url="@../Images/QR.png" />
          </image>
       </ImageView>
-      <Button fx:id="scanButton" layoutX="380.0" layoutY="613.0" mnemonicParsing="false" onAction="#scanButtonAction" prefHeight="41.0" prefWidth="218.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Scan" textFill="WHITE">
+      <Button fx:id="scanButton" layoutX="349.0" layoutY="611.0" mnemonicParsing="false" onAction="#scanButtonAction" prefHeight="41.0" prefWidth="297.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Scan" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
       <Text fx:id="Identify1" fill="#79a42b" layoutX="364.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identification by QR scan" textAlignment="CENTER" wrappingWidth="250.0">
          <font>
