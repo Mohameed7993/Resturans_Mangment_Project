@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -57,7 +57,6 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <TextArea fx:id="CityField" layoutX="905.0" layoutY="419.0" prefHeight="37.0" prefWidth="166.0" promptText="City" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" />
       <Text fx:id="streettxt" fill="#79a42b" layoutX="846.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -110,8 +109,6 @@
             </DropShadow>
          </effect>
       </Button>
-      <TextArea fx:id="streetField" layoutX="905.0" layoutY="469.0" prefHeight="38.0" prefWidth="166.0" promptText="Street" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" />
-      <TextArea fx:id="houseNumberField" layoutX="905.0" layoutY="519.0" prefHeight="0.0" prefWidth="166.0" promptText="House number" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" />
     <Button fx:id="payprivatebutton" layoutX="682.0" layoutY="608.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="35.0" prefWidth="155.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" text="Private Account" textFill="#79a42b">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -184,7 +181,6 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <TextArea fx:id="orderdateField" layoutX="682.0" layoutY="335.0" prefHeight="38.0" prefWidth="118.0" promptText="Enter hour" />
       <Button fx:id="nowbutton" layoutX="507.0" layoutY="335.0" mnemonicParsing="false" onAction="#nowbuttonAction" prefHeight="38.0" prefWidth="71.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Now" textAlignment="RIGHT" textFill="#343434">
          <effect>
             <DropShadow>
@@ -391,5 +387,9 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
+      <TextField fx:id="CityField" layoutX="913.0" layoutY="439.0" promptText="City" style="-fx-background-radius: 100;" />
+      <TextField fx:id="orderdateField" layoutX="683.0" layoutY="331.0" prefHeight="35.0" prefWidth="107.0" promptText="Enter hour" style="-fx-background-radius: 100;" />
+      <TextField fx:id="houseNumberField" layoutX="911.0" layoutY="527.0" promptText="House number" style="-fx-background-radius: 100;" />
+      <TextField fx:id="streetField" layoutX="913.0" layoutY="483.0" promptText="Street" style="-fx-background-radius: 100;" />
    </children>
 </AnchorPane>

@@ -38,7 +38,7 @@ public class OrdersDetailsController implements Initializable {
 	public LocalDateTime ArrivalTime;
 	public static String orderTime;
 	public static Integer orderPackageNumber;
-	public String time;
+	public static String time;
 	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
 
@@ -125,14 +125,9 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     void BackButtonAction(ActionEvent event) {
-    	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-    	PaymentMethodController AFrame=new PaymentMethodController();
-		try {
-			AFrame.start(stage);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
+    	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+    
     }
 
     @FXML
@@ -207,11 +202,31 @@ public class OrdersDetailsController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		if(PaymentMethodController.accountpayment.equals("private")) {
+			empidtxt.setVisible(false);
+			empidfield.setVisible(false);
+			empnamefield.setVisible(false);
+			empnametxt.setVisible(false);
+			creditfield.setVisible(true);
 		creditfield.setText(ChatClient.w4ccard.getCreditCardNumber());
-		
+		}else {
+			credittxt.setVisible(false);
+			creditfield.setVisible(false);
+			empidfield.setText(ChatClient.bussiness.getEmployerId());
+			empnamefield.setText(ChatClient.bussiness.getEmployerName());
+		}
+			
 		resturantfield.setText(ChooseResturantController.resturant.getResturantName());
-		requesteddatefield.setText(orderTime);
+		
+	
+		if(PaymentMethodController.flagDate==0)
+		{
+			System.out.println(PaymentMethodController.Time);
+		requesteddatefield.setText(PaymentMethodController.Time);
+		}
+		else requesteddatefield.setText("now");
+		
+		
 		delevfield.setText(PaymentMethodController.DeleiveryType);
 		orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
 		totalpricefield.setText(String.valueOf(orderPrice));
@@ -226,21 +241,15 @@ public class OrdersDetailsController implements Initializable {
 			huosefiled.setVisible(false);
 		}
 		else {
+			if(PaymentMethodController.address!=null) {
 			cityfield.setText(PaymentMethodController.address.getCity());
 			streetfield.setText(PaymentMethodController.address.getStreet());
 			huosefiled.setText(PaymentMethodController.address.getHouseNumber());
+			}
 		}
-		if(ChatClient.w4ccard.getAccountType().equals("private"))
-		{
-			empidtxt.setVisible(false);
-			empidfield.setVisible(false);
-			empnamefield.setVisible(false);
-			empnametxt.setVisible(false);
-		}
-		else {
-			empidfield.setText(ChatClient.bussiness.getEmployerId());
-			empnamefield.setText(ChatClient.bussiness.getEmployerName());
-		}
+		
+			
+		
 		
 		
 	}
