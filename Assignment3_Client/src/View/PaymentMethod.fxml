@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentMethodController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentMethodController">
    <children>
       <ImageView fx:id="Visa" fitHeight="385.0" fitWidth="329.0" layoutX="876.0" layoutY="312.0">
          <image>
             <Image url="@../Images/Paymen.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image1" fitHeight="639.0" fitWidth="839.0" layoutX="368.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image1" fitHeight="639.0" fitWidth="839.0" layoutX="427.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/Layer%204.png" />
          </image>
@@ -62,7 +62,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="787.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
+      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="782.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -391,5 +391,25 @@
       <TextField fx:id="orderdateField" layoutX="683.0" layoutY="331.0" prefHeight="35.0" prefWidth="107.0" promptText="Enter hour" style="-fx-background-radius: 100;" />
       <TextField fx:id="houseNumberField" layoutX="911.0" layoutY="527.0" promptText="House number" style="-fx-background-radius: 100;" />
       <TextField fx:id="streetField" layoutX="913.0" layoutY="483.0" promptText="Street" style="-fx-background-radius: 100;" />
+      <Text fx:id="Discounttxt" fill="#05071f" layoutX="682.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="'Discount 10% on Price'">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Text>
+      <Text fx:id="Star1" fill="#a32c2c" layoutX="901.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <Text fx:id="Star11" fill="#a32c2c" layoutX="898.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <Text fx:id="Star12" fill="#a32c2c" layoutX="898.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

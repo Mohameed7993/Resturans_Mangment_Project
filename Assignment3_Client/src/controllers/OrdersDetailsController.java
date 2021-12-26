@@ -40,11 +40,13 @@ public class OrdersDetailsController implements Initializable {
 	public static Integer orderPackageNumber;
 	public static String time;
 	
+	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
 
 	public static ItemList AddItem;
 	
     public int orderPrice;
+    public double tempPrice;
     @FXML
     private ImageView image;
 
@@ -122,6 +124,7 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     private Text empidfield;
+    
 
     @FXML
     void BackButtonAction(ActionEvent event) {
@@ -218,7 +221,7 @@ public class OrdersDetailsController implements Initializable {
 			
 		resturantfield.setText(ChooseResturantController.resturant.getResturantName());
 		
-	
+
 		if(PaymentMethodController.flagDate==0)
 		{
 			System.out.println(PaymentMethodController.Time);
@@ -229,6 +232,11 @@ public class OrdersDetailsController implements Initializable {
 		
 		delevfield.setText(PaymentMethodController.DeleiveryType);
 		orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
+		
+		if(PaymentMethodController.flagDate==0) {//0->after two hour,1-> now
+			tempPrice=(ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery)*0.1;
+			orderPrice=orderPrice-(int)tempPrice;
+		}
 		totalpricefield.setText(String.valueOf(orderPrice));
 		
 		if(PaymentMethodController.DeleiveryType.equals("TakeAway")||PaymentMethodController.DeleiveryType.equals("Robot")) {

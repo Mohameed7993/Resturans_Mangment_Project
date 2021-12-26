@@ -37,7 +37,7 @@ public class PaymentMethodController implements Initializable{
 	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 	public  static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 	
-	public static String DeleiveryType=null;
+	public static String DeleiveryType="null";
 	
 	public static Integer pricedeleivery;
 	
@@ -177,6 +177,19 @@ public class PaymentMethodController implements Initializable{
     @FXML
     private Button payprivatebutton1;
     
+
+    @FXML
+    private Text Discounttxt;
+
+    @FXML
+    private Text Star1;
+
+    @FXML
+    private Text Star11;
+
+    @FXML
+    private Text Star12;
+    
     @FXML
     void otherbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(true);
@@ -184,6 +197,7 @@ public class PaymentMethodController implements Initializable{
     	Shadow.setVisible(false);
 		Shadow1.setVisible(true);
 		Star.setVisible(true);
+		Discounttxt.setVisible(true);
     	
     }
   
@@ -195,6 +209,7 @@ public class PaymentMethodController implements Initializable{
     	Shadow.setVisible(true);
 		Shadow1.setVisible(false);
 		Star.setVisible(false);
+		Discounttxt.setVisible(false);
     	
     	
     }
@@ -226,6 +241,9 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(true);
 		streetField.setVisible(true);
 		houseNumberField.setVisible(true);
+		Star1.setVisible(true);
+		Star11.setVisible(true);
+		Star12.setVisible(true);
 		
     }
 
@@ -244,6 +262,9 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(true);
 		streetField.setVisible(true);
 		houseNumberField.setVisible(true);
+		Star1.setVisible(true);
+		Star11.setVisible(true);
+		Star12.setVisible(true);
 	
     }
 
@@ -262,6 +283,9 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(true);
 		streetField.setVisible(true);
 		houseNumberField.setVisible(true);
+		Star1.setVisible(true);
+		Star11.setVisible(true);
+		Star12.setVisible(true);
 		
     }
 
@@ -280,6 +304,9 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(false);
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
+		Star1.setVisible(false);
+		Star11.setVisible(false);
+		Star12.setVisible(false);
     }
     
     ////////////////////////////////////////////////////////////////////////////////
@@ -563,7 +590,13 @@ public class PaymentMethodController implements Initializable{
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
+    	Discounttxt.setVisible(false);
+    	Star1.setVisible(false);
+		Star11.setVisible(false);
+		Star12.setVisible(false);
+    	
     	if(address!=null) {
+    		Visa.setVisible(false);
     		enterAdresstxt.setVisible(true);
     		citytxt.setVisible(true);
     		streettxt.setVisible(true);
@@ -575,18 +608,27 @@ public class PaymentMethodController implements Initializable{
     		CityField.setText(address.getCity());
     		streetField.setText(address.getStreet());
     		houseNumberField.setText(address.getHouseNumber());
-    		
-    		
-    		
-    		
+    		Star1.setVisible(true);
+    		Star11.setVisible(true);
+    		Star12.setVisible(true);
     	}
+    	if(flagDate==0) {
 		Shadow.setVisible(false);
+		Shadow1.setVisible(true);
+		
+		orderdateField.setVisible(true);
+		orderdateField.setText(Time);
+		
+    	}
+    	if(flagDate==1) {
+    	Shadow.setVisible(true);
 		Shadow1.setVisible(false);
+		orderdateField.setVisible(false);
+		
+    	}
 		Star.setVisible(false);
-		Pick1.setVisible(false);
-    	Pick2.setVisible(false);
-    	Pick3.setVisible(false);
-    	Pick4.setVisible(false);
+		
+    	
 		if(ChatClient.w4ccard.getAccountType().equals("business")) {
 		payprivatebutton1.setVisible(false);
 		payprivatebutton.setVisible(true);
@@ -612,6 +654,44 @@ public class PaymentMethodController implements Initializable{
 		CityField.setVisible(false);
 		streetField.setVisible(false);
 		houseNumberField.setVisible(false);
+		
+		 switch (DeleiveryType) {
+			case "Deleivery":
+				Pick1.setVisible(false);
+		    	Pick2.setVisible(false);
+		    	Pick3.setVisible(true);
+		    	Pick4.setVisible(false);
+		    	Visa.setVisible(false);
+				break;
+			case "SharedDeleivery":
+				Pick1.setVisible(false);
+		    	Pick2.setVisible(false);
+		    	Pick3.setVisible(false);
+		    	Pick4.setVisible(true);
+		    	Visa.setVisible(false);
+				break;
+			case "Robot":
+				Pick1.setVisible(false);
+		    	Pick2.setVisible(true);
+		    	Pick3.setVisible(false);
+		    	Pick4.setVisible(false);
+		    	Visa.setVisible(false);
+				break;
+			case "TakeAway":
+				Pick1.setVisible(true);
+		    	Pick2.setVisible(false);
+		    	Pick3.setVisible(false);
+		    	Pick4.setVisible(false);
+		    	Visa.setVisible(true);
+				break;
+			default:
+				Pick1.setVisible(false);
+		    	Pick2.setVisible(false);
+		    	Pick3.setVisible(false);
+		    	Pick4.setVisible(false);
+		    	Visa.setVisible(true);
+				break;
+		 }
 		
 	}
 	public void start(Stage stage)  throws Exception {
