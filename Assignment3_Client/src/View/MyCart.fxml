@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MyCartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MyCartController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="286.0" style="-fx-background-color: #05071F;" stylesheets="@../../../CSS/CSS/src/application/style1.css">
          <children>
@@ -182,7 +182,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <Button fx:id="DeleteButton" layoutX="794.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
+      <Button fx:id="DeleteButton" layoutX="901.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -197,7 +197,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="Addbutton" layoutX="579.0" layoutY="616.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
+      <Button fx:id="Addbutton" layoutX="683.0" layoutY="616.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -217,5 +217,20 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
+      <Button fx:id="EditButton" layoutX="463.0" layoutY="616.0" mnemonicParsing="false" onAction="#EditAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Edit" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
