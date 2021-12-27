@@ -190,7 +190,19 @@ public class OrdersDetailsController implements Initializable {
     	MyCartController.numberitem=0;
     	ItemDetailsController.itemList.clear();
     	Items.clear();
-    
+    if(PaymentMethodController.accountpayment.equals("buissiness")) {
+		String wallet=(ScanerQrController.Wallet);
+		int orederPrice=Integer.valueOf(orders.getTotalPrice());
+		int x=Integer.valueOf(wallet)-orderPrice;
+		wallet=String.valueOf(x);
+		System.out.println(wallet);
+		System.out.println(ChatClient.w4ccard.getW4cCode());
+		ClientUI.chat.accept(new Message(MessageType.updateCelling,wallet+" "+ChatClient.w4ccard.getW4cCode()));
+    }
+		PaymentMethodController.address=null;
+		PaymentMethodController.flagDate=2;
+		PaymentMethodController.DeleiveryType=null;
+    	
     	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
     	CustomerHomeController AFrame=new CustomerHomeController();
 		try {
@@ -199,6 +211,7 @@ public class OrdersDetailsController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     	
  
     }

@@ -169,6 +169,23 @@ public class mysqlConnection {
 		
 	}
 	
+
+	public static void updatecelling(String Celling,String w4ccode) {
+		PreparedStatement ps;
+		try {
+			ps=mysqlConnection.conn.prepareStatement("update bitemedb.business set Ceiling=? where w4cCode=?");
+			ps.setString(1, Celling);
+			ps.setString(2, w4ccode);
+			ps.execute();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
 	public static  OrdersList getOrder(String CustomerId) {
 		PreparedStatement ps;
 		ResultSet res;
@@ -377,6 +394,8 @@ public class mysqlConnection {
 
 			return Item_list;
 		}
+
+
 		
 		
 		

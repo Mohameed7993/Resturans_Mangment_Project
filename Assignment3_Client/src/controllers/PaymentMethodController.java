@@ -628,16 +628,6 @@ public class PaymentMethodController implements Initializable{
         	    	   	    				      break;
         	    	   	    			    }
         	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-        	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
-        	    		        		       {
-        	    		        			      Alert a = new Alert(AlertType.ERROR);
-        	    		        	              a.setContentText("Error");
-        	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
-        	    		        	              a.showAndWait();
-        	    		        		      }
-        	    		        		  else
-        	    		        		  {
-        	    		        			  
         	    		        				  Stage stage = new Stage();
         	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
         	    			    		          try {
@@ -647,7 +637,7 @@ public class PaymentMethodController implements Initializable{
         	    			    			        e.printStackTrace();}  
         	    		        			   
         	    		        			     
-        	    		        		   }
+        	    		        		   
      	    	    	        	    }
      	    	    	        	
      	    		        		  
@@ -674,16 +664,6 @@ public class PaymentMethodController implements Initializable{
 	    	   	    				      break;
 	    	   	    			    }
 	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
-	    		        		       {
-	    		        			      Alert a = new Alert(AlertType.ERROR);
-	    		        	              a.setContentText("Error");
-	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
-	    		        	              a.showAndWait();
-	    		        		      }
-	    		        		  else
-	    		        		  {
-	    		        			  
 	    		        				  Stage stage = new Stage();
 	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
 	    			    		          try {
@@ -693,7 +673,7 @@ public class PaymentMethodController implements Initializable{
 	    			    			        e.printStackTrace();}  
 	    		        			   
 	    		        			     
-	    		        		   }
+	    		        		   
     	    	        	    }
     	    	    	   }
     	    	    	    
@@ -732,15 +712,6 @@ public class PaymentMethodController implements Initializable{
 	    				                         break;
 	    			                         }
  	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	        		                        if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
-	        		                             {
-	        			                            Alert a = new Alert(AlertType.ERROR);
-	        	                                    a.setContentText("Error");
-	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
-	        	                                    a.showAndWait();
-	        		                              }
-	        		                                 else
-	        		                                       {
 	        			                                     Stage stage = new Stage();
 		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
 		    		                                         try {
@@ -748,7 +719,7 @@ public class PaymentMethodController implements Initializable{
 		    		                                         catch (Exception e) {
 		    			                                     // TODO Auto-generated catch block
 		    			                                      e.printStackTrace();}  
-	        			                                    }
+	        			                                    
 	        	                    }
    	                        }
                       }
@@ -773,16 +744,6 @@ public class PaymentMethodController implements Initializable{
 				      break;
 			    }
  	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
- 		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
- 		       {
- 			      Alert a = new Alert(AlertType.ERROR);
- 	              a.setContentText("Error");
- 	              a.setHeaderText("there is no enough money in your bussiness wallet ");
- 	              a.showAndWait();
- 		      }
- 		  else
- 		  {
- 			  
  				  Stage stage = new Stage();
      	          OrdersDetailsController AFrame=new OrdersDetailsController();
  		          try {
@@ -792,7 +753,7 @@ public class PaymentMethodController implements Initializable{
  			        e.printStackTrace();}  
  			   
  			     
- 		   }
+ 		   
   	    }
   	   }
   	    

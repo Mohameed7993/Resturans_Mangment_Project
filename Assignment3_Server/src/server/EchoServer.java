@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.sun.media.jfxmedia.events.NewFrameEvent;
+
 import common.*;
 import controllers.ServerConnectionController;
 import javafx.scene.control.Label;
@@ -153,9 +155,14 @@ public class EchoServer extends AbstractServer {
 				message=((String)m.getObject()).split(" ");
 				OrdersList order;
 				order =mysqlConnection.getOrder(message[0]);
-				System.out.println(order.getOrderPackageNumber());
 				client.sendToClient(new Message(MessageType.GetOrder, order));
 				break;
+			case updateCelling:
+				System.out.println(1111);
+				message=((String)m.getObject()).split(" ");
+				System.out.println(message[0]+" "+message[1]);
+				mysqlConnection.updatecelling(message[0],message[1]);
+				client.sendToClient(new Message(MessageType.updateCelling, null));
 			default:
 			
 				break;
