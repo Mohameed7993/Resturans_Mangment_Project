@@ -52,27 +52,27 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="enterAdresstxt" fill="#79a42b" layoutX="905.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enter address Please:" wrappingWidth="166.0">
+      <Text fx:id="enterAdresstxt" fill="#79a42b" layoutX="938.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enter address Please:" wrappingWidth="166.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="streettxt" fill="#79a42b" layoutX="846.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
+      <Text fx:id="streettxt" fill="#79a42b" layoutX="879.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="782.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
+      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="815.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="citytxt" fill="#79a42b" layoutX="865.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" wrappingWidth="35.0">
+      <Text fx:id="citytxt" fill="#79a42b" layoutX="898.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" wrappingWidth="35.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <ImageView fitHeight="247.0" fitWidth="200.0" layoutX="659.0" layoutY="368.0">
+      <ImageView fitHeight="247.0" fitWidth="200.0" layoutX="697.0" layoutY="368.0">
          <image>
             <Image url="@../Images/cutter.png" />
          </image>
@@ -109,7 +109,7 @@
             </DropShadow>
          </effect>
       </Button>
-    <Button fx:id="payprivatebutton" layoutX="682.0" layoutY="608.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="35.0" prefWidth="155.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" text="Private Account" textFill="#79a42b">
+    <Button fx:id="payprivatebutton" layoutX="727.0" layoutY="608.0" mnemonicParsing="false" onAction="#payprivatebuttonAction" prefHeight="35.0" prefWidth="155.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" text="Private Account" textFill="#79a42b">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -150,7 +150,7 @@
                </color>
             </DropShadow>
          </effect></Button>
-      <Button fx:id="paybussinessbutton" layoutX="657.0" layoutY="654.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="35.0" prefWidth="206.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" text="Bussiness Account" textFill="#79a42b">
+      <Button fx:id="paybussinessbutton" layoutX="702.0" layoutY="654.0" mnemonicParsing="false" onAction="#paybussinessbuttonAction" prefHeight="35.0" prefWidth="206.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle.css" text="Bussiness Account" textFill="#79a42b">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -203,7 +203,7 @@
                </color>
             </DropShadow>
          </effect></Button>
-      <Text fx:id="Wallettxt" fill="#79a42b" layoutX="787.0" layoutY="591.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bussiness Wallet:" wrappingWidth="130.5">
+      <Text fx:id="Wallettxt" fill="#79a42b" layoutX="820.0" layoutY="591.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bussiness Wallet:" wrappingWidth="130.5">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -377,7 +377,7 @@
             <Font name="System Bold" size="11.0" />
          </font>
       </Text>
-      <Text fx:id="walletTxt" fill="#353f4c" layoutX="923.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="64.5">
+      <Text fx:id="walletTxt" fill="#353f4c" layoutX="956.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="64.5">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -387,26 +387,32 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <TextField fx:id="CityField" layoutX="913.0" layoutY="439.0" promptText="City" style="-fx-background-radius: 100;" />
-      <TextField fx:id="orderdateField" layoutX="683.0" layoutY="331.0" prefHeight="35.0" prefWidth="107.0" promptText="Enter hour" style="-fx-background-radius: 100;" />
-      <TextField fx:id="houseNumberField" layoutX="911.0" layoutY="527.0" promptText="House number" style="-fx-background-radius: 100;" />
-      <TextField fx:id="streetField" layoutX="913.0" layoutY="483.0" promptText="Street" style="-fx-background-radius: 100;" />
+      <TextField fx:id="CityField" layoutX="946.0" layoutY="439.0" promptText="City" style="-fx-background-radius: 100;" />
+      <TextField fx:id="orderdateField" layoutX="683.0" layoutY="331.0" prefHeight="35.0" prefWidth="107.0" promptText="HH:MM" style="-fx-background-radius: 100;" />
+      <TextField fx:id="houseNumberField" layoutX="944.0" layoutY="527.0" promptText="House number" style="-fx-background-radius: 100;" />
+      <TextField fx:id="streetField" layoutX="946.0" layoutY="483.0" promptText="Street" style="-fx-background-radius: 100;" />
       <Text fx:id="Discounttxt" fill="#05071f" layoutX="682.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="'Discount 10% on Price'">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
       </Text>
-      <Text fx:id="Star1" fill="#a32c2c" layoutX="901.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star1" fill="#a32c2c" layoutX="934.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Text fx:id="Star11" fill="#a32c2c" layoutX="898.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star11" fill="#a32c2c" layoutX="931.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Text fx:id="Star12" fill="#a32c2c" layoutX="898.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star12" fill="#a32c2c" layoutX="931.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <TextField fx:id="SharedDelNumfield" layoutX="588.0" layoutY="617.0" prefHeight="35.0" prefWidth="130.0" promptText="ParticipantsNumber" style="-fx-background-radius: 100;" />
+      <Text fx:id="Star2" fill="#a32c2c" layoutX="573.0" layoutY="645.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>

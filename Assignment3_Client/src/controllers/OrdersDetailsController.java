@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 
 public class OrdersDetailsController implements Initializable {
 	public static OrdersList orders=null;
+	public static Integer CountParticipants;
 	
 	
 	public LocalDateTime ArrivalTime;
@@ -186,6 +187,8 @@ public class OrdersDetailsController implements Initializable {
     		Items.get(i).getIngredient()+" "+ Items.get(i).getQuantity()+" "+ Items.get(i).getPrice()+" "+ Items.get(i).getPackageID()));
     	}
     	
+    	System.out.println(PaymentMethodController.IsDeleiveryShared);
+    	System.out.println(PaymentMethodController.Participants_Number);
     	
     	MyCartController.numberitem=0;
     	ItemDetailsController.itemList.clear();
@@ -195,22 +198,54 @@ public class OrdersDetailsController implements Initializable {
 		int orederPrice=Integer.valueOf(orders.getTotalPrice());
 		int x=Integer.valueOf(wallet)-orderPrice;
 		wallet=String.valueOf(x);
-		System.out.println(wallet);
-		System.out.println(ChatClient.w4ccard.getW4cCode());
+
 		ClientUI.chat.accept(new Message(MessageType.updateCelling,wallet+" "+ChatClient.w4ccard.getW4cCode()));
     }
 		PaymentMethodController.address=null;
 		PaymentMethodController.flagDate=2;
-		PaymentMethodController.DeleiveryType=null;
+	//	PaymentMethodController.DeleiveryType=null;
     	
-    	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
-    	CustomerHomeController AFrame=new CustomerHomeController();
-		try {
-			AFrame.start(CustomerHomeController.stage1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(PaymentMethodController.DeleiveryType.equals("SharedDeleivery"))
+		{
+			if(PaymentMethodController.Participants_Number==1)
+			{
+				 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+			    	CustomerHomeController AFrame=new CustomerHomeController();
+					try {
+						AFrame.start(CustomerHomeController.stage1);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			else
+			{
+				for(int i=0;i<PaymentMethodController.Participants_Number;i++)
+				{
+				 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+			    	TybeMealController AFrame=new TybeMealController();
+					try {
+						AFrame.start(CustomerHomeController.stage1);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
 		}
+		else {
+			 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+		    	CustomerHomeController AFrame=new CustomerHomeController();
+				try {
+					AFrame.start(CustomerHomeController.stage1);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+    	
 
     	
  
