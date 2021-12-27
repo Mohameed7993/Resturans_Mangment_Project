@@ -54,7 +54,7 @@ public class PaymentMethodController implements Initializable{
 	public long differenceInHours;
 	public long differenceInMinutes;
 	
-	public static int flagDate=1; //0-> other, 1->now
+	public static int flagDate=2; //0-> other, 1->now
 	
 	public Date date1;
 	public Date date2;
@@ -215,7 +215,8 @@ public class PaymentMethodController implements Initializable{
     }
     @FXML
     void BackButtonAction(ActionEvent event) {
-    	address=null;
+    	if(DeleiveryType.equals("TakeAway")) 
+    	    address=null;
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	MyCartController AFrame=new MyCartController();
 		try {
@@ -322,323 +323,493 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
     	accountpayment="buissiness";
-    	
-    	
-    	if(flagDate==0) {
-    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) {
-    				  Alert a = new Alert(AlertType.ERROR);
-    		            a.setContentText("Error");
-    		            a.setHeaderText("your details that you insert is Wrong!");
-    		            a.showAndWait();
-    		    		}
-    			 else {
-    				 Time= orderdateField.getText();
-	    	    	 try {
-	    				date1=simpleDateFormat.parse(Time);
-	    			    date2=simpleDateFormat.parse(dtf.format(now));
-	    			    TimerMath( date1,date2);
-	    			} catch (ParseException e1) {
-	    				// TODO Auto-generated catch block
-	    				e1.printStackTrace();
-	    			}
-	    	    	 if((differenceInHours<2)) {
-	    	    		  Alert a = new Alert(AlertType.ERROR);
+    	if(flagDate==0)
+    	{
+    		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
+    		{
+    			Alert a = new Alert(AlertType.ERROR);
+	            a.setContentText("Error");
+	            a.setHeaderText("Insert requested Date");
+	            a.showAndWait();
+    		}else//////////////////////////////////////////////////////////////////////
+    		   {
+    			 Time= orderdateField.getText();
+    	    	 try {
+    				date1=simpleDateFormat.parse(Time);
+    			    date2=simpleDateFormat.parse(dtf.format(now));
+    			    TimerMath( date1,date2);
+    			     } catch (ParseException e1) {
+    				// TODO Auto-generated catch block
+    				e1.printStackTrace();}
+    	    	 
+    	    	       if(differenceInHours<2)
+    	    	          {
+    	    	    	   Alert a = new Alert(AlertType.ERROR);
 	    		            a.setContentText("Error");
 	    		            a.setHeaderText("At least after two hour from now");
 	    		            a.showAndWait();
-	    	    	 }
-	    	    	 else {
-	    	    		 if(DeleiveryType==null)
-	    	    	    	{
-	    	    	    		 Alert a = new Alert(AlertType.ERROR);
-	    	    		            a.setContentText("Error");
-	    	    		            a.setHeaderText("Choose deleivery service");
-	    	    		            a.showAndWait();
-	    	    	    	}
-	    	    	    	else {
-	    	    	    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
-	    	    	    	{
-	    	    	    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
-	    	    	    			 Alert a = new Alert(AlertType.ERROR);
-	    	    			            a.setContentText("Error");
-	    	    			            a.setHeaderText("your details that you insert is Wrong!");
-	    	    			            a.showAndWait();
-	    	    	    		}
-	    	    	    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
-	    	    	    	}
-	    	    	
-	    	    			switch (DeleiveryType) {
-	    	    			case "Deleivery":
-	    	    				pricedeleivery=25;
-	    	    				break;
-	    	    			case "SharedDeleivery":
-	    	    				pricedeleivery=25;
-	    	    				break;
-	    	    			default:
-	    	    				pricedeleivery=0;
-	    	    				break;
-	    	    			}
-	    	        		
-	    	        		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    	        		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
-	    	        			   Alert a = new Alert(AlertType.ERROR);
-	    	        	            a.setContentText("Error");
-	    	        	            a.setHeaderText("there is no enough money in your bussiness wallet ");
-	    	        	            a.showAndWait();
-	    	        		}
-	    	        		 Stage stage = new Stage();
-	    	        	OrdersDetailsController AFrame=new OrdersDetailsController();
-	    	    		try {
-	    	    			AFrame.start(stage);
-	    	    		} catch (Exception e) {
-	    	    			// TODO Auto-generated catch block
-	    	    			e.printStackTrace();
-	    	    		}
-	    	    	 }
-	    	    	 
-	    	    	
-	    	    	 }
-    			 }
+    	    	          }
+    	    	       else
+    	    	       {
+    	    	    	   if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
+     	       		           {
+     	    	    	          if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+     	    	    	           {
+   	    	    			         Alert a = new Alert(AlertType.ERROR);
+   	    			                 a.setContentText("Error");
+   	    			                 a.setHeaderText("Insert your address");
+   	    			                 a.showAndWait();
+     	       		                }
+     	    	    	         else {
+     	    	    	        	    address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+     	    	    	        	    if(DeleiveryType.equals("null"))
+     	    	    	        	    {
+        	    		        				  Alert a = new Alert(AlertType.ERROR);
+        	    		        	              a.setContentText("Error");
+        	    		        	              a.setHeaderText("Choose Deleivery Service");
+        	    		        	              a.showAndWait(); 
+     	    	    	        	    }
+     	    	    	        	    else
+     	    	    	        	    {
+     	    	    	        	       switch (DeleiveryType) 
+        	    	    	    	        {
+        	    	   	    			        case "Deleivery":
+        	    	   	    				      pricedeleivery=25;
+        	    	   	    				      break;
+        	    	   	    			       case "SharedDeleivery":
+        	    	   	    				      pricedeleivery=25;
+        	    	   	    				      break;
+        	    	   	    			       default:
+        	    	   	    				      pricedeleivery=0;
+        	    	   	    				      break;
+        	    	   	    			    }
+        	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+        	    		        		       {
+        	    		        			      Alert a = new Alert(AlertType.ERROR);
+        	    		        	              a.setContentText("Error");
+        	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+        	    		        	              a.showAndWait();
+        	    		        		      }
+        	    		        		  else
+        	    		        		  {
+        	    		        			  
+        	    		        				  Stage stage = new Stage();
+        	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+        	    			    		          try {
+        	    			    			        AFrame.start(stage);}
+        	    			    		            catch (Exception e) {
+        	    			    			        // TODO Auto-generated catch block
+        	    			    			        e.printStackTrace();}  
+        	    		        			   
+        	    		        			     
+        	    		        		   }
+     	    	    	        	    }
+     	    	    	        	
+     	    		        		  
+     	    	    	             }
+     		                  }
+    	    	    	   else
+    	    	    	   {
+    	    	    		   if(DeleiveryType.equals("null"))
+    	    	        	    {
+	    		        				  Alert a = new Alert(AlertType.ERROR);
+	    		        	              a.setContentText("Error");
+	    		        	              a.setHeaderText("Choose Deleivery Service");
+	    		        	              a.showAndWait(); 
+    	    	        	    }
+    	    	        	    else
+    	    	        	    {
+    	    	        	       switch (DeleiveryType) 
+	    	    	    	        {
+	    	   	    			        case "Deleivery":
+	    	   	    				      pricedeleivery=25;
+	    	   	    				      break;
+	    	   	    			       case "SharedDeleivery":
+	    	   	    				      pricedeleivery=25;
+	    	   	    				      break;
+	    	   	    			       default:
+	    	   	    				      pricedeleivery=0;
+	    	   	    				      break;
+	    	   	    			    }
+	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+	    		        		       {
+	    		        			      Alert a = new Alert(AlertType.ERROR);
+	    		        	              a.setContentText("Error");
+	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+	    		        	              a.showAndWait();
+	    		        		      }
+	    		        		  else
+	    		        		  {
+	    		        			  
+	    		        				  Stage stage = new Stage();
+	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+	    			    		          try {
+	    			    			        AFrame.start(stage);}
+	    			    		            catch (Exception e) {
+	    			    			        // TODO Auto-generated catch block
+	    			    			        e.printStackTrace();}  
+	    		        			   
+	    		        			     
+	    		        		   }
+    	    	        	    }
+    	    	    	   }
+    	    	    	    
+    	    	       }  	    
     	}
-    			
-    				
-    			 
-    			 else {
-    				 if(DeleiveryType==null)
-    			    	{
-    			    		 Alert a = new Alert(AlertType.ERROR);
-    				            a.setContentText("Error");
-    				            a.setHeaderText("Choose deleivery service");
-    				            a.showAndWait();
-    			    	}
-    			    	else {
-    			    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
-    			    	{
-    			    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
-    			    			 Alert a = new Alert(AlertType.ERROR);
-    					            a.setContentText("Error");
-    					            a.setHeaderText("your details that you insert is Wrong!");
-    					            a.showAndWait();
-    			    		}
-    			    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
-    			    	}
-    				 
-    				 switch (DeleiveryType) {
-	    				case "Deleivery":
-	    					pricedeleivery=25;
-	    					break;
-	    				case "SharedDeleivery":
-	    					pricedeleivery=25;
-	    					break;
-	    				default:
-	    					pricedeleivery=0;
-	    					break;
-	    				}
-	    	    		
-	    	    		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    	    		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
-	    	    			   Alert a = new Alert(AlertType.ERROR);
-	    	    	            a.setContentText("Error");
-	    	    	            a.setHeaderText("there is no enough money in your bussiness wallet ");
-	    	    	            a.showAndWait();
-	    	    		}
-	    	    		 Stage stage = new Stage();
-	    	    	OrdersDetailsController AFrame=new OrdersDetailsController();
-	    			try {
-	    				AFrame.start(stage);
-	    			} catch (Exception e) {
-	    				// TODO Auto-generated catch block
-	    				e.printStackTrace();
-	    			}
-    			 }
-    		}
-    }
     	
-	
+    	}///now
+    	else{
+    		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
+		                   {
+   	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+   	                                 {
+ 			                           Alert a = new Alert(AlertType.ERROR);
+		                                a.setContentText("Error");
+		                                a.setHeaderText("enter your address");
+		                                a.showAndWait();
+		                             }
+   	                else {
+   	        	              address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+   	        	                  if(DeleiveryType.equals("null"))
+	        	                     {
+	        				           Alert a = new Alert(AlertType.ERROR);
+	        	                       a.setContentText("Error");
+	        	                       a.setHeaderText("Choose Deleivery Service");
+	        	                       a.showAndWait(); 
+	        	                     }
+	        	                  else
+	        	                       {
+	        	                            switch (DeleiveryType) 
+ 	    	                                 {
+	    			                          case "Deleivery":
+	    				                          pricedeleivery=25;
+	    				                           break;
+	    			                          case "SharedDeleivery":
+	    				                         pricedeleivery=25;
+	    				                         break;
+	    			                         default:
+	    				                         pricedeleivery=0;
+	    				                         break;
+	    			                         }
+ 	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+	        		                        if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+	        		                             {
+	        			                            Alert a = new Alert(AlertType.ERROR);
+	        	                                    a.setContentText("Error");
+	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+	        	                                    a.showAndWait();
+	        		                              }
+	        		                                 else
+	        		                                       {
+	        			                                     Stage stage = new Stage();
+		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+		    		                                         try {
+		    			                                     AFrame.start(stage);}
+		    		                                         catch (Exception e) {
+		    			                                     // TODO Auto-generated catch block
+		    			                                      e.printStackTrace();}  
+	        			                                    }
+	        	                    }
+   	                        }
+                      }
+  	   else
+  	   {
+  		 if(DeleiveryType.equals("null"))
+  	    {
+ 				  Alert a = new Alert(AlertType.ERROR);
+ 	              a.setContentText("Error");
+ 	              a.setHeaderText("Choose Deleivery Service");
+ 	              a.showAndWait(); 
+  	    }
+  	    else
+  	    {
+  	       switch (DeleiveryType) 
+ 	        {
+			        case "Deleivery":
+				      pricedeleivery=25;
+				      break;
+			       case "SharedDeleivery":
+				      pricedeleivery=25;
+				      break;
+			       default:
+				      pricedeleivery=0;
+				      break;
+			    }
+ 	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+ 		       {
+ 			      Alert a = new Alert(AlertType.ERROR);
+ 	              a.setContentText("Error");
+ 	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+ 	              a.showAndWait();
+ 		      }
+ 		  else
+ 		  {
+ 			  
+ 				  Stage stage = new Stage();
+     	          OrdersDetailsController AFrame=new OrdersDetailsController();
+ 		          try {
+ 			        AFrame.start(stage);}
+ 		            catch (Exception e) {
+ 			        // TODO Auto-generated catch block
+ 			        e.printStackTrace();}  
+ 			   
+ 			     
+ 		   }
+  	    }
+  	   }
+  	    
+     }  	    
+}
+    
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
     	accountpayment="private";
-    	
-    	if(flagDate==0) {
-    			 if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) {
-    				  Alert a = new Alert(AlertType.ERROR);
-    		            a.setContentText("Error");
-    		            a.setHeaderText("your details that you insert is Wrong!");
-    		            a.showAndWait();
-    		    		}
-    			 else {
-    				 Time= orderdateField.getText();
-	    	    	 try {
-	    				date1=simpleDateFormat.parse(Time);
-	    			    date2=simpleDateFormat.parse(dtf.format(now));
-	    			    TimerMath( date1,date2);
-	    			} catch (ParseException e1) {
-	    				// TODO Auto-generated catch block
-	    				e1.printStackTrace();
-	    			}
-	    	    	 if((differenceInHours<2)) {
-	    	    		  Alert a = new Alert(AlertType.ERROR);
+    	if(flagDate==0)
+    	{
+    		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
+    		{
+    			Alert a = new Alert(AlertType.ERROR);
+	            a.setContentText("Error");
+	            a.setHeaderText("Insert requested Date");
+	            a.showAndWait();
+    		}else//////////////////////////////////////////////////////////////////////
+    		   {
+    			 Time= orderdateField.getText();
+    	    	 try {
+    				date1=simpleDateFormat.parse(Time);
+    			    date2=simpleDateFormat.parse(dtf.format(now));
+    			    TimerMath( date1,date2);
+    			     } catch (ParseException e1) {
+    				// TODO Auto-generated catch block
+    				e1.printStackTrace();}
+    	    	 
+    	    	       if(differenceInHours<2)
+    	    	          {
+    	    	    	   Alert a = new Alert(AlertType.ERROR);
 	    		            a.setContentText("Error");
 	    		            a.setHeaderText("At least after two hour from now");
 	    		            a.showAndWait();
-	    	    	 }
-	    	    	 else {
-	    	    		 if(DeleiveryType==null)
-	    	    	    	{
-	    	    	    		 Alert a = new Alert(AlertType.ERROR);
-	    	    		            a.setContentText("Error");
-	    	    		            a.setHeaderText("Choose deleivery service");
-	    	    		            a.showAndWait();
-	    	    	    	}
-	    	    	    	else {
-	    	    	    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
-	    	    	    	{
-	    	    	    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
-	    	    	    			 Alert a = new Alert(AlertType.ERROR);
-	    	    			            a.setContentText("Error");
-	    	    			            a.setHeaderText("your details that you insert is Wrong!");
-	    	    			            a.showAndWait();
-	    	    	    		}
-	    	    	    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
-	    	    	    	}
-	    	    	
-	    	    			switch (DeleiveryType) {
-	    	    			case "Deleivery":
-	    	    				pricedeleivery=25;
-	    	    				break;
-	    	    			case "SharedDeleivery":
-	    	    				pricedeleivery=25;
-	    	    				break;
-	    	    			default:
-	    	    				pricedeleivery=0;
-	    	    				break;
-	    	    			}
-	    	        		
-	    	        		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    	        		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
-	    	        			   Alert a = new Alert(AlertType.ERROR);
-	    	        	            a.setContentText("Error");
-	    	        	            a.setHeaderText("there is no enough money in your bussiness wallet ");
-	    	        	            a.showAndWait();
-	    	        		}
-	    	        		 Stage stage = new Stage();
-	    	        	OrdersDetailsController AFrame=new OrdersDetailsController();
-	    	    		try {
-	    	    			AFrame.start(stage);
-	    	    		} catch (Exception e) {
-	    	    			// TODO Auto-generated catch block
-	    	    			e.printStackTrace();
-	    	    		}
-	    	    	 }
-	    	    	 
-	    	    	
-	    	    	 }
-    			 }
+    	    	          }
+    	    	       else
+    	    	       {
+    	    	    	   if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
+     	       		           {
+     	    	    	          if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+     	    	    	           {
+   	    	    			         Alert a = new Alert(AlertType.ERROR);
+   	    			                 a.setContentText("Error");
+   	    			                 a.setHeaderText("Insert your address");
+   	    			                 a.showAndWait();
+     	       		                }
+     	    	    	         else {
+     	    	    	        	    address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+     	    	    	        	    if(DeleiveryType.equals("null"))
+     	    	    	        	    {
+        	    		        				  Alert a = new Alert(AlertType.ERROR);
+        	    		        	              a.setContentText("Error");
+        	    		        	              a.setHeaderText("Choose Deleivery Service");
+        	    		        	              a.showAndWait(); 
+     	    	    	        	    }
+     	    	    	        	    else
+     	    	    	        	    {
+     	    	    	        	       switch (DeleiveryType) 
+        	    	    	    	        {
+        	    	   	    			        case "Deleivery":
+        	    	   	    				      pricedeleivery=25;
+        	    	   	    				      break;
+        	    	   	    			       case "SharedDeleivery":
+        	    	   	    				      pricedeleivery=25;
+        	    	   	    				      break;
+        	    	   	    			       default:
+        	    	   	    				      pricedeleivery=0;
+        	    	   	    				      break;
+        	    	   	    			    }
+        	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+        	    		        		       {
+        	    		        			      Alert a = new Alert(AlertType.ERROR);
+        	    		        	              a.setContentText("Error");
+        	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+        	    		        	              a.showAndWait();
+        	    		        		      }
+        	    		        		  else
+        	    		        		  {
+        	    		        			  
+        	    		        				  Stage stage = new Stage();
+        	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+        	    			    		          try {
+        	    			    			        AFrame.start(stage);}
+        	    			    		            catch (Exception e) {
+        	    			    			        // TODO Auto-generated catch block
+        	    			    			        e.printStackTrace();}  
+        	    		        			   
+        	    		        			     
+        	    		        		   }
+     	    	    	        	    }
+     	    	    	        	
+     	    		        		  
+     	    	    	             }
+     		                  }
+    	    	    	   else
+    	    	    	   {
+    	    	    		   if(DeleiveryType.equals("null"))
+    	    	        	    {
+	    		        				  Alert a = new Alert(AlertType.ERROR);
+	    		        	              a.setContentText("Error");
+	    		        	              a.setHeaderText("Choose Deleivery Service");
+	    		        	              a.showAndWait(); 
+    	    	        	    }
+    	    	        	    else
+    	    	        	    {
+    	    	        	       switch (DeleiveryType) 
+	    	    	    	        {
+	    	   	    			        case "Deleivery":
+	    	   	    				      pricedeleivery=25;
+	    	   	    				      break;
+	    	   	    			       default:
+	    	   	    				      pricedeleivery=0;
+	    	   	    				      break;
+	    	   	    			    }
+	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+	    		        		       {
+	    		        			      Alert a = new Alert(AlertType.ERROR);
+	    		        	              a.setContentText("Error");
+	    		        	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+	    		        	              a.showAndWait();
+	    		        		      }
+	    		        		  else
+	    		        		  {
+	    		        			  
+	    		        				  Stage stage = new Stage();
+	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+	    			    		          try {
+	    			    			        AFrame.start(stage);}
+	    			    		            catch (Exception e) {
+	    			    			        // TODO Auto-generated catch block
+	    			    			        e.printStackTrace();}  
+	    		        			   
+	    		        			     
+	    		        		   }
+    	    	        	    }
+    	    	    	   }
+    	    	    	    
+    	    	       }  	    
     	}
-    			
-    				
-    			 
-    			 else {
-    				 if(DeleiveryType==null)
-    			    	{
-    			    		 Alert a = new Alert(AlertType.ERROR);
-    				            a.setContentText("Error");
-    				            a.setHeaderText("Choose deleivery service");
-    				            a.showAndWait();
-    			    	}
-    			    	else {
-    			    	if(DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
-    			    	{
-    			    		if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) {
-    			    			 Alert a = new Alert(AlertType.ERROR);
-    					            a.setContentText("Error");
-    					            a.setHeaderText("your details that you insert is Wrong!");
-    					            a.showAndWait();
-    			    		}
-    			    		else {address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());}
-    			    	}
-    				 
-    				 switch (DeleiveryType) {
-	    				case "Deleivery":
-	    					pricedeleivery=25;
-	    					break;
-	    				default:
-	    					pricedeleivery=0;
-	    					break;
-	    				}
-	    	    		
-	    	    		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    	    		if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) {
-	    	    			   Alert a = new Alert(AlertType.ERROR);
-	    	    	            a.setContentText("Error");
-	    	    	            a.setHeaderText("there is no enough money in your bussiness wallet ");
-	    	    	            a.showAndWait();
-	    	    		}
-	    	    		 Stage stage = new Stage();
-	    	    	OrdersDetailsController AFrame=new OrdersDetailsController();
-	    			try {
-	    				AFrame.start(stage);
-	    			} catch (Exception e) {
-	    				// TODO Auto-generated catch block
-	    				e.printStackTrace();
-	    			}
-    			 }
-    		}
+    	
+    	}///now
+    	else{
+    		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
+		                   {
+   	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+   	                                 {
+ 			                           Alert a = new Alert(AlertType.ERROR);
+		                                a.setContentText("Error");
+		                                a.setHeaderText("enter your address");
+		                                a.showAndWait();
+		                             }
+   	                else {
+   	        	              address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+   	        	                  if(DeleiveryType.equals("null"))
+	        	                     {
+	        				           Alert a = new Alert(AlertType.ERROR);
+	        	                       a.setContentText("Error");
+	        	                       a.setHeaderText("Choose Deleivery Service");
+	        	                       a.showAndWait(); 
+	        	                     }
+	        	                  else
+	        	                       {
+	        	                            switch (DeleiveryType) 
+ 	    	                                 {
+	    			                          case "Deleivery":
+	    				                          pricedeleivery=25;
+	    				                           break;
+	    			                         default:
+	    				                         pricedeleivery=0;
+	    				                         break;
+	    			                         }
+ 	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+	        		                        if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+	        		                             {
+	        			                            Alert a = new Alert(AlertType.ERROR);
+	        	                                    a.setContentText("Error");
+	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+	        	                                    a.showAndWait();
+	        		                              }
+	        		                                 else
+	        		                                       {
+	        			                                     Stage stage = new Stage();
+		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+		    		                                         try {
+		    			                                     AFrame.start(stage);}
+		    		                                         catch (Exception e) {
+		    			                                     // TODO Auto-generated catch block
+		    			                                      e.printStackTrace();}  
+	        			                                    }
+	        	                    }
+   	                        }
+                      }
+  	   else
+  	   {
+  		 if(DeleiveryType.equals("null"))
+  	    {
+ 				  Alert a = new Alert(AlertType.ERROR);
+ 	              a.setContentText("Error");
+ 	              a.setHeaderText("Choose Deleivery Service");
+ 	              a.showAndWait(); 
+  	    }
+  	    else
+  	    {
+  	       switch (DeleiveryType) 
+ 	        {
+			        case "Deleivery":
+				      pricedeleivery=25;
+				      break;
+			       default:
+				      pricedeleivery=0;
+				      break;
+			    }
+ 	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+ 		       {
+ 			      Alert a = new Alert(AlertType.ERROR);
+ 	              a.setContentText("Error");
+ 	              a.setHeaderText("there is no enough money in your bussiness wallet ");
+ 	              a.showAndWait();
+ 		      }
+ 		  else
+ 		  {
+ 			  
+ 				  Stage stage = new Stage();
+     	          OrdersDetailsController AFrame=new OrdersDetailsController();
+ 		          try {
+ 			        AFrame.start(stage);}
+ 		            catch (Exception e) {
+ 			        // TODO Auto-generated catch block
+ 			        e.printStackTrace();}  
+ 			   
+ 			     
+ 		   }
+  	    }
+  	   }
+  	    
+     } 
     
     }
     
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-    	
-    	Discounttxt.setVisible(false);
-    	Star1.setVisible(false);
-		Star11.setVisible(false);
-		Star12.setVisible(false);
-    	
-    	if(address!=null) {
-    		Visa.setVisible(false);
-    		enterAdresstxt.setVisible(true);
-    		citytxt.setVisible(true);
-    		streettxt.setVisible(true);
-    		housenumbertxt.setVisible(true);
-    		CityField.setVisible(true);
-    		streetField.setVisible(true);
-    		houseNumberField.setVisible(true);
-    		
-    		CityField.setText(address.getCity());
-    		streetField.setText(address.getStreet());
-    		houseNumberField.setText(address.getHouseNumber());
-    		Star1.setVisible(true);
-    		Star11.setVisible(true);
-    		Star12.setVisible(true);
-    	}
-    	if(flagDate==0) {
-		Shadow.setVisible(false);
-		Shadow1.setVisible(true);
-		
-		orderdateField.setVisible(true);
-		orderdateField.setText(Time);
-		
-    	}
-    	if(flagDate==1) {
-    	Shadow.setVisible(true);
-		Shadow1.setVisible(false);
-		orderdateField.setVisible(false);
-		
-    	}
-		Star.setVisible(false);
-		
-    	
-		if(ChatClient.w4ccard.getAccountType().equals("business")) {
-		payprivatebutton1.setVisible(false);
-		payprivatebutton.setVisible(true);
-		paybussinessbutton.setVisible(true);
-		ScanerQrController.Wallet=ChatClient.bussiness.getCeiling();
-		walletTxt.setText(": "+ScanerQrController.Wallet+"$");
-		}
-		
-		orderdateField.setVisible(false);
-		if(ChatClient.w4ccard.getAccountType().equals("private")) {
+    	if(ChatClient.w4ccard.getAccountType().equals("business")) {
+    		payprivatebutton1.setVisible(false);
+    		payprivatebutton.setVisible(true);
+    		paybussinessbutton.setVisible(true);
+    		ScanerQrController.Wallet=ChatClient.bussiness.getCeiling();
+    		walletTxt.setText(": "+ScanerQrController.Wallet+"$");
+    		}
+    	if(ChatClient.w4ccard.getAccountType().equals("private")) {
 			payprivatebutton.setVisible(false);
 			SharedDelButton.setVisible(false);
 			paybussinessbutton.setVisible(false);
@@ -646,53 +817,145 @@ public class PaymentMethodController implements Initializable{
 			walletTxt.setVisible(false);
 			txt4.setVisible(false);
 		}
-		
-		enterAdresstxt.setVisible(false);
-		citytxt.setVisible(false);
-		streettxt.setVisible(false);
-		housenumbertxt.setVisible(false);
-		CityField.setVisible(false);
-		streetField.setVisible(false);
-		houseNumberField.setVisible(false);
-		
-		 switch (DeleiveryType) {
-			case "Deleivery":
-				Pick1.setVisible(false);
-		    	Pick2.setVisible(false);
-		    	Pick3.setVisible(true);
-		    	Pick4.setVisible(false);
-		    	Visa.setVisible(false);
-				break;
-			case "SharedDeleivery":
-				Pick1.setVisible(false);
-		    	Pick2.setVisible(false);
-		    	Pick3.setVisible(false);
-		    	Pick4.setVisible(true);
-		    	Visa.setVisible(false);
-				break;
-			case "Robot":
-				Pick1.setVisible(false);
-		    	Pick2.setVisible(true);
-		    	Pick3.setVisible(false);
-		    	Pick4.setVisible(false);
-		    	Visa.setVisible(false);
-				break;
-			case "TakeAway":
-				Pick1.setVisible(true);
-		    	Pick2.setVisible(false);
-		    	Pick3.setVisible(false);
-		    	Pick4.setVisible(false);
-		    	Visa.setVisible(true);
-				break;
-			default:
-				Pick1.setVisible(false);
-		    	Pick2.setVisible(false);
-		    	Pick3.setVisible(false);
-		    	Pick4.setVisible(false);
-		    	Visa.setVisible(true);
-				break;
-		 }
-		
+    	if(flagDate==1) {
+        	Shadow.setVisible(true);
+    		Shadow1.setVisible(false);
+    		orderdateField.setVisible(false);
+    		Discounttxt.setVisible(false);
+    		Star.setVisible(false);
+    	}
+    	else if (flagDate==0){
+    		System.out.println(Time);///////////////////////////
+    		Shadow.setVisible(false);
+    		Shadow1.setVisible(true);
+    		orderdateField.setVisible(true);
+    		orderdateField.setText(Time);
+    		Discounttxt.setVisible(true);
+    		Star.setVisible(true);
+    	}
+    	  else 
+    	   {
+    			Shadow.setVisible(false);
+        		Shadow1.setVisible(false);
+        		orderdateField.setVisible(false);
+        		Discounttxt.setVisible(false);
+        		Star.setVisible(false);
+    	   }
+    	switch (DeleiveryType) {
+		case "TakeAway":
+			///////pickes
+			Pick1.setVisible(true);
+	    	Pick2.setVisible(false);
+	    	Pick3.setVisible(false);
+	    	Pick4.setVisible(false);
+	    	Visa.setVisible(true);
+	    	////////address
+	    	enterAdresstxt.setVisible(false);
+			citytxt.setVisible(false);
+			streettxt.setVisible(false);
+			housenumbertxt.setVisible(false);
+			CityField.setVisible(false);
+			streetField.setVisible(false);
+			houseNumberField.setVisible(false);
+			Star1.setVisible(false);
+			Star11.setVisible(false);
+			Star12.setVisible(false);
+			break;
+		case "Deleivery":
+		    ///////pickes
+			Pick1.setVisible(false);
+	    	Pick2.setVisible(true);
+	    	Pick3.setVisible(false);
+	    	Pick4.setVisible(false);
+	    	Visa.setVisible(false);
+	        ////////address
+		    enterAdresstxt.setVisible(true);
+			citytxt.setVisible(true);
+			streettxt.setVisible(true);
+			housenumbertxt.setVisible(true);
+			CityField.setVisible(true);
+			streetField.setVisible(true);
+			houseNumberField.setVisible(true);
+			Star1.setVisible(true);
+			Star11.setVisible(true);
+			Star12.setVisible(true);
+			    if(address!=null)
+			     {
+			    	CityField.setText(address.getCity());
+		    		streetField.setText(address.getStreet());
+		    		houseNumberField.setText(address.getHouseNumber());
+			     }
+			    	break;
+		case "Robot":
+		    ///////pickes
+			Pick1.setVisible(false);
+	    	Pick2.setVisible(false);
+	    	Pick3.setVisible(true);
+	    	Pick4.setVisible(false);
+	    	Visa.setVisible(false);
+	        ////////address
+		    enterAdresstxt.setVisible(true);
+			citytxt.setVisible(true);
+			streettxt.setVisible(true);
+			housenumbertxt.setVisible(true);
+			CityField.setVisible(true);
+			streetField.setVisible(true);
+			houseNumberField.setVisible(true);
+			Star1.setVisible(true);
+			Star11.setVisible(true);
+			Star12.setVisible(true);
+			    if(address!=null)
+			     {
+			    	CityField.setText(address.getCity());
+		    		streetField.setText(address.getStreet());
+		    		houseNumberField.setText(address.getHouseNumber());
+			     }
+			    	break;
+		case "SharedDeleivery":
+		    ///////pickes
+			Pick1.setVisible(false);
+	    	Pick2.setVisible(false);
+	    	Pick3.setVisible(false);
+	    	Pick4.setVisible(true);
+	    	Visa.setVisible(false);
+	        ////////address
+		    enterAdresstxt.setVisible(true);
+			citytxt.setVisible(true);
+			streettxt.setVisible(true);
+			housenumbertxt.setVisible(true);
+			CityField.setVisible(true);
+			streetField.setVisible(true);
+			houseNumberField.setVisible(true);
+			Star1.setVisible(true);
+			Star11.setVisible(true);
+			Star12.setVisible(true);
+			    if(address!=null)
+			     {
+			    	CityField.setText(address.getCity());
+		    		streetField.setText(address.getStreet());
+		    		houseNumberField.setText(address.getHouseNumber());
+			     }
+			    	break;
+		default:
+		    ///////pickes
+			Pick1.setVisible(false);
+	    	Pick2.setVisible(false);
+	    	Pick3.setVisible(false);
+	    	Pick4.setVisible(false);
+	    	Visa.setVisible(true);
+	    	 ////////address
+		    enterAdresstxt.setVisible(false);
+			citytxt.setVisible(false);
+			streettxt.setVisible(false);
+			housenumbertxt.setVisible(false);
+			CityField.setVisible(false);
+			streetField.setVisible(false);
+			houseNumberField.setVisible(false);
+			Star1.setVisible(false);
+			Star11.setVisible(false);
+			Star12.setVisible(false);
+			break;
+		}
 	}
 	public void start(Stage stage)  throws Exception {
 		// TODO Auto-generated method stub
