@@ -19,6 +19,11 @@
             <Image url="@../Images/sub.jpeg" />
          </image>
       </ImageView>
+      <ImageView fitHeight="692.0" fitWidth="616.0">
+         <image>
+            <Image url="@../Images/A.png" />
+         </image>
+      </ImageView>
       <TableView fx:id="Resturant" layoutX="1.0" layoutY="260.0" prefHeight="310.0" prefWidth="616.0" stylesheets="@../../../CSS/CSS/src/application/Style.css">
         <columns>
           <TableColumn fx:id="ColTheMeal" prefWidth="104.0" text="The Meal" />

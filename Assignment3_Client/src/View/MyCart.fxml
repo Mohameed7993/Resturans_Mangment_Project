@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MyCartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1276.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MyCartController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="286.0" style="-fx-background-color: #05071F;" stylesheets="@../../../CSS/CSS/src/application/style1.css">
          <children>
@@ -124,12 +125,11 @@
       </ImageView>
       <TableView fx:id="CartList" layoutX="368.0" layoutY="325.0" prefHeight="277.0" prefWidth="839.0" style="-fx-border-color: #343434;" stylesheets="@../../../CSS/CSS/src/application/Style.css">
         <columns>
-          <TableColumn fx:id="ItemNumbercol" minWidth="0.0" prefWidth="125.0" text="Items Number" />
           <TableColumn fx:id="Tybemealcol" minWidth="100.0" prefWidth="125.0" text="Tybes Meal" />
-            <TableColumn fx:id="dishescol" minWidth="0.0" prefWidth="125.0" text="Dishes" />
-            <TableColumn fx:id="extrascol" prefWidth="259.0" text="Extras" />
-            <TableColumn fx:id="itempricecol" minWidth="0.0" prefWidth="96.0" text="Price" />
-            <TableColumn fx:id="QuantityCol" minWidth="0.0" prefWidth="107.0" text="Quantity" />
+            <TableColumn fx:id="dishescol" minWidth="0.0" prefWidth="163.0" text="Dishes" />
+            <TableColumn fx:id="extrascol" prefWidth="265.0" text="Extras" />
+            <TableColumn fx:id="itempricecol" minWidth="0.0" prefWidth="143.0" text="Price" />
+            <TableColumn fx:id="QuantityCol" minWidth="0.0" prefWidth="141.0" text="Quantity" />
         </columns>
       </TableView>
       <Button fx:id="BackButton" layoutX="303.0" layoutY="656.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Back" textFill="WHITE">
@@ -182,7 +182,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <Button fx:id="DeleteButton" layoutX="794.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
+      <Button fx:id="DeleteButton" layoutX="681.0" layoutY="616.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #d71212; -fx-background-radius: 100;" text="Delete" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -197,7 +197,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="Addbutton" layoutX="579.0" layoutY="616.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
+      <Button fx:id="Addbutton" layoutX="466.0" layoutY="616.0" mnemonicParsing="false" onAction="#AddAction" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="+add" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -217,5 +217,32 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
+      <Button layoutX="893.0" layoutY="616.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Edit" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <ComboBox fx:id="Comb" layoutX="894.0" layoutY="616.0" onAction="#Edit" prefHeight="38.0" prefWidth="209.0" style="-fx-background-color: #0000; -fx-background-radius: 100;">
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ComboBox>
    </children>
 </AnchorPane>
