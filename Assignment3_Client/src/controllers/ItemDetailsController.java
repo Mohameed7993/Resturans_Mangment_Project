@@ -3,10 +3,7 @@ package controllers;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-
 import common.ItemInCart;
-import common.ItemList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,7 +72,15 @@ public static Integer Quantity;
 
     @FXML
     private Text extrasField;
-
+    
+    @FXML
+    private Button DoneBtn;
+    
+    @FXML
+    void Done(ActionEvent event) {
+    	addButtonAction(event);
+    }
+    
     @FXML
     void BackButtonAction(ActionEvent event) {
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
@@ -102,15 +107,29 @@ public static Integer Quantity;
     	}
     	else {
     		Quantity=Integer.parseInt(QuantityField.getText());
+    		if(Quantity<=0) {
+        		Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("Error");
+                a.setHeaderText("Enter Should Enter Quantity!");
+                a.showAndWait();
+    			return;
+
+    		}
     	MyCartController.numberitem++;
-    	TotalPrice=OptionalSelectionController.totalPrice*Quantity;
+    	if(!MyCartController.Flag) {
+    		TotalPrice=MyCartController.ItemSelected.getTotalPrice()/MyCartController.ItemSelected.getQuantity()*Quantity;
+        	MyCartController.numberitem--;
+    		ItemDetailsController.itemList.remove(MyCartController.ItemSelected);
+    	}
+    	else {
+    	TotalPrice=OptionalSelectionController.totalPrice*Quantity;}
  if(OptionalSelectionController.sel.size()!=0) {
 	 
-    	AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+    	AdditemList =new ItemInCart (TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
     			,OptionalSelectionController.sel.toString(),TotalPrice,Quantity);
  }
  
- else {  AdditemList =new ItemInCart (MyCartController.numberitem,TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+ else {  AdditemList =new ItemInCart (TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
  			,"No Extra",TotalPrice,Quantity);
  }
 
@@ -140,13 +159,21 @@ public static Integer Quantity;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		if(MyCartController.Flag==true) {
+			DoneBtn.setVisible(false);
+			BackButton.setVisible(true);
+			addButton.setVisible(true);
+
+		}
+		else {
+			DoneBtn.setVisible(true);
+			BackButton.setVisible(false);
+			addButton.setVisible(false);
+		}
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
-		
-		tybemealfield.setText(TybeMealController.tybe_meal.getTypeMeal());
-		
+		tybemealfield.setText(TybeMealController.tybe_meal.getTypeMeal());		
 		dishfield.setText(DishController.dish.getDish()+", Price:"+DishController.dish.getDishPrice());
-		
-		if(OptionalSelectionController.sel.size()==0)
+				if(OptionalSelectionController.sel.size()==0)
 			extrasField.setText("No Extras");
 		
 		else extrasField.setText(OptionalSelectionController.sel.toString());

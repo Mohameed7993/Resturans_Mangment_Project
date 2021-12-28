@@ -218,26 +218,26 @@ public class mysqlConnection {
 	}
 	
 	public static Account getAccountListFromDB(String ID){
-	Account account=null;
-	PreparedStatement ps;
-	ResultSet res;
-	try {
+		Account account=null;
+		PreparedStatement ps;
+		ResultSet res;
+		try {
+			
+		ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.account where ID=?");
+		ps.setString(1,ID );
+		ps.execute();
 		
-	ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.account where ID=?");
-	ps.setString(1,ID );
-	ps.execute();
-	
-	res=ps.getResultSet();
-	if(!res.next())
-		return null;
-	account =new Account (res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6));
-	return account;
-	} catch (SQLException e) {
-	   // TODO Auto-generated catch block
-	   e.printStackTrace();
-     }
-	return account;
-}
+		res=ps.getResultSet();
+		if(!res.next())
+			return null;
+		account =new Account (res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6),res.getString(7));
+		return account;
+		} catch (SQLException e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	     }
+		return account;
+	}
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -326,25 +326,27 @@ public class mysqlConnection {
 	   }
 	
 	
-		public static ArrayList<Resturants> getResturantsListFromDB(){
-		ArrayList<Resturants> list = new ArrayList<Resturants>();
-		Resturants temp;
-		Statement statment;
-		ResultSet res;
-		try {
-			statment=mysqlConnection.conn.createStatement();
-			res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
-			while (res.next()) {
-				temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4));
-				list.add(temp);
-			}
-				res.close();
-		} catch (SQLException e) {
-		   // TODO Auto-generated catch block
-		   e.printStackTrace();
-	     }
-	       return list;
-	}
+	   public static ArrayList<Resturants> getResturantsListFromDB(String Location){
+			ArrayList<Resturants> list = new ArrayList<Resturants>();
+			Resturants temp;
+			Statement statment;
+			ResultSet res;
+			try {
+				statment=mysqlConnection.conn.createStatement();
+				res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
+				while (res.next()) {
+					if(res.getString(6).equals(Location)) {
+					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6));
+					list.add(temp);
+					}
+				}
+					res.close();
+			} catch (SQLException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		     }
+		       return list;
+		}
 		
 		
 		public static ArrayList<OrdersList> BuildOrderTable() {

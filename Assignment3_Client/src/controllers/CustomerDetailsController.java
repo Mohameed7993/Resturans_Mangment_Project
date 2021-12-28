@@ -71,7 +71,13 @@ public class CustomerDetailsController implements Initializable {
 
     @FXML
     private Text YourDetailstxt;
+    
+    @FXML
+    private Text LocationFiled;
 
+    @FXML
+    private Text LocationTxt;
+    
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
     	
@@ -112,7 +118,7 @@ public class CustomerDetailsController implements Initializable {
 		EmailField.setText(ChatClient.accounts.getEmail());
 		CreditField.setText(ChatClient.w4ccard.getCreditCardNumber());
 		AccountField.setText(ChatClient.w4ccard.getAccountType());
-		
+		LocationFiled.setText(ChatClient.accounts.getLocation());
 	}
 	
 	public void start(Stage stage) throws Exception{

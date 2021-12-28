@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -26,8 +27,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MyCartController implements Initializable {
+		
+	public static Stage stage1=new Stage();
 	
 	public static String yourOrderIsInResturant=null;
+	
+	public static boolean Flag;
 	
 	ObservableList<ItemInCart> ItemsList; 
 	
@@ -62,9 +67,6 @@ public class MyCartController implements Initializable {
     private TableView<ItemInCart> CartList;
 
     @FXML
-    private TableColumn<ItemInCart,Integer> ItemNumbercol;
-
-    @FXML
     private TableColumn<ItemInCart,String> Tybemealcol;
 
     @FXML
@@ -80,7 +82,11 @@ public class MyCartController implements Initializable {
     private TableColumn<ItemInCart,Integer> QuantityCol;
 
     @FXML
+    private ComboBox<String> Comb;
+
+    @FXML
     void AddAction(ActionEvent event) {
+    	MyCartController.Flag=true;
     	if(ItemDetailsController.itemList.size()!=0) {
     	Stage stage = new Stage() ;//((Node) event.getSource()).getScene().getWindow();// get stage
     	TybeMealController AFrame=new TybeMealController();
@@ -138,11 +144,9 @@ public class MyCartController implements Initializable {
     @FXML
     void deleteAction(ActionEvent event) {
     	if(CartList.getSelectionModel().getSelectedItem()!=null)
-    	{
-    		
-    		int itemnumber =CartList.getSelectionModel().getSelectedItem().getItemNumber();
-    		ItemDetailsController.itemList.remove(itemnumber-1);
-    		numberitem--;
+    	{  		
+    		ItemSelected =CartList.getSelectionModel().getSelectedItem();
+    		ItemDetailsController.itemList.remove(ItemSelected);
     		 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
         	 CartList.setItems(ItemsList);
     		
@@ -157,31 +161,74 @@ public class MyCartController implements Initializable {
     	
     }
     
-
+    @FXML
+    void Edit(ActionEvent event) {
+    	if(CartList.getSelectionModel().getSelectedItem()!=null)
+    	{
+	    	String EditChoose = (String)Comb.getValue();
+	    	ItemSelected =CartList.getSelectionModel().getSelectedItem();
+	    	Stage stage = new Stage() ;//((Node) event.getSource()).getScene().getWindow();// get stage
+	    	if(EditChoose.equals("Optionals"))
+	    		{
+		        	MyCartController.Flag=false;
+		    		OptionalSelectionController AFrame=new OptionalSelectionController();
+		    		try {
+		    			AFrame.start(stage);
+		    		} catch (Exception e) {
+		    			// TODO Auto-generated catch block
+		    			e.printStackTrace();
+		    		}
+		    	}
+    	else if(EditChoose.equals("Quantity"))
+    	{
+        	MyCartController.Flag=false;
+    		ItemDetailsController AFrame=new ItemDetailsController();
+    		try {
+    			AFrame.start(stage);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    else 
+    	{
+   		Alert a = new Alert(AlertType.ERROR);
+        a.setContentText("Error");
+        a.setHeaderText("should you Select The item that you want to delete");
+        a.showAndWait();
+     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+     	MyCartController AFrame=new MyCartController();
+    		try {
+    			AFrame.start(stage);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    }
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
+    	ObservableList<String> List =FXCollections.observableArrayList("Optionals","Quantity");
+    	Comb.setItems(List);
     	resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
-    	
-    	
-    	ItemNumbercol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("itemNumber"));
     	Tybemealcol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("TypeMeal"));
     	dishescol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("Dishes"));
     	extrascol.setCellValueFactory(new PropertyValueFactory<ItemInCart,String>("Extras"));
-    	 itempricecol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("TotalPrice"));
-    	 QuantityCol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("quantity"));
-    	 ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
-    	 CartList.setItems(ItemsList);
-    	 
-    	 CartList.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-    			@Override
-    			public void handle(MouseEvent arg0) {
-    				if(CartList.getSelectionModel().getSelectedItem()!=null)
+    	itempricecol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("TotalPrice"));
+    	QuantityCol.setCellValueFactory(new PropertyValueFactory<ItemInCart,Integer>("quantity"));
+    	ItemsList=FXCollections.observableArrayList(ItemDetailsController.itemList);
+    	CartList.setItems(ItemsList); 
+    	CartList.setOnMousePressed(new EventHandler<MouseEvent>()
+    	{
+    		@Override
+    		public void handle(MouseEvent arg0)
+    		{
+    			if(CartList.getSelectionModel().getSelectedItem()!=null)
     				ItemSelected=CartList.getSelectionModel().getSelectedItem();
-    			}
-    			
-    		});
+    		}
+    	});
     	 
 	}
 	
@@ -189,7 +236,7 @@ public class MyCartController implements Initializable {
 
 	public void start(Stage stage)  throws Exception {
 		// TODO Auto-generated method stub
-		
+		stage1=stage;
 		Parent root = FXMLLoader.load(getClass().getResource("/View/MyCart.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("My Cart");
@@ -197,7 +244,4 @@ public class MyCartController implements Initializable {
 
 		stage.show();
 	}
-
-	
-
 }

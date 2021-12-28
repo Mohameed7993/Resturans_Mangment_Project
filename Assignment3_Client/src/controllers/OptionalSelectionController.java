@@ -2,11 +2,11 @@ package controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
+import common.ItemInCart;
 import common.Message;
 import common.MessageType;
 import common.Selection;
@@ -33,37 +33,38 @@ import javafx.stage.Stage;
 
 public class OptionalSelectionController implements Initializable{
 
-    ObservableList<Selection> Sel; //all the extras that we toke from DB
-    
-    public static Integer totalPrice;
-    
-    public static ArrayList<Selection> sel;  //list for extras 
-	
+    ObservableList<Selection> Sel; //all the extras that we toke from DB   
+    public static Integer totalPrice;   
+    public static ArrayList<Selection> sel;  //list for extras 	
 	public static Selection selection;
+	public static ItemInCart AdditemList;
 	
-
-	
-    @FXML
-    private ImageView image;
-
     @FXML
     private Button BackButton;
+
+    @FXML
+    private Text ChangeOp;
+
+    @FXML
+    private Button DoneBtn;
+
+    @FXML
+    private Text Optionaltxt;
+
+    @FXML
+    private Button Selectbutton;
+
+    @FXML
+    private Button UnSelectbutton;
+
+    @FXML
+    private ImageView image;
 
     @FXML
     private Button nextButton;
 
     @FXML
     private Text resturantnametxt;
-
-    @FXML
-    private Text Optionaltxt;
-    
-    @FXML
-    private Button Selectbutton;
-    
-    @FXML
-    private Button UnSelectbutton;
-
     @FXML
     private TableView<Selection> OptionalSelectionList;
 
@@ -86,7 +87,33 @@ public class OptionalSelectionController implements Initializable{
 		}
     }
     
-    
+    @FXML
+	    	void Done(ActionEvent event) {
+	    		ItemDetailsController.TotalPrice=totalPrice*ItemDetailsController.Quantity;
+	        	for(int i=0;i<sel.size();i++)
+	        		ItemDetailsController.TotalPrice=sel.get(i).getSelectionPrice()*ItemDetailsController.Quantity +ItemDetailsController.TotalPrice;
+	    		if(OptionalSelectionController.sel.size()==0)
+	    		{
+	    			AdditemList =new ItemInCart (TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+	    					,"No Extra",ItemDetailsController.TotalPrice,ItemDetailsController.Quantity);
+	    		}
+	    		else 
+	    		{
+	    	    	AdditemList =new ItemInCart (TybeMealController.tybe_meal.getTypeMeal(),DishController.dish.getDish()
+	    	     			,sel.toString(),ItemDetailsController.TotalPrice,ItemDetailsController.Quantity);
+	    		}	 
+	    		ItemDetailsController.itemList.add(AdditemList);
+	    		ItemDetailsController.itemList.remove(MyCartController.ItemSelected);
+
+	    		((Node) event.getSource()).getScene().getWindow().hide();// get stage
+	    	  	MyCartController AFrame=new MyCartController();
+	    		try {
+	    			AFrame.start(MyCartController.stage1);
+	    		} catch (Exception e) {
+	    			// TODO Auto-generated catch blocks
+	    			e.printStackTrace();
+	    		}
+	    }
     @FXML
     void UnSelectbuttonAction(ActionEvent event) {
     	if(OptionalSelectionList.getSelectionModel().getSelectedItem()!=null) {
@@ -152,23 +179,36 @@ public class OptionalSelectionController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		if(MyCartController.Flag==true) {
+			DoneBtn.setVisible(false);
+			ChangeOp.setVisible(false);
+			BackButton.setVisible(true);
+			nextButton.setVisible(true);
+			Optionaltxt.setVisible(true);
+
+		}
+		else {
+			DoneBtn.setVisible(true);
+			ChangeOp.setVisible(true);
+			BackButton.setVisible(false);
+			nextButton.setVisible(false);
+			Optionaltxt.setVisible(false);
+		}
+
 		sel = new ArrayList<>();
 		totalPrice=DishController.dish.getDishPrice();
-		Selectbutton.setVisible(true);
-		
+		Selectbutton.setVisible(true);	
 		if(sel.size()!=0)
 	     	UnSelectbutton.setVisible(true);
 		else
 			UnSelectbutton.setVisible(false);
-
         resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		SelectionsCol.setCellValueFactory(new PropertyValueFactory<Selection,String>("Selction"));
 		PriceCol.setCellValueFactory(new PropertyValueFactory<Selection,Integer>("SelectionPrice"));
-		
 		ClientUI.chat.accept(new Message(MessageType.ViewSelctionsList,DishController.dish.getDish_ID()));
 		Sel=FXCollections.observableArrayList(ChatClient.selection);
 		OptionalSelectionList.setItems(Sel);
-		
 		OptionalSelectionList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -192,4 +232,3 @@ public class OptionalSelectionController implements Initializable{
 	}
 
 }
-

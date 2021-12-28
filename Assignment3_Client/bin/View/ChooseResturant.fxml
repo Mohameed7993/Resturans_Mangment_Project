@@ -23,8 +23,8 @@
       <TableView fx:id="TablelistID" layoutX="368.0" layoutY="325.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="277.0" prefWidth="839.0" style="-fx-border-color: #343434;" stylesheets="@../../../CSS/CSS/src/application/Style.css">
         <columns>
           <TableColumn fx:id="ResturanNameCol" minWidth="0.0" prefWidth="264.0" text="ResturantName" />
-            <TableColumn fx:id="StatusCol" prefWidth="270.0" text="Status" />
-            <TableColumn fx:id="PhoneNumberCol" prefWidth="303.0" text="PhoneNumber" />
+            <TableColumn fx:id="StatusCol" prefWidth="287.0" text="Status" />
+            <TableColumn fx:id="PhoneNumberCol" prefWidth="286.0" text="PhoneNumber" />
         </columns>
       </TableView>
       <Button fx:id="BackButton" layoutX="303.0" layoutY="656.0" mnemonicParsing="false" onAction="#BackButtonAction" prefHeight="41.0" prefWidth="130.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Back" textFill="WHITE">
@@ -171,5 +171,10 @@
             </Button>
          </children>
       </VBox>
+      <Text fx:id="ResturantFrom" fill="#79a42b" layoutX="690.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #79a42b;" text="From :" textAlignment="CENTER" wrappingWidth="195.587890625">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

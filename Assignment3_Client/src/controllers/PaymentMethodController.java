@@ -12,7 +12,10 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
+import client.ClientUI;
 import common.Address;
+import common.Message;
+import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +40,8 @@ public class PaymentMethodController implements Initializable{
 	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 	public  static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 	
+	public static String Wallet=null;
+	
 	public static String DeleiveryType="null";
 	
 	public static Integer pricedeleivery;
@@ -55,13 +60,10 @@ public class PaymentMethodController implements Initializable{
 	public long differenceInMinutes;
 	
 	public static int flagDate=2; //0-> other, 1->now
-	public static Integer Participants_Number;
+	public static Integer Participants_Number=0;
 	public static Integer Temp;
 	public Date date1;
 	public Date date2;
-	
-
-	  // System.out.println(dtf.format(now));  */
 	
 	
     @FXML
@@ -237,7 +239,7 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void SharedDelButtonAction(ActionEvent event) {
     	DeleiveryType=("SharedDeleivery");
-    	IsDeleiveryShared=true;
+    	Temp=0;
     	Visa.setVisible(false);
     	Pick1.setVisible(false);
     	Pick2.setVisible(false);
@@ -261,7 +263,6 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void deleiveryButtonAction(ActionEvent event) {
     	DeleiveryType=("Deleivery");
-    	IsDeleiveryShared=false;
     	Visa.setVisible(false);
     	Pick1.setVisible(false);
     	Pick2.setVisible(false);
@@ -285,7 +286,6 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void robotbuttonAction(ActionEvent event) {
     	DeleiveryType=("Robot");
-    	IsDeleiveryShared=false;
     	Visa.setVisible(false);
     	Pick1.setVisible(false);
     	Pick2.setVisible(true);
@@ -309,7 +309,6 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void takeawaybuttonAction(ActionEvent event) {
     	DeleiveryType=("TakeAway");
-    	IsDeleiveryShared=false;
     	Pick1.setVisible(true);
     	Pick2.setVisible(false);
     	Pick3.setVisible(false);
@@ -339,6 +338,7 @@ public class PaymentMethodController implements Initializable{
     }
     
     ////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
     	
@@ -397,10 +397,7 @@ public class PaymentMethodController implements Initializable{
      	                        	  else
       	                        	   {
       	                        		   Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
-      	               /////////////////////////
-      	                        		   System.out.println(Participants_Number);
       	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
-      	                        		System.out.println(address);
         	        	                  if(DeleiveryType.equals("null"))
      	        	                     {
      	        				           Alert a = new Alert(AlertType.ERROR);
@@ -416,14 +413,17 @@ public class PaymentMethodController implements Initializable{
      	    				                          pricedeleivery=25;
      	    				                           break;
      	    			                          case "SharedDeleivery":
+     	    			                        	  if(Temp==0) {
      	    				                         pricedeleivery=25;
+     	    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+     	    			                        	  else pricedeleivery=15;
      	    				                         break;
      	    			                         default:
      	    				                         pricedeleivery=0;
      	    				                         break;
      	    			                         }
       	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-     	        		                        if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+     	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
      	        		                             {
      	        			                            Alert a = new Alert(AlertType.ERROR);
      	        	                                    a.setContentText("Error");
@@ -458,20 +458,23 @@ public class PaymentMethodController implements Initializable{
     	    	        	    }
     	    	        	    else
     	    	        	    {
-    	    	        	       switch (DeleiveryType) 
-	    	    	    	        {
-	    	   	    			        case "Deleivery":
-	    	   	    				      pricedeleivery=25;
-	    	   	    				      break;
-	    	   	    			       case "SharedDeleivery":
-	    	   	    				      pricedeleivery=25;
-	    	   	    				      break;
-	    	   	    			       default:
-	    	   	    				      pricedeleivery=0;
-	    	   	    				      break;
-	    	   	    			    }
+    	    	        	    	switch (DeleiveryType) 
+ 	                                 {
+			                          case "Deleivery":
+				                          pricedeleivery=25;
+				                           break;
+			                          case "SharedDeleivery":
+			                        	  if(Temp==0) {
+				                         pricedeleivery=25;
+			                        	  }else if(Temp==1) {pricedeleivery=20;}
+			                        	  else pricedeleivery=15;
+				                         break;
+			                         default:
+				                         pricedeleivery=0;
+				                         break;
+			                         }
 	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    		        		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+	    		        		  if((Integer.valueOf(Wallet)-(orderPrice))<0) 
 	    		        		       {
 	    		        			      Alert a = new Alert(AlertType.ERROR);
 	    		        	              a.setContentText("Error");
@@ -520,8 +523,9 @@ public class PaymentMethodController implements Initializable{
    	                        	   else
    	                        	   {
    	                        		   
-   	                        		   Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
-   	                        		   Temp=Participants_Number;
+   	                        	if(Participants_Number==0)
+	                        		   Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+	                        		 
    	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
      	        	                  if(DeleiveryType.equals("null"))
   	        	                     {
@@ -532,20 +536,23 @@ public class PaymentMethodController implements Initializable{
   	        	                     }
   	        	                  else
   	        	                       {
-  	        	                            switch (DeleiveryType) 
-   	    	                                 {
-  	    			                          case "Deleivery":
-  	    				                          pricedeleivery=25;
-  	    				                           break;
-  	    			                          case "SharedDeleivery":
-  	    				                         pricedeleivery=25;
-  	    				                         break;
-  	    			                         default:
-  	    				                         pricedeleivery=0;
-  	    				                         break;
-  	    			                         }
+  	        	                	switch (DeleiveryType) 
+ 	                                 {
+			                          case "Deleivery":
+				                          pricedeleivery=25;
+				                           break;
+			                          case "SharedDeleivery":
+			                        	  if(Temp==0) {
+				                         pricedeleivery=25;
+			                        	  }else if(Temp==1) {pricedeleivery=20;}
+			                        	  else pricedeleivery=15;
+				                         break;
+			                         default:
+				                         pricedeleivery=0;
+				                         break;
+			                         }
    	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-  	        		                        if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+  	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
   	        		                             {
   	        			                            Alert a = new Alert(AlertType.ERROR);
   	        	                                    a.setContentText("Error");
@@ -580,20 +587,23 @@ public class PaymentMethodController implements Initializable{
   	    }
   	    else
   	    {
-  	       switch (DeleiveryType) 
- 	        {
-			        case "Deleivery":
-				      pricedeleivery=25;
-				      break;
-			       case "SharedDeleivery":
-				      pricedeleivery=25;
-				      break;
-			       default:
-				      pricedeleivery=0;
-				      break;
-			    }
+  	    	switch (DeleiveryType) 
+              {
+              case "Deleivery":
+                  pricedeleivery=25;
+                   break;
+              case "SharedDeleivery":
+            	  if(Temp==0) {
+                 pricedeleivery=25;
+            	  }else if(Temp==1) {pricedeleivery=20;}
+            	  else pricedeleivery=15;
+                 break;
+             default:
+                 pricedeleivery=0;
+                 break;
+             }
  	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
- 		  if((Integer.valueOf(ScanerQrController.Wallet)-(orderPrice))<0) 
+ 		  if((Integer.valueOf(Wallet)-(orderPrice))<0) 
  		       {
  			      Alert a = new Alert(AlertType.ERROR);
  	              a.setContentText("Error");
@@ -618,13 +628,12 @@ public class PaymentMethodController implements Initializable{
   	    
      }  	    
 }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
-    	if(DeleiveryType.equals("SharedDeleivery"))
-    	{
-    		IsDeleiveryShared=true;
-    	}
+    	
+    
     	accountpayment="private";
     	if(flagDate==0)
     	{
@@ -823,12 +832,19 @@ public class PaymentMethodController implements Initializable{
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
+    	
     	if(ChatClient.w4ccard.getAccountType().equals("business")) {
+    		ClientUI.chat.accept(new Message(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));
+    	}
+    	
+    	
+    	if(ChatClient.w4ccard.getAccountType().equals("business")) {
+    	
     		payprivatebutton1.setVisible(false);
     		payprivatebutton.setVisible(true);
     		paybussinessbutton.setVisible(true);
-    		ScanerQrController.Wallet=ChatClient.bussiness.getCeiling();
-    		walletTxt.setText(": "+ScanerQrController.Wallet+"$");
+    		Wallet=ChatClient.bussiness.getCeiling();
+    		walletTxt.setText(": "+Wallet+"$");
     		}
     	if(ChatClient.w4ccard.getAccountType().equals("private")) {
 			payprivatebutton.setVisible(false);
@@ -846,7 +862,6 @@ public class PaymentMethodController implements Initializable{
     		Star.setVisible(false);
     	}
     	else if (flagDate==0){
-    		System.out.println(Time);///////////////////////////
     		Shadow.setVisible(false);
     		Shadow1.setVisible(true);
     		orderdateField.setVisible(true);
@@ -866,6 +881,10 @@ public class PaymentMethodController implements Initializable{
     	if(IsDeleiveryShared==true)
     	{
     		DeleiveryType="SharedDeleivery";
+    		takeawaybutton.setDisable(true);
+    		deleiveryButton.setDisable(true);
+    		robotbutton.setDisable(true);
+    		SharedDelButton.setDisable(true);
     		Pick1.setVisible(false);
 	    	Pick2.setVisible(false);
 	    	Pick3.setVisible(false);

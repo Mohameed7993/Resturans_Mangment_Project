@@ -98,8 +98,9 @@ public class EchoServer extends AbstractServer {
 				break;
 				
 			case ViewResturants:
+				message = ((String) m.getObject()).split(" ");
 				ArrayList<Resturants> resturant;
-				resturant =mysqlConnection.getResturantsListFromDB();
+				resturant =mysqlConnection.getResturantsListFromDB(message[0]);
 				client.sendToClient(new Message(MessageType.ViewResturants, resturant));
 				break;
 				
@@ -163,6 +164,8 @@ public class EchoServer extends AbstractServer {
 				System.out.println(message[0]+" "+message[1]);
 				mysqlConnection.updatecelling(message[0],message[1]);
 				client.sendToClient(new Message(MessageType.updateCelling, null));
+				break;
+				
 			default:
 			
 				break;

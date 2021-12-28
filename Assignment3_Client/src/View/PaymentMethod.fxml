@@ -135,7 +135,7 @@
                </input>
             </DropShadow>
          </effect></Button>
-    <Button fx:id="deleiveryButton" layoutX="521.0" layoutY="519.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="30.0" prefWidth="118.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Deleivery" textAlignment="RIGHT" textFill="#343434">
+    <Button fx:id="deleiveryButton" cancelButton="true" layoutX="521.0" layoutY="519.0" mnemonicParsing="false" onAction="#deleiveryButtonAction" prefHeight="30.0" prefWidth="118.0" stylesheets="@../../../CSS/CSS/src/application/ButtonStyle1.css" text="Deleivery" textAlignment="RIGHT" textFill="#343434">
          <effect>
             <DropShadow height="0.0" radius="0.0" width="0.0">
                <input>
