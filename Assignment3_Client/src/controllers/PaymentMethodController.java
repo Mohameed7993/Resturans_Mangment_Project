@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 public class PaymentMethodController implements Initializable{
 	
 	
-	public static boolean IsDeleiveryShared;
+	public static boolean IsDeleiveryShared=false;
 	public  static LocalDateTime now = LocalDateTime.now();
 	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 	public  static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
@@ -342,12 +342,9 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
     	
-    	if(DeleiveryType.equals("SharedDeleivery"))
-    	{
-    		IsDeleiveryShared=true;
-  
-    	}
+    
     	accountpayment="buissiness";
+    	System.out.println(flagDate);
     	if(flagDate==0)
     	{
     		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
@@ -387,7 +384,7 @@ public class PaymentMethodController implements Initializable{
      	       		                }
      	    	    	          else if(DeleiveryType.equals("SharedDeleivery"))
      	                           {
-     	                        	   if(SharedDelNumfield.getText().equals("")||!SharedDelNumfield.getText().matches("[a-zA-Z_]+")&&IsDeleiveryShared==false)
+     	                        	   if(SharedDelNumfield.getText().equals("")||Integer.valueOf(SharedDelNumfield.getText())<=0||!SharedDelNumfield.getText().matches("[a-zA-Z_]+")&&IsDeleiveryShared==false)
      	                        	   {
      	                        		 Alert a = new Alert(AlertType.ERROR);
   		                                a.setContentText("Error");
@@ -396,7 +393,17 @@ public class PaymentMethodController implements Initializable{
      	                        	   }
      	                        	  else
       	                        	   {
-      	                        		   Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+     	                        		  
+     	                        			if(DeleiveryType.equals("SharedDeleivery"))
+     	   	                         	    {
+     	   	                         		IsDeleiveryShared=true;
+     	   	                         	  if(Participants_Number==0)
+     		                        	      {
+     	   	                         		 Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+     		                        	      }
+     	   	                         	   }
+     	   	                        		
+     	                        		  
       	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
         	        	                  if(DeleiveryType.equals("null"))
      	        	                     {
@@ -445,6 +452,54 @@ public class PaymentMethodController implements Initializable{
       	                        	   }
      	                        	   
      	                           }
+     	    	    	          else
+     	    	    	          {
+     	    	    	        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+      	        	                  if(DeleiveryType.equals("null"))
+   	        	                     {
+   	        				           Alert a = new Alert(AlertType.ERROR);
+   	        	                       a.setContentText("Error");
+   	        	                       a.setHeaderText("Choose Deleivery Service");
+   	        	                       a.showAndWait(); 
+   	        	                     }
+   	        	                  else
+   	        	                       {
+   	        	                            switch (DeleiveryType) 
+    	    	                                 {
+   	    			                          case "Deleivery":
+   	    				                          pricedeleivery=25;
+   	    				                           break;
+   	    			                          case "SharedDeleivery":
+   	    			                        	  if(Temp==0) {
+   	    				                         pricedeleivery=25;
+   	    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+   	    			                        	  else pricedeleivery=15;
+   	    				                         break;
+   	    			                         default:
+   	    				                         pricedeleivery=0;
+   	    				                         break;
+   	    			                         }
+    	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+   	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
+   	        		                             {
+   	        			                            Alert a = new Alert(AlertType.ERROR);
+   	        	                                    a.setContentText("Error");
+   	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+   	        	                                    a.showAndWait();
+   	        		                              }
+   	        		                                 else
+   	        		                                       {
+   	        			                                     Stage stage = new Stage();
+   		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+   		    		                                         try {
+   		    			                                     AFrame.start(stage);}
+   		    		                                         catch (Exception e) {
+   		    			                                     // TODO Auto-generated catch block
+   		    			                                      e.printStackTrace();}  
+   	        			                                    }
+   	        	                    }
+      	                        
+     	    	    	          }
      	    	    	       
      		                  }
     	    	    	   else
@@ -500,8 +555,8 @@ public class PaymentMethodController implements Initializable{
     	    	       }  	    
     	}
     	
-    	}///now
-    	else{
+    	}///now//
+    	else if(flagDate==1){
     		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
 		                   {
    	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
@@ -513,7 +568,7 @@ public class PaymentMethodController implements Initializable{
 		                             }
    	                           else if(DeleiveryType.equals("SharedDeleivery"))
    	                           {
-   	                        	   if((SharedDelNumfield.getText().equals("")||SharedDelNumfield.getText().matches("[a-zA-Z_]+"))&&IsDeleiveryShared==false)
+   	                        	   if((SharedDelNumfield.getText().equals("")||Integer.valueOf(SharedDelNumfield.getText())<=0||SharedDelNumfield.getText().matches("[a-zA-Z_]+"))&&IsDeleiveryShared==false)
    	                        	   {
    	                        		 Alert a = new Alert(AlertType.ERROR);
 		                                a.setContentText("Error");
@@ -523,8 +578,16 @@ public class PaymentMethodController implements Initializable{
    	                        	   else
    	                        	   {
    	                        		   
-   	                        	if(Participants_Number==0)
-	                        		   Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+   	                        		if(DeleiveryType.equals("SharedDeleivery"))
+   	                         	    {
+   	                         		IsDeleiveryShared=true;
+   	                         	  if(Participants_Number==0)
+	                        	      {
+   	                         		 Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+	                        	      }
+   	                         	   }
+   	                        		   
+   	                        	   
 	                        		 
    	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
      	        	                  if(DeleiveryType.equals("null"))
@@ -572,6 +635,54 @@ public class PaymentMethodController implements Initializable{
   	        	                    }
      	                        
    	                        	   }
+   	                           }
+   	                           else
+   	                           {
+   	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+	        	                  if(DeleiveryType.equals("null"))
+        	                     {
+        				           Alert a = new Alert(AlertType.ERROR);
+        	                       a.setContentText("Error");
+        	                       a.setHeaderText("Choose Deleivery Service");
+        	                       a.showAndWait(); 
+        	                     }
+        	                  else
+        	                       {
+        	                	switch (DeleiveryType) 
+                                {
+		                          case "Deleivery":
+			                          pricedeleivery=25;
+			                           break;
+		                          case "SharedDeleivery":
+		                        	  if(Temp==0) {
+			                         pricedeleivery=25;
+		                        	  }else if(Temp==1) {pricedeleivery=20;}
+		                        	  else pricedeleivery=15;
+			                         break;
+		                         default:
+			                         pricedeleivery=0;
+			                         break;
+		                         }
+	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
+        		                             {
+        			                            Alert a = new Alert(AlertType.ERROR);
+        	                                    a.setContentText("Error");
+        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+        	                                    a.showAndWait();
+        		                              }
+        		                                 else
+        		                                       {
+        			                                     Stage stage = new Stage();
+	        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+	    		                                         try {
+	    			                                     AFrame.start(stage);}
+	    		                                         catch (Exception e) {
+	    			                                     // TODO Auto-generated catch block
+	    			                                      e.printStackTrace();}  
+        			                                    }
+        	                    }
+   	                        	   
    	                           }
    	                         
    	        	                  
@@ -626,141 +737,299 @@ public class PaymentMethodController implements Initializable{
   	    }
   	   }
   	    
-     }  	    
+     }  
+    	else {
+    		Alert a = new Alert(AlertType.ERROR);
+             a.setContentText("Error");
+             a.setHeaderText("Choose Requested date");
+             a.showAndWait();
+    	}
+    	
+    	
 }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
-    	
-    
     	accountpayment="private";
-    	if(flagDate==0)
+    	if(ChatClient.w4ccard.getAccountType().equals("business"))
     	{
-    		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
-    		{
-    			Alert a = new Alert(AlertType.ERROR);
-	            a.setContentText("Error");
-	            a.setHeaderText("Insert requested Date");
-	            a.showAndWait();
-    		}else//////////////////////////////////////////////////////////////////////
-    		   {
-    			 Time= orderdateField.getText();
-    	    	 try {
-    				date1=simpleDateFormat.parse(Time);
-    			    date2=simpleDateFormat.parse(dtf.format(now));
-    			    TimerMath( date1,date2);
-    			     } catch (ParseException e1) {
-    				// TODO Auto-generated catch block
-    				e1.printStackTrace();}
-    	    	 
-    	    	       if(differenceInHours<2)
-    	    	          {
-    	    	    	   Alert a = new Alert(AlertType.ERROR);
-	    		            a.setContentText("Error");
-	    		            a.setHeaderText("At least after two hour from now");
-	    		            a.showAndWait();
-    	    	          }
-    	    	       else
-    	    	       {
-    	    	    	   if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
-     	       		           {
-     	    	    	          if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
-     	    	    	           {
-   	    	    			         Alert a = new Alert(AlertType.ERROR);
-   	    			                 a.setContentText("Error");
-   	    			                 a.setHeaderText("Insert your address");
-   	    			                 a.showAndWait();
-     	       		                }
-     	    	    	         else {
-     	    	    	        	    address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
-     	    	    	        	    if(DeleiveryType.equals("null"))
-     	    	    	        	    {
-        	    		        				  Alert a = new Alert(AlertType.ERROR);
-        	    		        	              a.setContentText("Error");
-        	    		        	              a.setHeaderText("Choose Deleivery Service");
-        	    		        	              a.showAndWait(); 
-     	    	    	        	    }
-     	    	    	        	    else
-     	    	    	        	    {
-     	    	    	        	       switch (DeleiveryType) 
-        	    	    	    	        {
-        	    	   	    			        case "Deleivery":
-        	    	   	    				      pricedeleivery=25;
-        	    	   	    				      break;
-        	    	   	    			       case "SharedDeleivery":
-        	    	   	    				      pricedeleivery=25;
-        	    	   	    				      break;
-        	    	   	    			       default:
-        	    	   	    				      pricedeleivery=0;
-        	    	   	    				      break;
-        	    	   	    			    }
-        	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-        	    		        				  Stage stage = new Stage();
-        	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
-        	    			    		          try {
-        	    			    			        AFrame.start(stage);}
-        	    			    		            catch (Exception e) {
-        	    			    			        // TODO Auto-generated catch block
-        	    			    			        e.printStackTrace();}  
-        	    		        			   
-        	    		        			     
-        	    		        		   
-     	    	    	        	    }
-     	    	    	        	
-     	    		        		  
-     	    	    	             }
-     		                  }
-    	    	    	   else
-    	    	    	   {
-    	    	    		   if(DeleiveryType.equals("null"))
-    	    	        	    {
-	    		        				  Alert a = new Alert(AlertType.ERROR);
-	    		        	              a.setContentText("Error");
-	    		        	              a.setHeaderText("Choose Deleivery Service");
-	    		        	              a.showAndWait(); 
-    	    	        	    }
-    	    	        	    else
-    	    	        	    {
-    	    	        	       switch (DeleiveryType) 
-	    	    	    	        {
-	    	   	    			        case "Deleivery":
-	    	   	    				      pricedeleivery=25;
-	    	   	    				      break;
-	    	   	    			       default:
-	    	   	    				      pricedeleivery=0;
-	    	   	    				      break;
-	    	   	    			    }
-	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
-	    		        				  Stage stage = new Stage();
-	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
-	    			    		          try {
-	    			    			        AFrame.start(stage);}
-	    			    		            catch (Exception e) {
-	    			    			        // TODO Auto-generated catch block
-	    			    			        e.printStackTrace();}  
-	    		        			   
-	    		        			     
-	    		        		   
-    	    	        	    }
-    	    	    	   }
-    	    	    	    
-    	    	       }  	    
-    	}
-    	
-    	}///now
-    	else{
-    		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
-		                   {
-   	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
-   	                                 {
- 			                           Alert a = new Alert(AlertType.ERROR);
-		                                a.setContentText("Error");
-		                                a.setHeaderText("enter your address");
-		                                a.showAndWait();
-		                             }
-   	                else {
-   	        	              address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+    		if(DeleiveryType.equals("SharedDeleivery"))
+        	{
+        		IsDeleiveryShared=true;
+      
+        	}
+        	if(flagDate==0)
+        	{
+        		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
+        		{
+        			Alert a = new Alert(AlertType.ERROR);
+    	            a.setContentText("Error");
+    	            a.setHeaderText("Insert requested Date");
+    	            a.showAndWait();
+        		}else//////////////////////////////////////////////////////////////////////
+        		   {
+        			 Time= orderdateField.getText();
+        	    	 try {
+        				date1=simpleDateFormat.parse(Time);
+        			    date2=simpleDateFormat.parse(dtf.format(now));
+        			    TimerMath( date1,date2);
+        			     } catch (ParseException e1) {
+        				// TODO Auto-generated catch block
+        				e1.printStackTrace();}
+        	    	 
+        	    	       if(differenceInHours<2)
+        	    	          {
+        	    	    	   Alert a = new Alert(AlertType.ERROR);
+    	    		            a.setContentText("Error");
+    	    		            a.setHeaderText("At least after two hour from now");
+    	    		            a.showAndWait();
+        	    	          }
+        	    	       else
+        	    	       {
+        	    	    	   if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
+         	       		           {
+         	    	    	          if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+         	    	    	           {
+       	    	    			         Alert a = new Alert(AlertType.ERROR);
+       	    			                 a.setContentText("Error");
+       	    			                 a.setHeaderText("Insert your address");
+       	    			                 a.showAndWait();
+         	       		                }
+         	    	    	          else if(DeleiveryType.equals("SharedDeleivery"))
+         	                           {
+         	                        	   if(SharedDelNumfield.getText().equals("")||Integer.valueOf(SharedDelNumfield.getText())<=0||!SharedDelNumfield.getText().matches("[a-zA-Z_]+")&&IsDeleiveryShared==false)
+         	                        	   {
+         	                        		 Alert a = new Alert(AlertType.ERROR);
+      		                                a.setContentText("Error");
+      		                                a.setHeaderText("Participants Number is Wrong!");
+      		                                a.showAndWait();
+         	                        	   }
+         	                        	  else
+          	                        	   {
+         	                        			if(DeleiveryType.equals("SharedDeleivery"))
+         	   	                         	    {
+         	   	                         		IsDeleiveryShared=true;
+         	   	                         	  if(Participants_Number==0)
+         		                        	      {
+         	   	                         		 Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+         		                        	      }
+         	   	                         	   }
+         	   	                        		 
+         	                        		  
+          	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+            	        	                  if(DeleiveryType.equals("null"))
+         	        	                     {
+         	        				           Alert a = new Alert(AlertType.ERROR);
+         	        	                       a.setContentText("Error");
+         	        	                       a.setHeaderText("Choose Deleivery Service");
+         	        	                       a.showAndWait(); 
+         	        	                     }
+         	        	                  else
+         	        	                       {
+         	        	                            switch (DeleiveryType) 
+          	    	                                 {
+         	    			                          case "Deleivery":
+         	    				                          pricedeleivery=25;
+         	    				                           break;
+         	    			                          case "SharedDeleivery":
+         	    			                        	  if(Temp==0) {
+         	    				                         pricedeleivery=25;
+         	    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+         	    			                        	  else pricedeleivery=15;
+         	    				                         break;
+         	    			                         default:
+         	    				                         pricedeleivery=0;
+         	    				                         break;
+         	    			                         }
+          	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
+         	        		                             {
+         	        			                            Alert a = new Alert(AlertType.ERROR);
+         	        	                                    a.setContentText("Error");
+         	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+         	        	                                    a.showAndWait();
+         	        		                              }
+         	        		                                 else
+         	        		                                       {
+         	        			                                     Stage stage = new Stage();
+         		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+         		    		                                         try {
+         		    			                                     AFrame.start(stage);}
+         		    		                                         catch (Exception e) {
+         		    			                                     // TODO Auto-generated catch block
+         		    			                                      e.printStackTrace();}  
+         	        			                                    }
+         	        	                    }
+            	                        
+          	                        	   }
+         	                        	   
+         	                           }
+         	    	    	          else
+         	    	    	          {
+         	    	    	        	 address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+       	        	                  if(DeleiveryType.equals("null"))
+    	        	                     {
+    	        				           Alert a = new Alert(AlertType.ERROR);
+    	        	                       a.setContentText("Error");
+    	        	                       a.setHeaderText("Choose Deleivery Service");
+    	        	                       a.showAndWait(); 
+    	        	                     }
+    	        	                  else
+    	        	                       {
+    	        	                            switch (DeleiveryType) 
+     	    	                                 {
+    	    			                          case "Deleivery":
+    	    				                          pricedeleivery=25;
+    	    				                           break;
+    	    			                          case "SharedDeleivery":
+    	    			                        	  if(Temp==0) {
+    	    				                         pricedeleivery=25;
+    	    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+    	    			                        	  else pricedeleivery=15;
+    	    				                         break;
+    	    			                         default:
+    	    				                         pricedeleivery=0;
+    	    				                         break;
+    	    			                         }
+     	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
+    	        		                             {
+    	        			                            Alert a = new Alert(AlertType.ERROR);
+    	        	                                    a.setContentText("Error");
+    	        	                                    a.setHeaderText("there is no enough money in your bussiness wallet ");
+    	        	                                    a.showAndWait();
+    	        		                              }
+    	        		                                 else
+    	        		                                       {
+    	        			                                     Stage stage = new Stage();
+    		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+    		    		                                         try {
+    		    			                                     AFrame.start(stage);}
+    		    		                                         catch (Exception e) {
+    		    			                                     // TODO Auto-generated catch block
+    		    			                                      e.printStackTrace();}  
+    	        			                                    }
+    	        	                    }
+         	    	    	          }
+         	    	    	       
+         		                  }
+        	    	    	   else
+        	    	    	   {
+        	    	    		   if(DeleiveryType.equals("null"))
+        	    	        	    {
+    	    		        				  Alert a = new Alert(AlertType.ERROR);
+    	    		        	              a.setContentText("Error");
+    	    		        	              a.setHeaderText("Choose Deleivery Service");
+    	    		        	              a.showAndWait(); 
+        	    	        	    }
+        	    	        	    else
+        	    	        	    {
+        	    	        	    	switch (DeleiveryType) 
+     	                                 {
+    			                          case "Deleivery":
+    				                          pricedeleivery=25;
+    				                           break;
+    			                          case "SharedDeleivery":
+    			                        	  if(Temp==0) {
+    				                         pricedeleivery=25;
+    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+    			                        	  else pricedeleivery=15;
+    				                         break;
+    			                         default:
+    				                         pricedeleivery=0;
+    				                         break;
+    			                         }
+    	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	    		        				  Stage stage = new Stage();
+    	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+    	    			    		          try {
+    	    			    			        AFrame.start(stage);}
+    	    			    		            catch (Exception e) {
+    	    			    			        // TODO Auto-generated catch block
+    	    			    			        e.printStackTrace();}  
+    	    		        			   
+    	    		        			     
+    	    		        		   
+        	    	        	    }
+        	    	    	   }
+        	    	    	    
+        	    	       }  	    
+        	}
+        	
+        	}///now
+        	else if(flagDate==1){
+        		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery")||DeleiveryType.equals("SharedDeleivery"))
+    		                   {
+       	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+       	                                 {
+     			                           Alert a = new Alert(AlertType.ERROR);
+    		                                a.setContentText("Error");
+    		                                a.setHeaderText("enter your address");
+    		                                a.showAndWait();
+    		                             }
+       	                           else if(DeleiveryType.equals("SharedDeleivery"))
+       	                           {
+       	                        	   if((SharedDelNumfield.getText().equals("")||Integer.valueOf(SharedDelNumfield.getText())<=0||SharedDelNumfield.getText().matches("[a-zA-Z_]+"))&&IsDeleiveryShared==false)
+       	                        	   {
+       	                        		 Alert a = new Alert(AlertType.ERROR);
+    		                                a.setContentText("Error");
+    		                                a.setHeaderText("Participants Number is Wrong!");
+    		                                a.showAndWait();
+       	                        	   } 
+       	                        	   else
+       	                        	   {
+       	                        		   
+       	                        		if(DeleiveryType.equals("SharedDeleivery"))
+       	                         	    {
+       	                         		IsDeleiveryShared=true;
+       	                         	  if(Participants_Number==0)
+    	                        	      {
+       	                         		 Participants_Number=Integer.valueOf(SharedDelNumfield.getText());
+    	                        	      }
+       	                         	   }
+       	                        		
+    	                        		 
+       	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+         	        	                  if(DeleiveryType.equals("null"))
+      	        	                     {
+      	        				           Alert a = new Alert(AlertType.ERROR);
+      	        	                       a.setContentText("Error");
+      	        	                       a.setHeaderText("Choose Deleivery Service");
+      	        	                       a.showAndWait(); 
+      	        	                     }
+      	        	                  else
+      	        	                       {
+      	        	                	switch (DeleiveryType) 
+     	                                 {
+    			                          case "Deleivery":
+    				                          pricedeleivery=25;
+    				                           break;
+    			                          case "SharedDeleivery":
+    			                        	  if(Temp==0) {
+    				                         pricedeleivery=25;
+    			                        	  }else if(Temp==1) {pricedeleivery=20;}
+    			                        	  else pricedeleivery=15;
+    				                         break;
+    			                         default:
+    				                         pricedeleivery=0;
+    				                         break;
+    			                         }
+       	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+      	        			                                     Stage stage = new Stage();
+      		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+      		    		                                         try {
+      		    			                                     AFrame.start(stage);}
+      		    		                                         catch (Exception e) {
+      		    			                                     // TODO Auto-generated catch block
+      		    			                                      e.printStackTrace();}  
+      	        			                                    
+      	        	                    }
+         	                        
+       	                        	   }
+       	                           }
+       	                           else {
+       	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
    	        	                  if(DeleiveryType.equals("null"))
 	        	                     {
 	        				           Alert a = new Alert(AlertType.ERROR);
@@ -770,15 +1039,21 @@ public class PaymentMethodController implements Initializable{
 	        	                     }
 	        	                  else
 	        	                       {
-	        	                            switch (DeleiveryType) 
- 	    	                                 {
-	    			                          case "Deleivery":
-	    				                          pricedeleivery=25;
-	    				                           break;
-	    			                         default:
-	    				                         pricedeleivery=0;
-	    				                         break;
-	    			                         }
+	        	                	switch (DeleiveryType) 
+	                                 {
+			                          case "Deleivery":
+				                          pricedeleivery=25;
+				                           break;
+			                          case "SharedDeleivery":
+			                        	  if(Temp==0) {
+				                         pricedeleivery=25;
+			                        	  }else if(Temp==1) {pricedeleivery=20;}
+			                        	  else pricedeleivery=15;
+				                         break;
+			                         default:
+				                         pricedeleivery=0;
+				                         break;
+			                         }
  	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
 	        			                                     Stage stage = new Stage();
 		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
@@ -789,43 +1064,263 @@ public class PaymentMethodController implements Initializable{
 		    			                                      e.printStackTrace();}  
 	        			                                    
 	        	                    }
-   	                        }
-                      }
-  	   else
-  	   {
-  		 if(DeleiveryType.equals("null"))
-  	    {
- 				  Alert a = new Alert(AlertType.ERROR);
- 	              a.setContentText("Error");
- 	              a.setHeaderText("Choose Deleivery Service");
- 	              a.showAndWait(); 
-  	    }
-  	    else
-  	    {
-  	       switch (DeleiveryType) 
- 	        {
-			        case "Deleivery":
-				      pricedeleivery=25;
-				      break;
-			       default:
-				      pricedeleivery=0;
-				      break;
-			    }
- 	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
- 				  Stage stage = new Stage();
-     	          OrdersDetailsController AFrame=new OrdersDetailsController();
- 		          try {
- 			        AFrame.start(stage);}
- 		            catch (Exception e) {
- 			        // TODO Auto-generated catch block
- 			        e.printStackTrace();}  
- 			   
- 			     
- 		   
-  	    }
-  	   }
-  	    
-     } 
+       	                           }
+       	                         
+       	        	                  
+                          }
+      	   else
+      	   {
+      		 if(DeleiveryType.equals("null"))
+      	    {
+     				  Alert a = new Alert(AlertType.ERROR);
+     	              a.setContentText("Error");
+     	              a.setHeaderText("Choose Deleivery Service");
+     	              a.showAndWait(); 
+      	    }
+      	    else
+      	    {
+      	    	switch (DeleiveryType) 
+                  {
+                  case "Deleivery":
+                      pricedeleivery=25;
+                       break;
+                  case "SharedDeleivery":
+                	  if(Temp==0) {
+                     pricedeleivery=25;
+                	  }else if(Temp==1) {pricedeleivery=20;}
+                	  else pricedeleivery=15;
+                     break;
+                 default:
+                     pricedeleivery=0;
+                     break;
+                 }
+     	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     				  Stage stage = new Stage();
+         	          OrdersDetailsController AFrame=new OrdersDetailsController();
+     		          try {
+     			        AFrame.start(stage);}
+     		            catch (Exception e) {
+     			        // TODO Auto-generated catch block
+     			        e.printStackTrace();}  
+     			   
+     			     
+     		   
+      	    }
+      	   }
+      	    
+         }
+        	else {
+        		Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("Error");
+                a.setHeaderText("Choose Requested date");
+                a.showAndWait();
+        	}
+    		   
+        	if(DeleiveryType.equals("SharedDeleivery"))
+        	{
+        		IsDeleiveryShared=true;
+      
+        	}
+    	}
+    	
+    /////////////////////////////////////////////////////////////////////
+    	else {/////////////////////////////////acounttype="private"
+    		if(flagDate==0)
+        	{
+        		if(orderdateField.getText().equals("")||orderdateField.getText().matches("[a-zA-Z_]+")) 
+        		{
+        			Alert a = new Alert(AlertType.ERROR);
+    	            a.setContentText("Error");
+    	            a.setHeaderText("Insert requested Date");
+    	            a.showAndWait();
+        		}else//////////////////////////////////////////////////////////////////////
+        		   {
+        			 Time= orderdateField.getText();
+        	    	 try {
+        				date1=simpleDateFormat.parse(Time);
+        			    date2=simpleDateFormat.parse(dtf.format(now));
+        			    TimerMath( date1,date2);
+        			     } catch (ParseException e1) {
+        				// TODO Auto-generated catch block
+        				e1.printStackTrace();}
+        	    	 
+        	    	       if(differenceInHours<2)
+        	    	          {
+        	    	    	   Alert a = new Alert(AlertType.ERROR);
+    	    		            a.setContentText("Error");
+    	    		            a.setHeaderText("At least after two hour from now");
+    	    		            a.showAndWait();
+        	    	          }
+        	    	       else
+        	    	       {
+        	    	    	   if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
+         	       		           {
+         	    	    	          if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+         	    	    	           {
+       	    	    			         Alert a = new Alert(AlertType.ERROR);
+       	    			                 a.setContentText("Error");
+       	    			                 a.setHeaderText("Insert your address");
+       	    			                 a.showAndWait();
+         	       		                }
+         	    	    	         else {
+         	    	    	        	    address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+         	    	    	        	    if(DeleiveryType.equals("null"))
+         	    	    	        	    {
+            	    		        				  Alert a = new Alert(AlertType.ERROR);
+            	    		        	              a.setContentText("Error");
+            	    		        	              a.setHeaderText("Choose Deleivery Service");
+            	    		        	              a.showAndWait(); 
+         	    	    	        	    }
+         	    	    	        	    else
+         	    	    	        	    {
+         	    	    	        	       switch (DeleiveryType) 
+            	    	    	    	        {
+            	    	   	    			        case "Deleivery":
+            	    	   	    				      pricedeleivery=25;
+            	    	   	    				      break;
+            	    	   	    			       default:
+            	    	   	    				      pricedeleivery=0;
+            	    	   	    				      break;
+            	    	   	    			    }
+            	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+            	    		        				  Stage stage = new Stage();
+            	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+            	    			    		          try {
+            	    			    			        AFrame.start(stage);}
+            	    			    		            catch (Exception e) {
+            	    			    			        // TODO Auto-generated catch block
+            	    			    			        e.printStackTrace();}  
+            	    		        			   
+            	    		        			     
+            	    		        		   
+         	    	    	        	    }
+         	    	    	        	
+         	    		        		  
+         	    	    	             }
+         		                  }
+        	    	    	   else
+        	    	    	   {
+        	    	    		   if(DeleiveryType.equals("null"))
+        	    	        	    {
+    	    		        				  Alert a = new Alert(AlertType.ERROR);
+    	    		        	              a.setContentText("Error");
+    	    		        	              a.setHeaderText("Choose Deleivery Service");
+    	    		        	              a.showAndWait(); 
+        	    	        	    }
+        	    	        	    else
+        	    	        	    {
+        	    	        	       switch (DeleiveryType) 
+    	    	    	    	        {
+    	    	   	    			        case "Deleivery":
+    	    	   	    				      pricedeleivery=25;
+    	    	   	    				      break;
+    	    	   	    			       default:
+    	    	   	    				      pricedeleivery=0;
+    	    	   	    				      break;
+    	    	   	    			    }
+    	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	    		        				  Stage stage = new Stage();
+    	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
+    	    			    		          try {
+    	    			    			        AFrame.start(stage);}
+    	    			    		            catch (Exception e) {
+    	    			    			        // TODO Auto-generated catch block
+    	    			    			        e.printStackTrace();}  
+    	    		        			   
+    	    		        			     
+    	    		        		   
+        	    	        	    }
+        	    	    	   }
+        	    	    	    
+        	    	       }  	    
+        	}
+        	
+        	}///now
+        	else if(flagDate==1){
+        		         if( DeleiveryType.equals("Robot")||DeleiveryType.equals("Deleivery"))
+    		                   {
+       	                           if(CityField.getText().equals("")||streetField.getText().equals("")||houseNumberField.getText().equals("")) 
+       	                                 {
+     			                           Alert a = new Alert(AlertType.ERROR);
+    		                                a.setContentText("Error");
+    		                                a.setHeaderText("enter your address");
+    		                                a.showAndWait();
+    		                             }
+       	                else {
+       	        	              address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+       	        	                  if(DeleiveryType.equals("null"))
+    	        	                     {
+    	        				           Alert a = new Alert(AlertType.ERROR);
+    	        	                       a.setContentText("Error");
+    	        	                       a.setHeaderText("Choose Deleivery Service");
+    	        	                       a.showAndWait(); 
+    	        	                     }
+    	        	                  else
+    	        	                       {
+    	        	                            switch (DeleiveryType) 
+     	    	                                 {
+    	    			                          case "Deleivery":
+    	    				                          pricedeleivery=25;
+    	    				                           break;
+    	    			                         default:
+    	    				                         pricedeleivery=0;
+    	    				                         break;
+    	    			                         }
+     	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	        			                                     Stage stage = new Stage();
+    		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
+    		    		                                         try {
+    		    			                                     AFrame.start(stage);}
+    		    		                                         catch (Exception e) {
+    		    			                                     // TODO Auto-generated catch block
+    		    			                                      e.printStackTrace();}  
+    	        			                                    
+    	        	                    }
+       	                        }
+                          }
+      	   else
+      	   {
+      		 if(DeleiveryType.equals("null"))
+      	    {
+     				  Alert a = new Alert(AlertType.ERROR);
+     	              a.setContentText("Error");
+     	              a.setHeaderText("Choose Deleivery Service");
+     	              a.showAndWait(); 
+      	    }
+      	    else
+      	    {
+      	       switch (DeleiveryType) 
+     	        {
+    			        case "Deleivery":
+    				      pricedeleivery=25;
+    				      break;
+    			       default:
+    				      pricedeleivery=0;
+    				      break;
+    			    }
+     	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     				  Stage stage = new Stage();
+         	          OrdersDetailsController AFrame=new OrdersDetailsController();
+     		          try {
+     			        AFrame.start(stage);}
+     		            catch (Exception e) {
+     			        // TODO Auto-generated catch block
+     			        e.printStackTrace();}  
+     			   
+     			     
+     		   
+      	    }
+      	   }
+      	    
+         }
+        	else {
+        		Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("Error");
+                a.setHeaderText("Choose Requested date");
+                a.showAndWait();
+        	}
+    	}
+    	
     
     }
     

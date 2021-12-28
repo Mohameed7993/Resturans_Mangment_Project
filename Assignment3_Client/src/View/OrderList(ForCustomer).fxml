@@ -43,7 +43,7 @@
             <Image url="@../Images/Spaggati.png" />
          </image>
       </ImageView>
-      <Button fx:id="ViewOrderBtn" layoutX="678.0" layoutY="614.0" mnemonicParsing="false" onAction="#ViewOrderAction" prefHeight="41.0" prefWidth="206.0" style="-fx-background-color: #343434; -fx-background-radius: 100;" text="View Order Package" textFill="WHITE">
+      <Button fx:id="ViewOrderBtn" layoutX="575.0" layoutY="614.0" mnemonicParsing="false" onAction="#ViewOrderAction" prefHeight="41.0" prefWidth="206.0" style="-fx-background-color: #343434; -fx-background-radius: 100;" text="View Order Package" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -166,6 +166,21 @@
          </children>
       </VBox>
       <Button fx:id="BackBtn" layoutX="304.0" layoutY="666.0" mnemonicParsing="false" onAction="#BackAction" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <input>
+                  <DropShadow />
+               </input>
+               <color>
+                  <Color red="0.4745098054409027" green="0.6431372761726379" blue="0.16862745583057404" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Button fx:id="AcceptBtn" layoutX="789.0" layoutY="614.0" mnemonicParsing="false" onAction="#AcceptedOrder" prefHeight="41.0" prefWidth="206.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Order Accepted" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>

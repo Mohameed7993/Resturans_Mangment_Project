@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 public class MyOrderListController implements Initializable {
 
 	public static OrdersList OL;
+	public static OrdersList ItemSelected;
 
 	@FXML
     private Button BackBtn;
@@ -67,6 +68,20 @@ public class MyOrderListController implements Initializable {
 
     @FXML
     private Button ViewOrderBtn;
+    
+    
+
+    @FXML
+    private Button AcceptBtn;
+    
+    @FXML
+    void AcceptedOrder(ActionEvent event) {
+		ItemSelected =OrderList1.getSelectionModel().getSelectedItem();
+		ClientUI.chat.accept(new Message(MessageType.OrderListBuildEdit, ItemSelected.getOrderPackageNumber()));
+		Order_list.remove(ItemSelected);
+		initialize(null, null);
+
+    }
 
 		public static ObservableList<OrdersList> Order_list = FXCollections.observableArrayList();
 
@@ -124,6 +139,7 @@ public class MyOrderListController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		AcceptBtn.setDisable(true);
 	    ColAddress.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("Address"));
 		ColApproval.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("ApprovalRecieving"));
 		ColArrivalTime.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("ArrivalTime"));
@@ -141,8 +157,12 @@ public class MyOrderListController implements Initializable {
 			@Override
 			public void handle(MouseEvent arg0) {
 				OL=OrderList1.getSelectionModel().getSelectedItem();
+				if(OL.getStatus().equals("Ready")) 
+					AcceptBtn.setDisable(false);		
+				else
+					AcceptBtn.setDisable(true);
+				
 			}
-			
 		});
 		
 	}

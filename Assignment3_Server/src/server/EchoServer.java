@@ -165,6 +165,12 @@ public class EchoServer extends AbstractServer {
 				mysqlConnection.updatecelling(message[0],message[1]);
 				client.sendToClient(new Message(MessageType.updateCelling, null));
 				break;
+			case OrderListBuildEdit:
+				Integer message2;
+				message2 =(Integer)m.getObject();
+				Order_list=mysqlConnection.EditBuildOrderTable(message2);
+				client.sendToClient(new Message(MessageType.OrderListBuild, Order_list));
+				break;
 				
 			default:
 			

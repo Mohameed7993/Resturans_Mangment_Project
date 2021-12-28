@@ -34,8 +34,10 @@ public class mysqlConnection {
 	public static String db_name;
 	public static String db_user;
 	public static String db_pass;
+	public static Integer PaCkage;
+	private static Boolean Flag=false;
+	
 	public static void connectToDB()   {
-
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			System.out.println("Driver definition succeed");
@@ -349,31 +351,48 @@ public class mysqlConnection {
 		}
 		
 		
-		public static ArrayList<OrdersList> BuildOrderTable() {
-			   //TABLE VIEW AND DATA
-			ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
-			PreparedStatement ps;
-			ResultSet res;
-
+	   public static ArrayList<OrdersList> BuildOrderTable() {
+		   //TABLE VIEW AND DATA
+		ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
+		PreparedStatement ps;
+		ResultSet res;
+		String S=new String("Take It");
+		if(Flag==true) {
 			try {
-
-				ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
-				ps.setString(1, user.getId());
+				ps = mysqlConnection.conn.prepareStatement("update bitemedb.order_list set Status=? where OrderPackageNumber =? ");
+				ps.setString(1, S);
+				ps.setInt(2, PaCkage);
 				ps.execute();
-				res=ps.getResultSet();
-				while(res.next()) {
-					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
-							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
-								res.getString(8),res.getString(9),res.getString(10),res.getString(11)));
-
-				}
+				Flag=false;
+				
+			//	res=ps.getResultSet();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			return Order_list;
 		}
+		try {
+
+			ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
+			ps.setString(1, user.getId());
+			ps.execute();
+			res=ps.getResultSet();
+			while(res.next()) 
+				 {
+
+				if(res.getInt(3)==39) {
+				}
+					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
+							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
+								res.getString(8),res.getString(9),res.getString(10),res.getString(11)));
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return Order_list;
+	}
 	
 		public static ArrayList<ItemList> BuildItemList(Integer OrderPackageNumber) {
 			ArrayList<ItemList> Item_list = new ArrayList<ItemList>(); 
@@ -395,6 +414,12 @@ public class mysqlConnection {
 			}
 
 			return Item_list;
+		}
+		
+		public static ArrayList<OrdersList> EditBuildOrderTable(Integer Package) {
+			PaCkage=Package;
+			Flag=true;
+			return BuildOrderTable();
 		}
 
 

@@ -132,6 +132,7 @@ public class OrdersDetailsController implements Initializable {
     void BackButtonAction(ActionEvent event) {
     	
     	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
+    	PaymentMethodController.IsDeleiveryShared=false;
     
     }
 
@@ -209,7 +210,7 @@ public class OrdersDetailsController implements Initializable {
     }
     
 		PaymentMethodController.address=null;
-		PaymentMethodController.flagDate=2;
+		PaymentMethodController.Time=null;
     	
 		
 
@@ -220,6 +221,7 @@ public class OrdersDetailsController implements Initializable {
 			       {
 			    	 PaymentMethodController.IsDeleiveryShared=false;
 				 	 PaymentMethodController.DeleiveryType="null";
+				 	 PaymentMethodController.flagDate=2;
 				 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
 			    	CustomerHomeController AFrame=new CustomerHomeController();
 					try {
@@ -242,6 +244,7 @@ public class OrdersDetailsController implements Initializable {
 						System.out.println(8);
 						PaymentMethodController.IsDeleiveryShared=false;
 					 	 PaymentMethodController.DeleiveryType="null";
+					 	 PaymentMethodController.flagDate=2;
 						 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
 					    	CustomerHomeController AFrame=new CustomerHomeController();
 							try {
@@ -271,6 +274,7 @@ public class OrdersDetailsController implements Initializable {
 			
 			PaymentMethodController.IsDeleiveryShared=false;
 		 	 PaymentMethodController.DeleiveryType="null";
+		 	 PaymentMethodController.flagDate=2;
 			 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
 		    	CustomerHomeController AFrame=new CustomerHomeController();
 				try {
@@ -288,6 +292,7 @@ public class OrdersDetailsController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		if(PaymentMethodController.accountpayment.equals("private")) {
 			empidtxt.setVisible(false);
 			empidfield.setVisible(false);
@@ -321,7 +326,7 @@ public class OrdersDetailsController implements Initializable {
 		}
 		totalpricefield.setText(String.valueOf(orderPrice));
 		
-		if(PaymentMethodController.DeleiveryType.equals("TakeAway")||PaymentMethodController.DeleiveryType.equals("Robot")) {
+		if(PaymentMethodController.DeleiveryType.equals("TakeAway")) {
 			addresstxt.setVisible(false);
 			Citytxt.setVisible(false);
 			streettxt.setVisible(false);
