@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,12 +35,22 @@ import javafx.stage.Stage;
 public class OrdersDetailsController implements Initializable {
 	public static OrdersList orders=null;
 	public static Integer CountParticipants;
+	public static String ArrivalTime;
 	
-	
-	public LocalDateTime ArrivalTime;
+
 	public static String orderTime;
 	public static Integer orderPackageNumber;
 	public static String time;
+	
+
+	public  static LocalDateTime now = LocalDateTime.now();
+	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+	public   long addtionInMilliSeconds ;
+	public   long differenceInHours;
+	public   long differenceInMinutes;
+	public   Date date1;
+	public  Date date2;
+	public static long dateTemp;
 	
 	
 	public static ArrayList<ItemList> Items=new ArrayList<>();
@@ -127,7 +138,15 @@ public class OrdersDetailsController implements Initializable {
     @FXML
     private Text empidfield;
     
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+    void TimerMath (Date data2,long dateTemp) {
+    	
+    	addtionInMilliSeconds = (date2.getTime() + dateTemp);
+		   differenceInHours = (addtionInMilliSeconds / (60 * 60 * 1000))  % 24;
+   // Calculating the difference in Minutes
+		   differenceInMinutes= (addtionInMilliSeconds / (60 * 1000)) % 60;
+ }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML
     void BackButtonAction(ActionEvent event) {
     	
@@ -138,7 +157,6 @@ public class OrdersDetailsController implements Initializable {
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
-    	System.out.println(1);
     	time=PaymentMethodController.dtf.format(PaymentMethodController.now);
     	if(PaymentMethodController.flagDate==1)
     	orderTime=(time);
@@ -146,29 +164,38 @@ public class OrdersDetailsController implements Initializable {
     		orderTime=PaymentMethodController.Time;
     	
     	orderPackageNumber=null;
+    	
+    	if(PaymentMethodController.flagDate==1)
+    	{
+    		try {
+				date2=PaymentMethodController.simpleDateFormat.parse(dtf.format(now));
+				dateTemp=3600000*3; ////to add one hour.
+				TimerMath(date2, dateTemp);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		ArrivalTime=(differenceInHours+":"+differenceInMinutes);
+    	}else ArrivalTime=PaymentMethodController.Time;
+    
+    	
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
-    				,"UnReady","0","UnApproved");
-    		System.out.println(1);
+    				,"UnReady",ArrivalTime,"UnApproved");
     	}
     	else {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
-    				,"UnReady","0","UnApproved");
-    		System.out.println(1);
+    				,"UnReady",ArrivalTime,"UnApproved");
     	}
-    	System.out.println(1);
     	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
     	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
     	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()));
-    	System.out.println(1);
     	ClientUI.chat.accept(new Message(MessageType.GetOrder,ChatClient.userlogged.getId()));
-    	System.out.println(1);
 
      	for(int i=0;i<ItemDetailsController.itemList.size();i++)
     	{
-     		System.out.println(1);
     	     if(OptionalSelectionController.sel.size()!=0) {
     		          AddItem=new ItemList(ItemDetailsController.itemList.get(i).getTypeMeal() , ItemDetailsController.itemList.get(i).getDishes(),
     				  ItemDetailsController.itemList.get(i).getExtras().toString().replaceAll(" ",""), ItemDetailsController.itemList.get(i).getQuantity()
@@ -176,7 +203,6 @@ public class OrdersDetailsController implements Initializable {
     		   Items.add(AddItem);
     	       }
     	     else {
-    	    	 System.out.println(1);
     		         AddItem=new ItemList(ItemDetailsController.itemList.get(i).getTypeMeal() , ItemDetailsController.itemList.get(i).getDishes(),
     				"NoExtra", ItemDetailsController.itemList.get(i).getQuantity()
    				   ,ItemDetailsController.itemList.get(i).getTotalPrice(),ChatClient.order2.getOrderPackageNumber());
@@ -187,10 +213,8 @@ public class OrdersDetailsController implements Initializable {
     	
     	for(int i=0;i<Items.size();i++)
     	{
-    		System.out.println(2);
     		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, Items.get(i).getTheMeal()+" "+ Items.get(i).getTheDish()+" "+
     		Items.get(i).getIngredient()+" "+ Items.get(i).getQuantity()+" "+ Items.get(i).getPrice()+" "+ Items.get(i).getPackageID()));
-    		System.out.println(3);
     	}
     	
 
@@ -198,15 +222,12 @@ public class OrdersDetailsController implements Initializable {
     	ItemDetailsController.itemList.clear();
     	Items.clear();
     	
-    	System.out.println(4);
     if(PaymentMethodController.accountpayment.equals("buissiness")) {
 		String wallet=(PaymentMethodController.Wallet);
 		int orederPrice=Integer.valueOf(orders.getTotalPrice());
 		int x=Integer.valueOf(wallet)-orderPrice;
 		wallet=String.valueOf(x);
-		System.out.println(5);
 		ClientUI.chat.accept(new Message(MessageType.updateCelling,wallet+" "+ChatClient.w4ccard.getW4cCode()));
-		System.out.println(6);
     }
     
 		PaymentMethodController.address=null;
@@ -216,7 +237,6 @@ public class OrdersDetailsController implements Initializable {
 
 		if(PaymentMethodController.DeleiveryType.equals("SharedDeleivery"))
 		{
-			System.out.println(6);
 			     if(PaymentMethodController.Participants_Number==1)
 			       {
 			    	 PaymentMethodController.IsDeleiveryShared=false;
@@ -233,7 +253,6 @@ public class OrdersDetailsController implements Initializable {
 			}
 			else
 			{
-				System.out.println(7);
 				if(i<PaymentMethodController.Participants_Number)
 				{
 					
@@ -241,7 +260,6 @@ public class OrdersDetailsController implements Initializable {
 					PaymentMethodController.Temp=PaymentMethodController.Temp+1;
 					
 					if(PaymentMethodController.Temp==PaymentMethodController.Participants_Number) {
-						System.out.println(8);
 						PaymentMethodController.IsDeleiveryShared=false;
 					 	 PaymentMethodController.DeleiveryType="null";
 					 	 PaymentMethodController.flagDate=2;

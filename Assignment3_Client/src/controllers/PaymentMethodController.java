@@ -55,15 +55,18 @@ public class PaymentMethodController implements Initializable{
 	public static String accountpayment;
 	public static String HelpTime;
 	
-	public long differenceInMilliSeconds ;
-	public long differenceInHours;
-	public long differenceInMinutes;
+	public   long differenceInMilliSeconds ;
+	public   long differenceInHours;
+	public   long differenceInMinutes;
+	public   Date date1;
+	public  Date date2;
+
+	
 	
 	public static int flagDate=2; //0-> other, 1->now
 	public static Integer Participants_Number=0;
 	public static Integer Temp;
-	public Date date1;
-	public Date date2;
+	
 	
 	
     @FXML
@@ -330,7 +333,8 @@ public class PaymentMethodController implements Initializable{
     
     ////////////////////////////////////////////////////////////////////////////////
     
-    void TimerMath (Date data1,Date data2) {
+      void TimerMath (Date data1,Date data2) {
+    	
     	   differenceInMilliSeconds = Math.abs(date2.getTime() - date1.getTime());
 		   differenceInHours = (differenceInMilliSeconds / (60 * 60 * 1000))  % 24;
       // Calculating the difference in Minutes
@@ -428,8 +432,8 @@ public class PaymentMethodController implements Initializable{
      	    			                         default:
      	    				                         pricedeleivery=0;
      	    				                         break;
-     	    			                         }
-      	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+      	    	                                 	}
+     	        	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
      	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
      	        		                             {
      	        			                            Alert a = new Alert(AlertType.ERROR);

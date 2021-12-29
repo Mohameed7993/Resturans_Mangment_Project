@@ -171,7 +171,14 @@ public class EchoServer extends AbstractServer {
 				Order_list=mysqlConnection.EditBuildOrderTable(message2);
 				client.sendToClient(new Message(MessageType.OrderListBuild, Order_list));
 				break;
-				
+			case RefundAdd:
+				message=((String)m.getObject()).split(" ");
+				Refund Refund;
+				System.out.println(message[0]+message[1]+message[2]+77777777);
+				mysqlConnection.RefundBuild(message[0], message[1], message[2]);
+				System.out.println(message[0]+message[1]+message[2]+88888888);
+                client.sendToClient(new Message(MessageType.RefundAdd, null));
+				break;
 			default:
 			
 				break;

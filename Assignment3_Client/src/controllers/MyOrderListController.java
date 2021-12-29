@@ -2,6 +2,11 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
@@ -33,6 +38,14 @@ public class MyOrderListController implements Initializable {
 	public static OrdersList OL;
 	public static OrdersList ItemSelected;
 
+	public static String TimeAccepted;
+	public static String ArrivelTime;
+	public static Integer refund;
+	public   long differenceInMilliSeconds ;
+	public   long differenceInHours;
+	public   long differenceInMinutes;
+	public   Date TimeAccepted1;
+	public  Date ArrivelTime1;
 	@FXML
     private Button BackBtn;
 
@@ -69,17 +82,50 @@ public class MyOrderListController implements Initializable {
     @FXML
     private Button ViewOrderBtn;
     
-    
-
     @FXML
     private Button AcceptBtn;
     
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    void TimerMath (Date date1,Date date2) {
+  	
+  	   differenceInMilliSeconds = (date2.getTime() - date1.getTime());
+		   differenceInHours = (differenceInMilliSeconds / (60 * 60 * 1000))  % 24;
+    // Calculating the difference in Minutes
+		   differenceInMinutes= (differenceInMilliSeconds / (60 * 1000)) % 60;
+  }
+  
+  ////////////////////////////////////////////////////////////////////////////////
+    
     @FXML
     void AcceptedOrder(ActionEvent event) {
-		ItemSelected =OrderList1.getSelectionModel().getSelectedItem();
+    
+    	LocalDateTime now = LocalDateTime.now();
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");   	   
+    	ItemSelected =OrderList1.getSelectionModel().getSelectedItem();
 		ClientUI.chat.accept(new Message(MessageType.OrderListBuildEdit, ItemSelected.getOrderPackageNumber()));
 		Order_list.remove(ItemSelected);
+		ArrivelTime=ItemSelected.getArrivalTime();
+		TimeAccepted=dtf.format(now);
+		try {
+			TimeAccepted1=simpleDateFormat.parse(TimeAccepted);
+			ArrivelTime1=simpleDateFormat.parse(ArrivelTime);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		refund=Integer.valueOf(ItemSelected.getTotalPrice())/2;
+		System.out.println(refund);
+		if(TimeAccepted1.after(ArrivelTime1)) {
+			ClientUI.chat.accept(new Message(MessageType.RefundAdd,ItemSelected.getCustomer_ID()+" "+ItemSelected.getResturant()+" "+String.valueOf(refund)));
+			System.out.println(refund);
+		}
+		
+		
 		initialize(null, null);
+		
 
     }
 
@@ -109,7 +155,6 @@ public class MyOrderListController implements Initializable {
 	    	else {
 			//Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 	    		Stage stage=new Stage();
-			System.out.println(OL.getOrderPackageNumber());
 	    	ClientUI.chat.accept(new Message(MessageType.ItemList, OL.getOrderPackageNumber()));
 			ObservableList<ItemList> Item_List = FXCollections.observableArrayList(ChatClient.ItemBuild);
 			ViewOrderController VOC=new ViewOrderController();
@@ -166,5 +211,29 @@ public class MyOrderListController implements Initializable {
 		});
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

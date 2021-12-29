@@ -15,6 +15,7 @@ import common.ItemList;
 import common.Message;
 import common.MessageType;
 import common.OrdersList;
+import common.Refund;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -49,6 +50,8 @@ public class ChatClient extends AbstractClient {
 	public static ArrayList<Selection> selection;
 	public static ArrayList<OrdersList> OrderBuild ;
 	public static ArrayList<ItemList> ItemBuild ;
+	public static Refund RefundBuild ;
+	
 	
 	
 	/**
@@ -132,6 +135,9 @@ public class ChatClient extends AbstractClient {
 		if (m.getMessageType().equals(MessageType.ItemList)) {
 			ItemBuild = (ArrayList<ItemList>)m.getObject();
 		}
+		/*if (m.getMessageType().equals(MessageType.RefundAdd)) {
+			RefundBuild = (Refund)m.getObject();
+		}*/
 	}
 
 	/**

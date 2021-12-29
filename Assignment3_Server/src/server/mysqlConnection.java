@@ -19,6 +19,7 @@ import common.Dish;
 import common.ItemList;
 import common.MessageType;
 import common.OrdersList;
+import common.Refund;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -422,7 +423,52 @@ public class mysqlConnection {
 			return BuildOrderTable();
 		}
 
-
+		public static void RefundBuild(String CustomerID, String ResturantID, String refund) {
+			Refund Refund1=null; 
+			PreparedStatement ps;
+			PreparedStatement ps1;
+			ResultSet res;
+			ResultSet res2;
+			int Sum;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+				ps.setString(1, CustomerID);
+				ps.setString(2, ResturantID);
+				ps.execute();
+				res=ps.getResultSet();
+					if(!res.next()) { //if next null
+							ps1=mysqlConnection.conn.prepareStatement("Insert into bitemedb.refund Values (?,?,?)");
+							ps1.setString(1,CustomerID);
+							ps1.setString(2, ResturantID);
+							ps1.setString(3, refund);
+							ps1.execute();
+							     ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+							     ps1.setString(1,CustomerID);
+								 ps1.setString(2, ResturantID);
+								 ps1.execute();
+								 res2=ps.getResultSet();
+								 //Refund1=new Refund(res2.getString(1), res2.getString(2), res2.getString(3));
+					}
+					else {
+						Sum=Integer.valueOf(res.getString(3))+Integer.valueOf(refund);
+						ps1=mysqlConnection.conn.prepareStatement("update bitemedb.refund set Refund=? where Customer_ID =? and ResturantId =? ");
+						ps1.setString(1, String.valueOf(Sum));
+						ps1.setString(2,CustomerID);
+						ps1.setString(3, ResturantID);
+						ps1.execute();
+								ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+							     ps1.setString(1,CustomerID);
+								 ps1.setString(2, ResturantID);
+								 ps1.execute();
+								 res2=ps.getResultSet();
+								 //Refund1=new Refund(res2.getString(1), res2.getString(2), res2.getString(3));
+					}
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//return Refund1;
+		}
 		
 		
 		
