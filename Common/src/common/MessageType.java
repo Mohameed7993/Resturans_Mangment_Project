@@ -7,6 +7,6 @@ public enum MessageType {
 	OrdersListToDataBase,itemsListtoDataBase,
 	OrderListBuild, ItemList, GetOrder,
 	updateCelling, OrderListBuildEdit,
-	RefundAdd;
+	RefundAdd, getRefund;
 	
 }

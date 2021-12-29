@@ -180,12 +180,12 @@ public class OrdersDetailsController implements Initializable {
     
     	
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
     				,"UnReady",ArrivalTime,"UnApproved");
     	}
     	else {
-    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantName(),orderPackageNumber,orderTime
+    		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
     				,"UnReady",ArrivalTime,"UnApproved");
     	}
@@ -303,9 +303,13 @@ public class OrdersDetailsController implements Initializable {
 				}
 		}
     	
-
-    	
- 
+		ClientUI.chat.accept(new Message(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID() ));
+		
+		
+		
+		
+		
+		
     }
 
 	@Override
