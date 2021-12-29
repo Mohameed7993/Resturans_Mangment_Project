@@ -81,7 +81,7 @@ public class EchoServer extends AbstractServer {
 				
 			case login:
 				message = ((String) m.getObject()).split(" ");
-				Users user=mysqlConnection.checkUserLogIn(message[0], message[1]);
+				Object user=mysqlConnection.checkUserLogIn(message[0], message[1]);
 				client.sendToClient(new Message(MessageType.login, user));
 				break;
 				
@@ -132,7 +132,7 @@ public class EchoServer extends AbstractServer {
 				break;
 			case OrdersListToDataBase:
 				message=((String)m.getObject()).split(" ");
-				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7],message[8], message[9], message[10]);
+				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7],message[8], message[9], message[10],message[11]);
 				client.sendToClient(new Message(MessageType.OrdersListToDataBase, null));
 				break;
 			case itemsListtoDataBase:
@@ -140,7 +140,7 @@ public class EchoServer extends AbstractServer {
 				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5]);
 				client.sendToClient(new Message(MessageType.itemsListtoDataBase, null));
 				break;
-			case OrderListBuild:
+		case OrderListBuild:
 				ArrayList<OrdersList> Order_list;
 				Order_list=mysqlConnection.BuildOrderTable();
 				client.sendToClient(new Message(MessageType.OrderListBuild, Order_list));
@@ -155,6 +155,7 @@ public class EchoServer extends AbstractServer {
 			case GetOrder:
 				message=((String)m.getObject()).split(" ");
 				OrdersList order;
+				System.out.println(message[0]);
 				order =mysqlConnection.getOrder(message[0]);
 				client.sendToClient(new Message(MessageType.GetOrder, order));
 				break;
@@ -179,8 +180,105 @@ public class EchoServer extends AbstractServer {
 				System.out.println(message[0]+message[1]+message[2]+88888888);
                 client.sendToClient(new Message(MessageType.RefundAdd, null));
 				break;
-			default:
+			case logout:
+				mysqlConnection.userLogOut((Users) m.getObject());
+				client.sendToClient(new Message(MessageType.logout, ""));
+				break;
+				
+				
+				
+				
+				
+			case getDishesFromResturant:
+				ArrayList<DishForResturant> dishes = mysqlConnection.getResturantDishes((String) m.getObject());
+				client.sendToClient(new Message(MessageType.getDishesFromResturant, dishes));
+				break;
+	
+			case deleteDish:
+
+				System.out.println(((DishForResturant) m.getObject()).getMealId());
+				mysqlConnection.deleteDish((DishForResturant) m.getObject());
+				client.sendToClient(new Message(MessageType.deleteDish, null));
+				break;
+			case getOptionalIngredients:
+				System.out.println(((DishForResturant) m.getObject()));
+				ArrayList<OptionalIngredients> optionalIngredients = mysqlConnection.getOptionalIngredients(((DishForResturant) m.getObject()).getMealId());
+				client.sendToClient(new Message(MessageType.getOptionalIngredients, optionalIngredients));
+				break;
+			case additem:
+
+				boolean add = mysqlConnection.AddItem((DishForResturant) m.getObject());
+				client.sendToClient(new Message(MessageType.additem, add));
+				break;
+			case AddOption:
+
+				boolean AddOption = mysqlConnection.AddOption((OptionalIngredients) m.getObject());
+				client.sendToClient(new Message(MessageType.AddOption, AddOption));
+				break;
+			case DeleteOption:
+
+				mysqlConnection.deleteOption(((OptionalIngredients) m.getObject()).getSelectionID());
+
+				client.sendToClient(new Message(MessageType.DeleteOption, null));
+
+				break;
+			case UpdateItem:
+				Boolean update;
+				update = mysqlConnection.updateItem((DishForResturant) m.getObject());
+				client.sendToClient(new Message(MessageType.UpdateItem, update));
+				break;
+			case GetResturantOrders:
+				
+				ArrayList<OrdersForRes> orders = mysqlConnection.GetResturantOrders((Resturant)m.getObject());
+				
+				client.sendToClient(new Message(MessageType.GetResturantOrders, orders));
+				break;
+				
+			case GetWaitingOrders:
+				ArrayList<OrdersForRes> Waitingorders=mysqlConnection.GetWaitingOrders((Resturant)m.getObject());
+				client.sendToClient(new Message(MessageType.GetWaitingOrders, Waitingorders));
+				
+				break;
+			case approveItem:
+			//	String[] split=m.getObject().toString().split(" ");
+				Integer Number=Integer.valueOf(m.getObject().toString());
+				boolean approve = mysqlConnection.ApproveItem(Number);
+				client.sendToClient(new Message(MessageType.approveItem, approve));
+				break;
+			case GetOrdersDishes:
+				ArrayList<OrderDish> Orderdishes=mysqlConnection.GetOrdersDishes((int)m.getObject());
+				client.sendToClient(new Message(MessageType.GetOrdersDishes, Orderdishes));
+				break;
+			case UpdateStatus:
+				
+				String str=(String)m.getObject();
+				
+				String[]split1=str.split(",");
+				System.out.println(split1[0]+split1[1]);
+				mysqlConnection.UpdateStatus(Integer.parseInt(split1[0]),split1[1]);
+				client.sendToClient(new Message(MessageType.UpdateStatus, null));
+			break;
 			
+			case GetEmployees:
+				ArrayList<waiting_account> accounts =mysqlConnection.GetWaitingAccounts((String)m.getObject());		
+				client.sendToClient(new Message(MessageType.GetEmployees, accounts));
+				break;
+				
+			case ApproveaccountB:
+				mysqlConnection.ApproveBusinessAccount((waiting_account)m.getObject());
+				client.sendToClient(new Message(MessageType.ApproveaccountB, null));
+				break;
+				
+			case AddEmployer:
+				String[] split2= ((String)m.getObject()).split(" ");
+				boolean added=mysqlConnection.AddEmployer(split2[0],split2[1],split2[2]);
+				client.sendToClient(new Message(MessageType.AddEmployer, added));
+				break;
+				
+				
+				
+			default:
+		
 				break;
 			}
 		} catch (IOException e) {

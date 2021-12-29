@@ -10,19 +10,15 @@ public class Resturants implements Serializable {
 	private String Status;
 	private String PhoneNumber;
 	private String ResturantID;
-	private String BranchID;
 	private String Location;
-	public Resturants(String resturantName, String status, String phoneNumber, String resturantID, String branchID,
-			String location) {
+	public Resturants(String resturantName, String status, String phoneNumber, String resturantID, String location) {
 		super();
 		ResturantName = resturantName;
 		Status = status;
 		PhoneNumber = phoneNumber;
 		ResturantID = resturantID;
-		BranchID = branchID;
 		Location = location;
 	}
-
 	public String getResturantName() {
 		return ResturantName;
 	}
@@ -47,18 +43,61 @@ public class Resturants implements Serializable {
 	public void setResturantID(String resturantID) {
 		ResturantID = resturantID;
 	}
-	public String getBranchID() {
-		return BranchID;
-	}
-	public void setBranchID(String branchID) {
-		BranchID = branchID;
-	}
 	public String getLocation() {
 		return Location;
 	}
 	public void setLocation(String location) {
 		Location = location;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Location == null) ? 0 : Location.hashCode());
+		result = prime * result + ((PhoneNumber == null) ? 0 : PhoneNumber.hashCode());
+		result = prime * result + ((ResturantID == null) ? 0 : ResturantID.hashCode());
+		result = prime * result + ((ResturantName == null) ? 0 : ResturantName.hashCode());
+		result = prime * result + ((Status == null) ? 0 : Status.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Resturants other = (Resturants) obj;
+		if (Location == null) {
+			if (other.Location != null)
+				return false;
+		} else if (!Location.equals(other.Location))
+			return false;
+		if (PhoneNumber == null) {
+			if (other.PhoneNumber != null)
+				return false;
+		} else if (!PhoneNumber.equals(other.PhoneNumber))
+			return false;
+		if (ResturantID == null) {
+			if (other.ResturantID != null)
+				return false;
+		} else if (!ResturantID.equals(other.ResturantID))
+			return false;
+		if (ResturantName == null) {
+			if (other.ResturantName != null)
+				return false;
+		} else if (!ResturantName.equals(other.ResturantName))
+			return false;
+		if (Status == null) {
+			if (other.Status != null)
+				return false;
+		} else if (!Status.equals(other.Status))
+			return false;
+		return true;
+	}
+	
+	
 
 	
 

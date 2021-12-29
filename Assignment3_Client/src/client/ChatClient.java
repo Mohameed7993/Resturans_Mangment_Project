@@ -10,17 +10,28 @@ import common.Account;
 import common.Business;
 import common.ChatIF;
 import common.Dish;
+import common.DishForResturant;
+import common.HoumanResources;
 import common.ItemInCart;
 import common.ItemList;
 import common.Message;
 import common.MessageType;
+import common.OptionalIngredients;
+import common.OrderDish;
+import common.OrdersForRes;
 import common.OrdersList;
 import common.Refund;
+import common.Resturant;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
 import common.Users;
 import common.W4C_Card;
+import common.waiting_account;
+import controllers.AddEmployerController;
+import controllers.AddItemController;
+import controllers.EditOptionalIngredientsController;
+import controllers.WaitingOrdersController;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,7 +47,7 @@ import java.util.ArrayList;
  */
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
-	
+	//customer
 	public static Users userlogged;
 	public static W4C_Card w4ccard;
 	public static Account accounts;
@@ -51,6 +62,17 @@ public class ChatClient extends AbstractClient {
 	public static ArrayList<OrdersList> OrderBuild ;
 	public static ArrayList<ItemList> ItemBuild ;
 	public static Refund RefundBuild ;
+	//resturant
+	public static Resturant resturant;
+	public static ArrayList<DishForResturant> dishes;
+	public static ArrayList<OrdersForRes> orders;
+	public static ArrayList<OptionalIngredients> optionalIngredients;
+	public static ArrayList<OrdersForRes> WaitingOrders;
+	public static ArrayList<OrderDish> OrdersDishes;
+	//hr
+	public static ArrayList<waiting_account> WaitingAccounts;
+	public static HoumanResources HR;
+	
 	
 	
 	
@@ -95,50 +117,131 @@ public class ChatClient extends AbstractClient {
 		//System.out.println((String) m.getObject());
 
 		if (m.getMessageType().equals(MessageType.login)) {
-			userlogged = (Users) m.getObject(); }
+			ArrayList<Object> arr=(ArrayList<Object>)m.getObject();
+			userlogged = (Users)(arr.get(0));
+			if(m.getObject()==null)
+				userlogged=null;
+			else {
+				switch (userlogged.getType()) {
+				case Supplier:
+					resturant=(Resturant)arr.get(1);
+					break;
+				case HR:
+					HR=(HoumanResources)arr.get(1);
+					System.out.println(HR.getID());
+					System.out.println(HR.getCompanyName());
+					break;
+				default:
+					break;
+				}
+			
+			}
+			
+		}
 		
-		if (m.getMessageType().equals(MessageType.scan)) {
-			accounts = (Account) m.getObject(); }
-		
-		if (m.getMessageType().equals(MessageType.w4cCard)) {
-			w4ccard = (W4C_Card) m.getObject(); }
-		
-		if(m.getMessageType().equals(MessageType.ViewResturants)) {
+		switch (m.getMessageType()) {
+		case scan :
+			accounts = (Account) m.getObject(); 
+			break;
+		case w4cCard:
+			w4ccard = (W4C_Card) m.getObject();
+			break;
+		case ViewResturants:
 			resturants=(ArrayList<Resturants>)m.getObject();
-		}
-		
-		if(m.getMessageType().equals(MessageType.ViewTybeMeallist)) {
+			break;
+		case ViewTybeMeallist:
 			tybemeal=(ArrayList<TybeMeal>)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.ViewDishList)) {
+			break;
+		case ViewDishList:
 			dish=(ArrayList<Dish>)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.ViewSelctionsList)) {
+			break;
+		case ViewSelctionsList:
 			selection=(ArrayList<Selection>)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.bussinessAccounts)) {
+			break;
+		case bussinessAccounts:
 			bussiness=(Business)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.OrdersListToDataBase)) {
+			break;
+		case OrdersListToDataBase:
 			order=(OrdersList)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.GetOrder)) {
+			break;
+		case GetOrder:
 			order2=(OrdersList)m.getObject();
-		}
-		if(m.getMessageType().equals(MessageType.itemsListtoDataBase)) {
+			break;
+		case itemsListtoDataBase:
 			items=(ItemList)m.getObject();
+			break;
+		case OrderListBuild:
+			OrderBuild = (ArrayList<OrdersList>)m.getObject();
+			break;
+		case ItemList:
+			ItemBuild = (ArrayList<ItemList>)m.getObject();
+			break;
+			
+		case getDishesFromResturant:
+			 dishes = (ArrayList<DishForResturant>)m.getObject();
+			break;
+			
+		case getOptionalIngredients:
+			optionalIngredients=(ArrayList<OptionalIngredients>)m.getObject();
+			break;
+			
+		case additem:
+			AddItemController.add=(boolean)m.getObject();
+			break;
+		case AddOption:
+			EditOptionalIngredientsController.AddOption=(boolean)m.getObject();
+			break;
+			
+		case UpdateItem:
+			EditOptionalIngredientsController.Update=(boolean)m.getObject();
+			break;
+		case GetResturantOrders:
+			orders=(ArrayList<OrdersForRes>)m.getObject();
+			break;
+		case GetWaitingOrders:
+			WaitingOrders=(ArrayList<OrdersForRes>)m.getObject();
+			break;
+		case approveItem:
+			WaitingOrdersController.approvebool=(Boolean)m.getObject();
+			break;
+		case GetOrdersDishes:
+			OrdersDishes=(ArrayList<OrderDish>)m.getObject();
+			break;
+		case GetEmployees:
+			WaitingAccounts = (ArrayList<waiting_account>)m.getObject();
+			break;
+		case AddEmployer:
+			AddEmployerController.added=(Boolean)m.getObject();
+			break;
+			
+			
+			
+			
+	
+		/*case:
+			break;*/
+			
+		default:
+			break;
 		}
 		
-		if (m.getMessageType().equals(MessageType.OrderListBuild)) {
-			OrderBuild = (ArrayList<OrdersList>)m.getObject();
-		}
-		if (m.getMessageType().equals(MessageType.ItemList)) {
-			ItemBuild = (ArrayList<ItemList>)m.getObject();
+		
+		
+		
+		
+
+		
+		
+		
+	
+		
+	
 		}
 		/*if (m.getMessageType().equals(MessageType.RefundAdd)) {
 			RefundBuild = (Refund)m.getObject();
 		}*/
-	}
+
+
 
 	/**
 	 * This method handles all data coming from the UI

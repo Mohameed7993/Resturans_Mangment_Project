@@ -16,22 +16,29 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 import common.Account;
 import common.Business;
 import common.Dish;
+import common.DishForResturant;
+import common.HoumanResources;
 import common.ItemList;
 import common.MessageType;
+import common.OptionalIngredients;
+import common.OrderDish;
+import common.OrdersForRes;
 import common.OrdersList;
 import common.Refund;
+import common.Resturant;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
 import common.UserType;
 import common.Users;
 import common.W4C_Card;
+import common.waiting_account;
 
 
 
 public class mysqlConnection {
 	static Connection conn;
-	private static Users user=null;
+	private static Users user1=null;
 	public static String db_name;
 	public static String db_user;
 	public static String db_pass;
@@ -58,11 +65,12 @@ public class mysqlConnection {
 		
 	}
  
-	
-	public static Users checkUserLogIn(String userName,String passWord) {//////////////////////////////////////////////////////////////////////////////////////update
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static Object checkUserLogIn(String userName,String passWord) {
 		PreparedStatement ps;
 		ResultSet res;
-		//Users user=null;
+		ArrayList<Object> arr=new ArrayList<>();
+		Users user=null;
 		try {
 			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.users where username=? and password=?");
 			ps.setString(1, userName);
@@ -76,14 +84,54 @@ public class mysqlConnection {
 			ps.setInt(1, 0); //// changed to 1
 			ps.setString(2, userName);
 			ps.execute();
-			return user;
+			
+			arr.add(user);///0
+			user1=user;
+			/////////////////////////////
+			switch (user.getType()) {
+			case Supplier:
+				Resturant resturant = null;
+				System.out.println(user.getId());
+				ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.resturants where ResturantId=?");
+
+				ps.setString(1, user.getId());
+				ps.execute();
+				res = ps.getResultSet();
+				System.out.println(res.next());
+				
+
+				resturant = new Resturant(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5));
+				System.out.println(resturant);
+				arr.add(resturant);///////1
+				break;
+		        case HR:
+				HoumanResources HR = null;
+				ps=mysqlConnection.conn.prepareStatement("Select * From bitemedb.human_resources where ID=?");
+				ps.setString(1, user.getId());
+				ps.execute();
+				res=ps.getResultSet();
+				res.next();
+				
+				HR = new HoumanResources(res.getString(1), res.getString(2));
+				arr.add(HR);//////////2
+				break;
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return user;
+		return arr;
 	}
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Business getBussinessInformationfromDB (String w4c_code) {
 		PreparedStatement ps;
 		ResultSet res;
@@ -144,11 +192,11 @@ public class mysqlConnection {
 	}
 	public static void setOrderinDB(String customer_ID, String resturant, String orderPackageNumber, String requestDate,
 			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
-			String arrivalTime, String approvalRecieving) {
+			String arrivalTime, String approvalRecieving,String Branch) {
 		PreparedStatement ps;
 		try {
 			ps=mysqlConnection.conn.prepareStatement("Insert Into bitemedb.order_list (Customer_ID, Resturant, RequestDate,"
-					+ " OrderDate, TotalPrice, Address, DeleiveryService, Status, ArrivalTime, ApprovalRecieving) Values (?,?,?,?,?,?,?,?,?,?)");
+					+ " OrderDate, TotalPrice, Address, DeleiveryService, Status, ArrivalTime, ApprovalRecieving, Branch) Values (?,?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1,customer_ID );
 			ps.setString(2,resturant );
 			ps.setString(3, requestDate);
@@ -156,9 +204,11 @@ public class mysqlConnection {
 			ps.setString(5, totalPrice);
 			ps.setString(6,address );
 			ps.setString(7, deleiveryService);
-			ps.setString(8,status );
+			ps.setInt(8,3 );
 			ps.setString(9,arrivalTime );
-			ps.setString(10,approvalRecieving);
+			ps.setInt(10,2);
+			ps.setString(11, Branch);
+			
 			ps.execute();
 			
 			//res=ps.getResultSet();
@@ -211,7 +261,10 @@ public class mysqlConnection {
 				res=ps.getResultSet();
 				res.next();
 				order=new OrdersList(res.getString(1),res.getString(2),res.getInt(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7)
-						,res.getString(8),res.getString(9),res.getString(10),res.getString(11));
+						,res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12));
+				
+				System.out.println(res.getString(1)+" "+res.getString(2)+" "+res.getInt(3)+" "+res.getString(4)+" "+res.getString(5)+" "+res.getString(6)+" "+res.getString(7)
+						+" "+res.getString(8)+" "+res.getString(9)+" "+res.getString(10)+" "+res.getString(11)+" "+res.getString(12));
 				return order;
 		}catch (SQLException e) {
 			   // TODO Auto-generated catch block
@@ -338,8 +391,8 @@ public class mysqlConnection {
 				statment=mysqlConnection.conn.createStatement();
 				res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
 				while (res.next()) {
-					if(res.getString(6).equals(Location)) {
-					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6));
+					if(res.getString(5).equals(Location)) {
+					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5));
 					list.add(temp);
 					}
 				}
@@ -352,7 +405,7 @@ public class mysqlConnection {
 		}
 		
 		
-	   public static ArrayList<OrdersList> BuildOrderTable() {
+	  public static ArrayList<OrdersList> BuildOrderTable() {
 		   //TABLE VIEW AND DATA
 		ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
 		PreparedStatement ps;
@@ -375,7 +428,7 @@ public class mysqlConnection {
 		try {
 
 			ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
-			ps.setString(1, user.getId());
+			ps.setString(1, user1.getId());
 			ps.execute();
 			res=ps.getResultSet();
 			while(res.next()) 
@@ -385,7 +438,7 @@ public class mysqlConnection {
 				}
 					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
 							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
-								res.getString(8),res.getString(9),res.getString(10),res.getString(11)));
+								res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12)));
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -469,24 +522,581 @@ public class mysqlConnection {
 			}
 			//return Refund1;
 		}
-		
-		
-		
-		
-		
-	/*public static void updateAddress(int orderNumber, String address) {
-		PreparedStatement ps;
+		public static void userLogOut(Users user) {
+			PreparedStatement ps;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET isLoggedIn =0 where username=?");
+				ps.setString(1, user.getUserName());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		public static ArrayList<DishForResturant> getResturantDishes(String resturantId) {
 
-		try {
-			ps = mysqlConnection.conn
-					.prepareStatement("UPDATE assignement2db.order SET OrderAddress =? where OrderNumber=?");
-			ps.setString(1, address);
-			ps.setInt(2, orderNumber);
-			ps.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			PreparedStatement ps,ps1,ps2;
+			ResultSet res, res1,res2;
+			String TypeID,DishID;
+			ArrayList<DishForResturant> dishes = new ArrayList<DishForResturant>();
+			DishForResturant dish;
+			StringBuilder stringBuilder = new StringBuilder();//////////////////////////////////////////////////////////////////////////
+			
+			
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.typemeal where ResturantId=?");
+				ps.setString(1, resturantId);
+				ps.execute();
+				res= ps.getResultSet();
+				while(res.next()) {//while there are more types for this restaurant
+					TypeID=res.getString(2);
+					ps1= mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where Typemealid=?");
+					ps1.setString(1, TypeID);
+					ps1.execute();
+					res1=ps1.getResultSet();
+					while(res1.next())
+					{
+						DishID=res1.getString(2);
+						ps2=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.selection where DishId=?");
+						ps2.setString(1, DishID);
+						ps2.execute();
+						res2=ps2.getResultSet();
+						while(res2.next())
+						{
+							if(res2.getInt(4)==0) {
+							stringBuilder.append(res2.getString(3));/////////////////////////////////////////////////////
+							stringBuilder.append("\n");}else {
+								stringBuilder.append(res2.getString(3)+" +"+res2.getInt(4));
+								stringBuilder.append("\n");
+							}
+							
+						}
+						res2.close();
+						
+						dish=new DishForResturant(resturantId,res.getString(3),
+								res1.getString(3),stringBuilder.toString(),res1.getString(2),res1.getInt(4));
+						dishes.add(dish);
+						stringBuilder =new StringBuilder();
+						
+					}//while res1 dishes
+					
+				}//while res types
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}/////////////////////////////////////////////////////////////////////////////////////////////
+			
+			
+
+			return dishes;
+		}
+		
+		
+
+		
+		public static void deleteDish(DishForResturant dish) {
+			PreparedStatement ps,ps1;
+		ResultSet res,res1;
+		String typeID;
+			
+			try {
+				System.out.println(123);
+				System.out.println(Integer.valueOf(dish.getMealId()));
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where DishId=?");
+				ps.setInt(1, Integer.valueOf(dish.getMealId()));
+				ps.execute();
+				res=ps.getResultSet();
+				res.next();
+				typeID=res.getString(1);
+				System.out.println(res.getInt(1));
+				
+				
+				//
+				////
+				// 
+				
+				
+				
+				////////////////////////////////////////////// we don't dalete the types becuase there is only one appearing in DB if we delete it we will lose all of the dishes
+				/////////////////////////////////////////////for getting the menu the program os not taking types with no dishes(so it can't affect on the menu view)  :)..
+				ps = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.selection WHERE DishId=?");
+				ps.setString(1, dish.getMealId());
+				ps.execute();
+				ps = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.dish WHERE DishId=?");
+				ps.setString(1, dish.getMealId());
+				ps.execute();
+				
+				ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where DishId=?");
+				ps1.setInt(1, Integer.valueOf(dish.getMealId()));
+				ps1.execute();
+				res1=ps1.getResultSet();
+				
+			if(!res1.next()) {
+				ps = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.typemeal WHERE TypemealId=?");
+				ps.setInt(1, Integer.valueOf(typeID));}
+				
+				res1.close();
+				res.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		public static ArrayList<OptionalIngredients>getOptionalIngredients(String dishID){
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<OptionalIngredients> optionalIngredients=new ArrayList<OptionalIngredients>();
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.selection where dishID=?");
+				ps.setString(1, dishID);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					optionalIngredients.add(new OptionalIngredients(res.getString(3), res.getInt(4), dishID, res.getInt(2)));
+				}
+				res.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return optionalIngredients;
 		}
 
-	}*/
+		public static boolean AddItem(DishForResturant dish) {//we have the restaurant id!!
+			PreparedStatement ps,ps1,ps2;
+			ResultSet res,res1;
+			String[] split=dish.getOptionalIngredients().split("\n");
+			try {
+				
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.typemeal where ResturantId=? and TybeMeal=?");
+				ps.setString(1, dish.getResturantId());
+				ps.setString(2, dish.getMealType());
+				ps.execute();
+				res=ps.getResultSet();//getting the the meal type from DB be in case it exists
+				
+				if(!res.next()) {//if there is no type like this we adding it to TypeMeal table
+				ps= mysqlConnection.conn.prepareStatement("insert into bitemedb.typemeal(ResturantId,TybeMeal) values(?,?)");
+				ps.setString(1, dish.getResturantId());
+				ps.setString(2, dish.getMealType());
+				ps.execute();
+				}
+				 
+				
+				
+				ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.typemeal where ResturantId=? and TybeMeal=?");
+				ps.setString(1, dish.getResturantId());
+				ps.setString(2, dish.getMealType());///////get the new type meal id
+				ps.execute();
+				
+				res=ps.getResultSet();
+				res.next();
+				ps1= mysqlConnection.conn.prepareStatement("insert into bitemedb.dish(TypemealId,Dish,DishPrice) values(?,?,?)");
+				ps1.setString(1,res.getString(2));//get the meal type id/////////////
+				ps1.setString(2, dish.getMealName());
+				ps1.setInt(3, dish.getPrice());//add the dish and its price,, here we have new dish id that we didn't saved yet
+				ps1.execute();
+				
+				ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where TypemealId=? and Dish=?");
+				ps1.setInt(1,res.getInt(2));
+				ps1.setString(2,dish.getMealName());
+				ps1.execute();
+				
+				res1=ps1.getResultSet();//get the new dish id
+				res1.next();
+				
+				
+				
+				if(!dish.getOptionalIngredients().equals("")) {
+				for(int i=0; i<split.length;i++)
+				{
+					String[] split2=split[i].split(",");
+					ps2= mysqlConnection.conn.prepareStatement("insert into bitemedb.selection (DishId,Selection,SelectionPrice) values(?,?,?)");
+					ps2.setString(1,res1.getString(2));
+					ps2.setString(2,split2[0]);
+					ps2.setString(3,split2[1]);
+					ps2.execute();
+					
+				}}
+				res.close();
+				res1.close();
+				
+				
+				
+				
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+				return false;
+			}
+
+
+			
+			// TODO Auto-generated method stub
+			return true;
+		}
+
+		public static boolean AddOption(OptionalIngredients Option) {
+			PreparedStatement ps;
+			try {
+				ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.selection (DishId,Selection,SelectionPrice) values(?,?,?)");
+				ps.setString(1, Option.getDishID());
+				ps.setString(2, Option.getOption());
+				ps.setInt(3, Option.getPrice());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO: handle exception
+			e.printStackTrace();
+			return false;
+			}
+			System.out.println("hiiiiiiiiii bitch");
+			return true;
+		}
+
+		public static void deleteOption(int Option) {
+			PreparedStatement ps;
+			try {
+				ps=mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.selection WHERE SelectionId=?");
+				ps.setInt(1, Option);
+				ps.execute();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		
+		public static Boolean updateItem(DishForResturant dish) {
+			PreparedStatement ps;
+			ResultSet res;
+		
+			try {
+				
+				
+				// ps= mysqlConnection.conn.prepareStatement("update bitemedb.order_list set ApprovalRecieving=? ,ApproveTime=?  where OrderPackageNumber=?");
+				ps= mysqlConnection.conn.prepareStatement(" update bitemedb.dish set Dish=?,DishPrice=? where DishId=? ");
+				ps.setString(1, dish.getMealName());
+				ps.setInt(2, dish.getPrice());
+				ps.setString(3, dish.getMealId());
+				ps.execute();
+				
+				
+				
+				
+				
+				
+				
+				 
+				
+				
+				
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			}
+			
+			return true;
+		}////////////////////////////////////////update
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		public static ArrayList<OrdersForRes> GetResturantOrders(Resturant resturant) {
+			ArrayList<OrdersForRes> orders = new ArrayList<>();
+			PreparedStatement ps;
+			ResultSet res;
+		
+			try {
+				
+				ps= mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.order_list where Resturant=? and ApprovalRecieving=? and Branch=?");
+				ps.setString(1, resturant.getId());
+				ps.setString(2, "Approved");
+				ps.setString(3, resturant.getBranch());
+				ps.execute();
+				 res=ps.getResultSet();
+				
+				 while(res.next())
+				 {
+					 
+					
+					 
+					 orders.add(new OrdersForRes(res.getString(1), resturant.getResturantName(), res.getInt(3), res.getString(4), res.getString(5), res.getString(6),
+							
+							 res.getString(7), res.getString(8), res.getString(9), res.getString(10), res.getString(11)));
+					 
+					 
+					 
+					 
+					
+				 }
+				 res.close();
+				
+				 
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			return orders;
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+
+		public static boolean ApproveItem(int object) {
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps= mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.order_list where OrderPackageNumber=?");
+				ps.setInt(1, object);
+				ps.execute();
+				res=ps.getResultSet();
+				res.next();
+				  if(res.getString(11).equals("Approved"))
+					  return false;
+				  
+				  ps= mysqlConnection.conn.prepareStatement("update bitemedb.order_list set ApprovalRecieving=? ,Status=?  where OrderPackageNumber=?");
+				  ps.setString(1, "Approved");
+				 ps.setInt(2, 2);
+				  ps.setInt(3, object);
+				  ps.execute();
+				  
+				  //UPDATE `bitemedb`.`dish` SET `dishprice` = ? WHERE (`dishID` = ?)
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			
+			
+			return true;
+		}
+
+		public static ArrayList<OrderDish> GetOrdersDishes(int OrderNum) {
+			ArrayList<OrderDish> OrderDishes= new ArrayList<>();
+			PreparedStatement ps;
+			ResultSet res;
+			 try {
+				ps=mysqlConnection.conn.prepareStatement("select * from bitemedb.item_list where PackageID=?");
+				ps.setInt(1, OrderNum);
+				ps.execute();
+				res=ps.getResultSet();
+				while(res.next()) {
+					OrderDishes.add(new OrderDish(res.getString(1), res.getString(2), res.getString(3), res.getInt(5), res.getInt(4)));
+					
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			 return OrderDishes;
+			
+		}
+
+		public static void UpdateStatus(int OrderNumber, String Status) {
+			PreparedStatement ps;
+			
+			try {
+				 ps= mysqlConnection.conn.prepareStatement("Update bitemedb.order_list set Status=? where OrderPackageNumber=? ");
+				 ps.setString(1, Status);
+				 ps.setInt(2, OrderNumber);
+				 ps.execute();
+				 
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			 
+			
+		}
+
+		public static ArrayList<waiting_account> GetWaitingAccounts(String CompanyName) {
+			
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<waiting_account> accounts=new ArrayList<>();
+			try {
+				ps = mysqlConnection.conn.prepareStatement("select * from bitemedb.waiting_accounts where CompanyName=?");
+				ps.setString(1, CompanyName);
+				ps.execute();
+				 res= ps.getResultSet();
+				
+					 
+					 while(res.next()) {
+					 accounts.add(new waiting_account(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), CompanyName,res.getString(7) , res.getString(8), res.getInt(9), res.getString(10)));
+					 System.out.println(res.getString(6)+res.getString(1));
+					 }
+					
+				 
+				 res.close();
+			} catch (SQLException e) {
+			e.printStackTrace();
+			}
+			
+			
+			return accounts;
+		}
+		
+		
+
+		public static void ApproveBusinessAccount(waiting_account account) {
+			
+			PreparedStatement ps;
+			ResultSet res;
+			String W4C;
+			 try {
+				 
+				  
+				 ps= mysqlConnection.conn.prepareStatement("delete from bitemedb.waiting_accounts where ID=? ");
+				 ps.setString(1, account.getID());
+				 ps.execute();
+				 
+				 
+				  
+				 ps =mysqlConnection.conn.prepareStatement("select * from bitemedb.w4c_card where CreditCard=?");
+				 ps.setString(1, account.getCreditCard());
+				 ps.execute();
+				 res=ps.getResultSet();
+				 
+				 if(!res.next()) {//if there is no private account for this customer
+					
+					 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.w4c_card (CreditCard,accounttype) values(?,?)");
+					 ps.setString(1, account.getCreditCard());
+					 ps.setString(2, "business");
+					 ps.execute();
+					 
+					 
+					 ps =mysqlConnection.conn.prepareStatement("select * from bitemedb.w4c_card where CreditCard=?");
+					 ps.setString(1, account.getCreditCard());
+					 ps.execute();
+					 res=ps.getResultSet();
+					 res.next();
+					 W4C=String.valueOf(res.getInt(1));
+					
+				 }else {// if there is private account for this customer
+					 W4C=String.valueOf(res.getInt(1));
+					 
+				 }
+				
+				 
+				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.account values(?,?,?,?,?,?)");
+				 ps.setString(1, account.getID());
+				 ps.setString(2, account.getFirstName());
+				 ps.setString(3, account.getLastName());
+				 ps.setString(4, account.getPhoneNumber());
+				 ps.setString(5, account.getEmail());
+				 ps.setString(6, W4C);
+				 ps.execute();
+				
+				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.business values(?,?,?,?)");
+				 ps.setString(1, W4C);
+				 ps.setString(2, account.getEmplyerID());
+				 ps.setString(3, account.getCompanyName());
+				 ps.setString(4, String.valueOf(account.getCeiling()));
+				 ps.execute();
+				 
+				 
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		}
+
+		public static boolean AddEmployer(String ID, String Name,String HRID) {
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps=mysqlConnection.conn.prepareStatement("select * from bitemedb.users where ID=? and userType=? ");
+				ps.setString(1, ID);
+				ps.setString(2, "UnKnown");
+				ps.execute();
+				res=ps.getResultSet();
+				if(!res.next()) {
+					return false;
+				}else {
+					ps=mysqlConnection.conn.prepareStatement("update bitemedb.users set userType=? where ID=?");
+					ps.setString(1, "Employer");
+					ps.setString(2, ID);
+					ps.execute();
+					
+					ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.employer values(?,?,?,?)");
+					ps.setString(1, ID);
+					ps.setString(2, Name);
+					ps.setString(3, HRID);
+					ps.setInt(4, 1);
+					ps.execute();
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		public static ArrayList<OrdersForRes> GetWaitingOrders(Resturant resturant) {
+			
+			ArrayList<OrdersForRes> orders = new ArrayList<>();
+			PreparedStatement ps;
+			ResultSet res;
+		
+			try {
+				
+				ps= mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.order_list where Resturant=? and ApprovalRecieving=? and Branch=?");
+				ps.setString(1, resturant.getId());
+				ps.setString(2, "Waiting for approve");
+				ps.setString(3, resturant.getBranch());
+				ps.execute();
+				 res=ps.getResultSet();
+				
+				 while(res.next())
+				 {
+					 
+					
+					 
+					 orders.add(new OrdersForRes(res.getString(1), resturant.getResturantName(), res.getInt(3), res.getString(4), res.getString(5), res.getString(6),
+							
+							 res.getString(7), res.getString(8), res.getString(9), res.getString(10), res.getString(11)));
+					 
+					 
+					 
+					 
+					
+				 }
+				 res.close();
+				
+				 
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			return orders;
+		}
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

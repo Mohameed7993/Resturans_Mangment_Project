@@ -164,6 +164,7 @@ public class ChooseResturantController implements Initializable {
 		}
 		else { MyCartButton.setVisible(true); Image5.setVisible(true);}
 		ResturantFrom.setText("From :" + ChatClient.accounts.getLocation() );
+		System.out.println(ChatClient.accounts.getLocation());
 		ResturanNameCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("ResturantName"));
 		StatusCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Status"));
 		PhoneNumberCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("PhoneNumber"));

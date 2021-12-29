@@ -12,7 +12,7 @@ public class Users  implements Serializable{
 	private String userName;
 	private String passWord;
 	private UserType type;
-	private boolean isLoged;
+	private boolean isLoggedIn;
 	
 	public String getId() {
 		return id;
@@ -28,7 +28,7 @@ public class Users  implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + (isLoged ? 1231 : 1237);
+		result = prime * result + (isLoggedIn ? 1231 : 1237);
 		result = prime * result + ((passWord == null) ? 0 : passWord.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -48,7 +48,7 @@ public class Users  implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (isLoged != other.isLoged)
+		if (isLoggedIn != other.isLoggedIn)
 			return false;
 		if (passWord == null) {
 			if (other.passWord != null)
@@ -80,17 +80,17 @@ public class Users  implements Serializable{
 		this.type = type;
 	}
 	public boolean isLoged() {
-		return isLoged;
+		return isLoggedIn;
 	}
 	public void setLoged(boolean isLoged) {
-		this.isLoged = isLoged;
+		this.isLoggedIn = isLoged;
 	}
 	public Users(String id, String userName, String passWord, boolean isLoged, UserType type) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.passWord = passWord;
-		this.isLoged = isLoged;
+		this.isLoggedIn = isLoged;
 		this.type = type;
 	}
 

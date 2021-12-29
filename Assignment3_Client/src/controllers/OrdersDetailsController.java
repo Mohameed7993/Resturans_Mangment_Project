@@ -19,7 +19,6 @@ import common.Message;
 import common.MessageType;
 
 import common.OrdersList;
-import common.StatusType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -182,17 +181,22 @@ public class OrdersDetailsController implements Initializable {
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
-    				,"UnReady",ArrivalTime,"UnApproved");
+    				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
     	}
     	else {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
-    				,"UnReady",ArrivalTime,"UnApproved");
+    				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
     	}
+    	
     	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
     	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
-    	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()));
+    	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()+" "+orders.getBranchlocation()));
+    	
+    	
     	ClientUI.chat.accept(new Message(MessageType.GetOrder,ChatClient.userlogged.getId()));
+    	
+    	System.out.println(ChatClient.order2.getOrderPackageNumber());
 
      	for(int i=0;i<ItemDetailsController.itemList.size();i++)
     	{
@@ -303,7 +307,7 @@ public class OrdersDetailsController implements Initializable {
 				}
 		}
     	
-		ClientUI.chat.accept(new Message(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID() ));
+		//ClientUI.chat.accept(new Message(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID() ));
 		
 		
 		

@@ -59,7 +59,6 @@ public class BiteMeLoginController implements Initializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				break;
 			case CEO:
 				System.out.println(ChatClient.userlogged.getPassWord() + "2");
@@ -68,7 +67,13 @@ public class BiteMeLoginController implements Initializable {
 				System.out.println(ChatClient.userlogged.getPassWord() + "3");
 				break;
 			case Supplier:
-				System.out.println(ChatClient.userlogged.getPassWord() + "4");
+				ResturantHomeController resturantHomeController=new ResturantHomeController();
+				try {
+					resturantHomeController.start(stage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			default:
 				break;

@@ -7,6 +7,8 @@ public enum MessageType {
 	OrdersListToDataBase,itemsListtoDataBase,
 	OrderListBuild, ItemList, GetOrder,
 	updateCelling, OrderListBuildEdit,
-	RefundAdd, getRefund;
+	RefundAdd, getRefund, logout, editDishName, getDishesFromResturant,
+	additem, getOptionalIngredients, AddOption, UpdateItem, GetResturantOrders, 
+	approveItem, GetOrdersDishes, GetWaitingOrders, GetEmployees, AddEmployer, DeleteOption, UpdateStatus, ApproveaccountB, deleteDish;
 	
 }

@@ -20,9 +20,10 @@ public class OrdersList implements Serializable {
 	private String Status;
 	private String ArrivalTime;
 	private String ApprovalRecieving;
+	private String Branchlocation;
 	public OrdersList(String customer_ID, String resturant, Integer orderPackageNumber, String requestDate,
 			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
-			String arrivalTime, String approvalRecieving) {
+			String arrivalTime, String approvalRecieving, String branchlocation) {
 		super();
 		Customer_ID = customer_ID;
 		Resturant = resturant;
@@ -35,6 +36,7 @@ public class OrdersList implements Serializable {
 		Status = status;
 		ArrivalTime = arrivalTime;
 		ApprovalRecieving = approvalRecieving;
+		Branchlocation = branchlocation;
 	}
 	public String getCustomer_ID() {
 		return Customer_ID;
@@ -102,6 +104,12 @@ public class OrdersList implements Serializable {
 	public void setApprovalRecieving(String approvalRecieving) {
 		ApprovalRecieving = approvalRecieving;
 	}
+	public String getBranchlocation() {
+		return Branchlocation;
+	}
+	public void setBranchlocation(String branchlocation) {
+		Branchlocation = branchlocation;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -109,6 +117,7 @@ public class OrdersList implements Serializable {
 		result = prime * result + ((Address == null) ? 0 : Address.hashCode());
 		result = prime * result + ((ApprovalRecieving == null) ? 0 : ApprovalRecieving.hashCode());
 		result = prime * result + ((ArrivalTime == null) ? 0 : ArrivalTime.hashCode());
+		result = prime * result + ((Branchlocation == null) ? 0 : Branchlocation.hashCode());
 		result = prime * result + ((Customer_ID == null) ? 0 : Customer_ID.hashCode());
 		result = prime * result + ((DeleiveryService == null) ? 0 : DeleiveryService.hashCode());
 		result = prime * result + ((OrderPackageNumber == null) ? 0 : OrderPackageNumber.hashCode());
@@ -142,6 +151,11 @@ public class OrdersList implements Serializable {
 			if (other.ArrivalTime != null)
 				return false;
 		} else if (!ArrivalTime.equals(other.ArrivalTime))
+			return false;
+		if (Branchlocation == null) {
+			if (other.Branchlocation != null)
+				return false;
+		} else if (!Branchlocation.equals(other.Branchlocation))
 			return false;
 		if (Customer_ID == null) {
 			if (other.Customer_ID != null)
@@ -185,6 +199,8 @@ public class OrdersList implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 	
 	
 
