@@ -96,7 +96,7 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 			
 	   ClientUI.chat.accept(new Message1(MessageType.UpdateStatus, orders_table.getSelectionModel().getSelectedItem().getOrderNumber()+","+"Ready"));
 	   Integer ordernumber =orders_table.getSelectionModel().getSelectedItem().getOrderNumber();
-		String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
+	/*	String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
 		System.out.println(number);
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message1 = Message.creator(
@@ -104,7 +104,7 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 	                new com.twilio.type.PhoneNumber("+15739933793"),////from
 	                "BiteMe Company:\n"
 	                + "Your order number '"+ordernumber+"' Is Ready\n You will receive it soon.Thanks ")//message body
-	            .create();
+	            .create();*/
 		
 		} else {
 			Alert a = new Alert(AlertType.ERROR);
