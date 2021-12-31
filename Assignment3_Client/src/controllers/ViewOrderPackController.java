@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.OrdersForRes;
 import common.OrderDish;
@@ -78,7 +78,7 @@ public class ViewOrderPackController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//orderNum.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
-		ClientUI.chat.accept(new Message(MessageType.GetOrdersDishes, ViewOrdersController.selctedOrder.getOrderNumber()));
+		ClientUI.chat.accept(new Message1(MessageType.GetOrdersDishes, ViewOrdersController.selctedOrder.getOrderNumber()));
 		
 		typecol.setCellValueFactory(new PropertyValueFactory<OrderDish, String>("mealType"));
 		ColTheDish.setCellValueFactory(new PropertyValueFactory<OrderDish, String>("mealName"));

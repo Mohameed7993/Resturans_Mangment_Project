@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.Dish;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.Resturants;
 import common.TybeMeal;
@@ -101,7 +101,7 @@ ObservableList<Dish> Dish;
 		
 		DishCol.setCellValueFactory(new PropertyValueFactory<Dish,String>("Dish"));
 		PriceCol.setCellValueFactory(new PropertyValueFactory<Dish,Integer>("DishPrice"));
-		ClientUI.chat.accept(new Message(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMealID()));
+		ClientUI.chat.accept(new Message1(MessageType.ViewDishList,TybeMealController.tybe_meal.getTybeMealID()));
 		Dish=FXCollections.observableArrayList(ChatClient.dish);
 		DishList.setItems(Dish);
 		

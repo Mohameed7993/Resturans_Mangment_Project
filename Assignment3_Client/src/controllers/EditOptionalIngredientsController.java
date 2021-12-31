@@ -10,7 +10,7 @@ import client.ChatClient;
 import client.ClientController;
 import client.ClientUI;
 import common.DishForResturant;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.OptionalIngredients;
 import javafx.collections.FXCollections;
@@ -91,7 +91,7 @@ public class EditOptionalIngredientsController implements Initializable{
     	OptionalIngredients option=new OptionalIngredients(Option.getText(), Integer.valueOf(price_txt.getText()), 
     			UpdateMenuListForResturantController.selectedDish.getMealId(), 0);
     	
-    	 ClientUI.chat.accept(new Message(MessageType.AddOption, option));
+    	 ClientUI.chat.accept(new Message1(MessageType.AddOption, option));
     	 if(!AddOption) {
     		 Alert a = new Alert(AlertType.ERROR);
  			a.setContentText("Error");
@@ -116,7 +116,7 @@ public class EditOptionalIngredientsController implements Initializable{
     	}else {
     		
     		System.out.println(optionalIngredients_table.getSelectionModel().getSelectedItem().toString());
-    		ClientUI.chat.accept(new Message(MessageType.DeleteOption,optionalIngredients_table.getSelectionModel().getSelectedItem()));
+    		ClientUI.chat.accept(new Message1(MessageType.DeleteOption,optionalIngredients_table.getSelectionModel().getSelectedItem()));
    
     		initialize(null, null);
     	}
@@ -132,7 +132,7 @@ public class EditOptionalIngredientsController implements Initializable{
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.YES){
 		// ... user chose YES
-			ClientUI.chat.accept(new Message(MessageType.logout, ChatClient.userlogged));
+			ClientUI.chat.accept(new Message1(MessageType.logout, ChatClient.userlogged));
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			BiteMeLoginController biteMeLoginController=new BiteMeLoginController();
 			try {
@@ -167,7 +167,7 @@ public class EditOptionalIngredientsController implements Initializable{
     	DishForResturant dish =new DishForResturant(ChatClient.resturant.getId(),null , mealName_txt.getText(),
        		 sb.toString(),UpdateMenuListForResturantController.selectedDish.getMealId() ,Integer.parseInt(mealPrice_txt.getText()));
     	
-     ClientUI.chat.accept(new Message(MessageType.UpdateItem, dish));
+     ClientUI.chat.accept(new Message1(MessageType.UpdateItem, dish));
     		 
     	if(Update==true)
     	{
@@ -199,7 +199,7 @@ public class EditOptionalIngredientsController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		ClientUI.chat.accept(new Message(MessageType.getOptionalIngredients, UpdateMenuListForResturantController.selectedDish));
+		ClientUI.chat.accept(new Message1(MessageType.getOptionalIngredients, UpdateMenuListForResturantController.selectedDish));
 		
 		option_col.setCellValueFactory(new PropertyValueFactory<OptionalIngredients, String>("option"));
 		price_col.setCellValueFactory(new PropertyValueFactory<OptionalIngredients, Integer>("price"));

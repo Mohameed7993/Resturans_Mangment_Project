@@ -79,7 +79,9 @@ public class mysqlConnection {
 			res=ps.getResultSet();
 			if(!res.next())
 				return null;
-			user=new Users(res.getString(1),res.getString(2),res.getString(3),true ,UserType.valueOf(res.getString(5)));
+			user=new Users(res.getString(1),res.getString(2),res.getString(3),true ,UserType.valueOf(res.getString(5))
+					,res.getString(6),res.getString(7),res.getString(8),res.getString(9),res.getString(10));
+			System.out.println(res.toString());
 			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET IsloggedIN =? where username=?");
 			ps.setInt(1, 0); //// changed to 1
 			ps.setString(2, userName);
@@ -477,7 +479,6 @@ public class mysqlConnection {
 		}
 
 		public static void RefundBuild(String CustomerID, String ResturantID, String refund) {
-			Refund Refund1=null; 
 			PreparedStatement ps;
 			PreparedStatement ps1;
 			ResultSet res;
@@ -500,7 +501,7 @@ public class mysqlConnection {
 								 ps1.setString(2, ResturantID);
 								 ps1.execute();
 								 res2=ps.getResultSet();
-								 //Refund1=new Refund(res2.getString(1), res2.getString(2), res2.getString(3));
+								 
 					}
 					else {
 						Sum=Integer.valueOf(res.getString(3))+Integer.valueOf(refund);
@@ -514,14 +515,71 @@ public class mysqlConnection {
 								 ps1.setString(2, ResturantID);
 								 ps1.execute();
 								 res2=ps.getResultSet();
-								 //Refund1=new Refund(res2.getString(1), res2.getString(2), res2.getString(3));
+								
 					}
 			}catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//return Refund1;
+			
 		}
+		public static Refund getRefundFromdb (String customerid,String resturantid) {
+			PreparedStatement ps;
+			PreparedStatement ps1;
+			ResultSet res;
+			ResultSet res2;
+			Refund ref=null;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+				ps.setString(1, customerid);
+				ps.setString(2, resturantid);
+				ps.execute();
+				res=ps.getResultSet();
+				if(!res.next())
+				{
+					ps1=mysqlConnection.conn.prepareStatement("Insert into bitemedb.refund Values (?,?,?)");
+					ps1.setString(1,customerid);
+					ps1.setString(2, resturantid);
+					ps1.setString(3, String.valueOf(0));
+					ps1.execute();
+							 ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+						     ps1.setString(1,customerid);
+							 ps1.setString(2, resturantid);
+							 ps1.execute();
+							 res2=ps.getResultSet();
+							 if(!res2.next())
+								 return null;
+							 else
+							 ref=new Refund(res2.getString(1),res2.getString(2),res2.getString(3));
+				}
+				ref=new Refund(res.getString(1),res.getString(2),res.getString(3));
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();}
+			return ref;
+		}
+		
+		public static void UpdateRefund (String customerid,String resturantid,String ref) {
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				System.out.println(ref);
+				ps=mysqlConnection.conn.prepareStatement("update bitemedb.refund set Refund=? where Customer_ID =? and ResturantId =? ");
+				ps.setString(1, ref);
+				ps.setString(2,customerid);
+				ps.setString(3, resturantid);
+				ps.execute();
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();}
+		}
+		
+		
+		
+		
+		
+		
 		public static void userLogOut(Users user) {
 			PreparedStatement ps;
 			try {
@@ -1072,10 +1130,7 @@ public class mysqlConnection {
 							
 							 res.getString(7), res.getString(8), res.getString(9), res.getString(10), res.getString(11)));
 					 
-					 
-					 
-					 
-					
+		
 				 }
 				 res.close();
 				
@@ -1084,16 +1139,29 @@ public class mysqlConnection {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			
-		
-			
-			
-			
-			
-			
-			
-			
+	
 			return orders;
+		}
+		
+		
+		public static Account getCustomerDetails (String customerId) {
+			PreparedStatement ps;
+			ResultSet res;
+			Account cus=null;
+			try {
+				ps=mysqlConnection.conn.prepareStatement("SELECT * From bitemedb.account Where ID=?");
+				ps.setString(1, customerId);
+				ps.execute();
+				res=ps.getResultSet();
+				if(!res.next())
+					return null;
+				cus=new Account (res.getString(1), res.getString(2),res.getString(3),res.getString(4), res.getString(5),res.getString(6),res.getString(7));
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return cus;
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

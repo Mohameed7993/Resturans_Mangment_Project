@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,12 +46,12 @@ public class BiteMeLoginController implements Initializable {
 		}
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		ClientUI.chat.accept(new Message(MessageType.login, Username.getText() + " " + Password.getText()));
+		ClientUI.chat.accept(new Message1(MessageType.login, Username.getText() + " " + Password.getText()));
 		///////////////////////////////////////////// llgersa alkdeme
 		if(ChatClient.userlogged!=null) {
 			switch(ChatClient.userlogged.getType()) {
 			case Customer:
-				ClientUI.chat.accept(new Message(MessageType.scan,ChatClient.userlogged.getId()));
+				ClientUI.chat.accept(new Message1(MessageType.scan,ChatClient.userlogged.getId()));
 				CustomerHomeController AFrame=new CustomerHomeController();
 				try {
 					AFrame.start(stage);
@@ -60,8 +60,14 @@ public class BiteMeLoginController implements Initializable {
 					e.printStackTrace();
 				}
 				break;
-			case CEO:
-				System.out.println(ChatClient.userlogged.getPassWord() + "2");
+			case HR:
+				HRHomeController hr=new HRHomeController();
+				try {
+					hr.start(stage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case BranchManager:
 				System.out.println(ChatClient.userlogged.getPassWord() + "3");

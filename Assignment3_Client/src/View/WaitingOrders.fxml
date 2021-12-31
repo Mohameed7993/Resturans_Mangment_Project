@@ -185,11 +185,6 @@
             </Button>
          </children>
       </VBox>
-      <Button fx:id="pkgbtn" layoutX="705.0" layoutY="595.0" mnemonicParsing="false" onAction="#ViewOrder" prefHeight="38.0" prefWidth="196.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="View Order Package" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </Button>
       <TextField fx:id="keyword" layoutX="958.0" layoutY="293.0" prefHeight="26.0" prefWidth="188.0" promptText="keywords..." />
       <Label layoutX="959.0" layoutY="260.0" prefHeight="18.0" prefWidth="52.0" text="Search" textFill="#79a42b">
          <font>

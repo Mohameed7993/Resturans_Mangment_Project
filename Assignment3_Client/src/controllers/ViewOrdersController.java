@@ -11,12 +11,13 @@ import java.util.ResourceBundle;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 
 import client.ChatClient;
 import client.ClientUI;
 import common.DishForResturant;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.OrdersForRes;
 import javafx.collections.FXCollections;
@@ -57,7 +58,10 @@ public class ViewOrdersController implements Initializable {
     private TextField keyword;
 
 	
-
+/////////////////////////////////////////////////////////////////////////////////////
+public static final String ACCOUNT_SID = "ACb6bc51f8ca05c4418ecf8b6d280e7768";
+public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
+/////////////////////////////////////////////////////////////////////////////////////
 	
 
 	
@@ -90,8 +94,17 @@ public class ViewOrdersController implements Initializable {
 			
 		}else if (orders_table.getSelectionModel().getSelectedItem() != null) {
 			
-	   ClientUI.chat.accept(new Message(MessageType.UpdateStatus, orders_table.getSelectionModel().getSelectedItem().getOrderNumber()+","+"Ready"));
-       
+	   ClientUI.chat.accept(new Message1(MessageType.UpdateStatus, orders_table.getSelectionModel().getSelectedItem().getOrderNumber()+","+"Ready"));
+	   Integer ordernumber =orders_table.getSelectionModel().getSelectedItem().getOrderNumber();
+		String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
+		System.out.println(number);
+		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+	        Message message1 = Message.creator(
+	                new com.twilio.type.PhoneNumber(number),//////to
+	                new com.twilio.type.PhoneNumber("+15739933793"),////from
+	                "BiteMe Company:\n"
+	                + "Your order number '"+ordernumber+"' Is Ready\n You will receive it soon.Thanks ")//message body
+	            .create();
 		
 		} else {
 			Alert a = new Alert(AlertType.ERROR);
@@ -131,7 +144,7 @@ public class ViewOrdersController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.YES) {
 			// ... user chose YES
-			ClientUI.chat.accept(new Message(MessageType.logout, ChatClient.userlogged));
+			ClientUI.chat.accept(new Message1(MessageType.logout, ChatClient.userlogged));
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			BiteMeLoginController biteMeLoginController = new BiteMeLoginController();
 			try {
@@ -159,7 +172,7 @@ public class ViewOrdersController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 	
 
-		ClientUI.chat.accept(new Message(MessageType.GetResturantOrders, ChatClient.resturant));
+		ClientUI.chat.accept(new Message1(MessageType.GetResturantOrders, ChatClient.resturant));
 
 		System.out.println("done with server");
 		orderNum.setCellValueFactory(new PropertyValueFactory<OrdersForRes, Integer>("orderNumber"));

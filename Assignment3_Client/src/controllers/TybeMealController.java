@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.Resturants;
 import common.TybeMeal;
@@ -101,7 +101,7 @@ public class TybeMealController  implements Initializable {
 		resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		
 		TybeMealCol.setCellValueFactory(new PropertyValueFactory<TybeMeal,String>("TypeMeal"));
-		ClientUI.chat.accept(new Message(MessageType.ViewTybeMeallist,ChooseResturantController.resturant.getResturantID())); //// sending id resturant to get tybe meal list.
+		ClientUI.chat.accept(new Message1(MessageType.ViewTybeMeallist,ChooseResturantController.resturant.getResturantID())); //// sending id resturant to get tybe meal list.
 		Meals=FXCollections.observableArrayList(ChatClient.tybemeal);
 		TypeMealList.setItems(Meals);
 		 

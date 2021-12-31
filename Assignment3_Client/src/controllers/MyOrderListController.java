@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.ItemList;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.OrdersList;
 import javafx.collections.FXCollections;
@@ -104,7 +104,7 @@ public class MyOrderListController implements Initializable {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
     	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");   	   
     	ItemSelected =OrderList1.getSelectionModel().getSelectedItem();
-		ClientUI.chat.accept(new Message(MessageType.OrderListBuildEdit, ItemSelected.getOrderPackageNumber()));
+		ClientUI.chat.accept(new Message1(MessageType.OrderListBuildEdit, ItemSelected.getOrderPackageNumber()));
 		Order_list.remove(ItemSelected);
 		ArrivelTime=ItemSelected.getArrivalTime();
 		TimeAccepted=dtf.format(now);
@@ -116,10 +116,11 @@ public class MyOrderListController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		refund=Integer.valueOf(ItemSelected.getTotalPrice())/2;
 		System.out.println(refund);
 		if(TimeAccepted1.after(ArrivelTime1)) {
-			ClientUI.chat.accept(new Message(MessageType.RefundAdd,ItemSelected.getCustomer_ID()+" "+ItemSelected.getResturant()+" "+String.valueOf(refund)));
+			ClientUI.chat.accept(new Message1(MessageType.RefundAdd,ItemSelected.getCustomer_ID()+" "+ItemSelected.getResturant()+" "+String.valueOf(refund)));
 			System.out.println(refund);
 		}
 		
@@ -155,7 +156,7 @@ public class MyOrderListController implements Initializable {
 	    	else {
 			//Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 	    		Stage stage=new Stage();
-	    	ClientUI.chat.accept(new Message(MessageType.ItemList, OL.getOrderPackageNumber()));
+	    	ClientUI.chat.accept(new Message1(MessageType.ItemList, OL.getOrderPackageNumber()));
 			ObservableList<ItemList> Item_List = FXCollections.observableArrayList(ChatClient.ItemBuild);
 			ViewOrderController VOC=new ViewOrderController();
 			try {
@@ -194,7 +195,7 @@ public class MyOrderListController implements Initializable {
 		ColStatus.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("Status"));
 		ColService.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("DeleiveryService"));
 		ColTime.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("OrderedDate"));
-		ClientUI.chat.accept(new Message(MessageType.OrderListBuild, null));
+		ClientUI.chat.accept(new Message1(MessageType.OrderListBuild, null));
 		Order_list=FXCollections.observableArrayList(ChatClient.OrderBuild); 
 		OrderList1.setItems(Order_list);
 		OrderList1.setOnMousePressed(new EventHandler<MouseEvent>() {

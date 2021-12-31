@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.Address;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -36,9 +37,7 @@ public class PaymentMethodController implements Initializable{
 	
 	
 	public static boolean IsDeleiveryShared=false;
-	public  static LocalDateTime now = LocalDateTime.now();
-	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-	public  static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+	
 	
 	public static String Wallet=null;
 	
@@ -54,6 +53,9 @@ public class PaymentMethodController implements Initializable{
 	
 	public static String accountpayment;
 	public static String HelpTime;
+	
+	public static Integer ref;
+	public static boolean isselected=false;
 	
 	public   long differenceInMilliSeconds ;
 	public   long differenceInHours;
@@ -202,6 +204,31 @@ public class PaymentMethodController implements Initializable{
     @FXML
     private Text Star2;
     
+
+    @FXML
+    private  CheckBox CheckRefund;
+
+    @FXML
+    private Text Refundtxt;
+
+    @FXML
+    private Text Refundfield;
+    
+
+    @FXML
+    void refundcheckbox(ActionEvent event) {
+    	/*if(ref==0)
+    		CheckRefund.setDisable(true);
+    	else {
+    		if(CheckRefund.isSelected()) {
+    			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    			orderPrice=orderPrice-ref;
+    		}
+    		else orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;   	
+    	}
+    	*/
+    }
+    
     @FXML
     void otherbuttonAction(ActionEvent event) {
     	orderdateField.setVisible(true);
@@ -346,6 +373,9 @@ public class PaymentMethodController implements Initializable{
     @FXML
     void paybussinessbuttonAction(ActionEvent event) {
     	
+    	LocalDateTime now = LocalDateTime.now();
+   	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+   	 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
     
     	accountpayment="buissiness";
     	System.out.println(flagDate);
@@ -408,7 +438,7 @@ public class PaymentMethodController implements Initializable{
      	   	                         	   }
      	   	                        		
      	                        		  
-      	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+      	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
         	        	                  if(DeleiveryType.equals("null"))
      	        	                     {
      	        				           Alert a = new Alert(AlertType.ERROR);
@@ -433,7 +463,26 @@ public class PaymentMethodController implements Initializable{
      	    				                         pricedeleivery=0;
      	    				                         break;
       	    	                                 	}
-     	        	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	        	                            
+     	        	                           if(ref==0) {
+     	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+     	        	                           }
+     	        	                      	else {
+
+     	        	                      		if(CheckRefund.isSelected()) {
+     	        	                      			isselected=true;
+     	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	        	                      			if(orderPrice-ref<=0) {
+     	        	                      				orderPrice=0;
+     	        	                      			}else {
+     	        	                      				orderPrice=orderPrice-ref;
+     	        	                      			}
+     	        	                      		}
+     	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	        	                      				isselected=false;}
+     	        	                      	 	
+     	        	                      	}
+     	        	                            
      	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
      	        		                             {
      	        			                            Alert a = new Alert(AlertType.ERROR);
@@ -458,7 +507,7 @@ public class PaymentMethodController implements Initializable{
      	                           }
      	    	    	          else
      	    	    	          {
-     	    	    	        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+     	    	    	        	 address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
       	        	                  if(DeleiveryType.equals("null"))
    	        	                     {
    	        				           Alert a = new Alert(AlertType.ERROR);
@@ -483,7 +532,24 @@ public class PaymentMethodController implements Initializable{
    	    				                         pricedeleivery=0;
    	    				                         break;
    	    			                         }
-    	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+   	        	                         if(ref==0) {
+  	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+  	        	                           }
+  	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
    	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
    	        		                             {
    	        			                            Alert a = new Alert(AlertType.ERROR);
@@ -532,7 +598,24 @@ public class PaymentMethodController implements Initializable{
 				                         pricedeleivery=0;
 				                         break;
 			                         }
-	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	    	        	    	  if(ref==0) {
+	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+	        	                           }
+	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
 	    		        		  if((Integer.valueOf(Wallet)-(orderPrice))<0) 
 	    		        		       {
 	    		        			      Alert a = new Alert(AlertType.ERROR);
@@ -593,7 +676,7 @@ public class PaymentMethodController implements Initializable{
    	                        		   
    	                        	   
 	                        		 
-   	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+   	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
      	        	                  if(DeleiveryType.equals("null"))
   	        	                     {
   	        				           Alert a = new Alert(AlertType.ERROR);
@@ -618,7 +701,24 @@ public class PaymentMethodController implements Initializable{
 				                         pricedeleivery=0;
 				                         break;
 			                         }
-   	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+  	        	                  if(ref==0) {
+       	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+       	                           }
+       	                      	else {
+
+     	                      		if(CheckRefund.isSelected()) {
+     	                      			isselected=true;
+     	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	                      			if(orderPrice-ref<=0) {
+     	                      				orderPrice=0;
+     	                      			}else {
+     	                      				orderPrice=orderPrice-ref;
+     	                      			}
+     	                      		}
+     	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	                      				isselected=false;}
+     	                      	 	
+     	                      	}
   	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
   	        		                             {
   	        			                            Alert a = new Alert(AlertType.ERROR);
@@ -642,7 +742,7 @@ public class PaymentMethodController implements Initializable{
    	                           }
    	                           else
    	                           {
-   	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+   	                        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
 	        	                  if(DeleiveryType.equals("null"))
         	                     {
         				           Alert a = new Alert(AlertType.ERROR);
@@ -667,7 +767,24 @@ public class PaymentMethodController implements Initializable{
 			                         pricedeleivery=0;
 			                         break;
 		                         }
-	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        	                	  if(ref==0) {
+       	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+       	                           }
+       	                      	else {
+
+     	                      		if(CheckRefund.isSelected()) {
+     	                      			isselected=true;
+     	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	                      			if(orderPrice-ref<=0) {
+     	                      				orderPrice=0;
+     	                      			}else {
+     	                      				orderPrice=orderPrice-ref;
+     	                      			}
+     	                      		}
+     	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	                      				isselected=false;}
+     	                      	 	
+     	                      	}
         		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
         		                             {
         			                            Alert a = new Alert(AlertType.ERROR);
@@ -717,7 +834,24 @@ public class PaymentMethodController implements Initializable{
                  pricedeleivery=0;
                  break;
              }
- 	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+  	      if(ref==0) {
+         		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+              }
+         	else {
+
+           		if(CheckRefund.isSelected()) {
+           			isselected=true;
+           			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+           			if(orderPrice-ref<=0) {
+           				orderPrice=0;
+           			}else {
+           				orderPrice=orderPrice-ref;
+           			}
+           		}
+           		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+           				isselected=false;}
+           	 	
+           	}
  		  if((Integer.valueOf(Wallet)-(orderPrice))<0) 
  		       {
  			      Alert a = new Alert(AlertType.ERROR);
@@ -755,6 +889,10 @@ public class PaymentMethodController implements Initializable{
     
     @FXML
     void payprivatebuttonAction(ActionEvent event) {
+    	 LocalDateTime now = LocalDateTime.now();
+    	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+    	 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+    	
     	accountpayment="private";
     	if(ChatClient.w4ccard.getAccountType().equals("business"))
     	{
@@ -821,7 +959,7 @@ public class PaymentMethodController implements Initializable{
          	   	                         	   }
          	   	                        		 
          	                        		  
-          	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+         	                        			address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
             	        	                  if(DeleiveryType.equals("null"))
          	        	                     {
          	        				           Alert a = new Alert(AlertType.ERROR);
@@ -846,7 +984,24 @@ public class PaymentMethodController implements Initializable{
          	    				                         pricedeleivery=0;
          	    				                         break;
          	    			                         }
-          	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        	                           if(ref==0) {
+            	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+            	        	                           }
+            	        	                      	else {
+
+             	        	                      		if(CheckRefund.isSelected()) {
+             	        	                      			isselected=true;
+             	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+             	        	                      			if(orderPrice-ref<=0) {
+             	        	                      				orderPrice=0;
+             	        	                      			}else {
+             	        	                      				orderPrice=orderPrice-ref;
+             	        	                      			}
+             	        	                      		}
+             	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+             	        	                      				isselected=false;}
+             	        	                      	 	
+             	        	                      	}
          	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
          	        		                             {
          	        			                            Alert a = new Alert(AlertType.ERROR);
@@ -871,7 +1026,7 @@ public class PaymentMethodController implements Initializable{
          	                           }
          	    	    	          else
          	    	    	          {
-         	    	    	        	 address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+         	    	    	        	 address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
        	        	                  if(DeleiveryType.equals("null"))
     	        	                     {
     	        				           Alert a = new Alert(AlertType.ERROR);
@@ -896,7 +1051,25 @@ public class PaymentMethodController implements Initializable{
     	    				                         pricedeleivery=0;
     	    				                         break;
     	    			                         }
-     	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	        	                            if(ref==0) {
+
+         	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+         	        	                           }
+         	        	                      	else {
+
+         	        	                      		if(CheckRefund.isSelected()) {
+         	        	                      			isselected=true;
+         	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        	                      			if(orderPrice-ref<=0) {
+         	        	                      				orderPrice=0;
+         	        	                      			}else {
+         	        	                      				orderPrice=orderPrice-ref;
+         	        	                      			}
+         	        	                      		}
+         	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        	                      				isselected=false;}
+         	        	                      	 	
+         	        	                      	}
     	        		                        if((Integer.valueOf(Wallet)-(orderPrice))<0) 
     	        		                             {
     	        			                            Alert a = new Alert(AlertType.ERROR);
@@ -944,7 +1117,25 @@ public class PaymentMethodController implements Initializable{
     				                         pricedeleivery=0;
     				                         break;
     			                         }
-    	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        	    	        	    	  if(ref==0) {
+
+   	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+   	        	                           }
+   	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
     	    		        				  Stage stage = new Stage();
     	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
     	    			    		          try {
@@ -994,7 +1185,7 @@ public class PaymentMethodController implements Initializable{
        	                         	   }
        	                        		
     	                        		 
-       	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+       	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
          	        	                  if(DeleiveryType.equals("null"))
       	        	                     {
       	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1019,7 +1210,25 @@ public class PaymentMethodController implements Initializable{
     				                         pricedeleivery=0;
     				                         break;
     			                         }
-       	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+      	        	                  if(ref==0) {
+
+	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+	        	                           }
+	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
       	        			                                     Stage stage = new Stage();
       		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
       		    		                                         try {
@@ -1033,7 +1242,7 @@ public class PaymentMethodController implements Initializable{
        	                        	   }
        	                           }
        	                           else {
-       	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+       	                        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
    	        	                  if(DeleiveryType.equals("null"))
 	        	                     {
 	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1058,7 +1267,25 @@ public class PaymentMethodController implements Initializable{
 				                         pricedeleivery=0;
 				                         break;
 			                         }
- 	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+	        	                	  if(ref==0) {
+
+	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+	        	                           }
+	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
 	        			                                     Stage stage = new Stage();
 		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
 		    		                                         try {
@@ -1098,7 +1325,25 @@ public class PaymentMethodController implements Initializable{
                      pricedeleivery=0;
                      break;
                  }
-     	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+      	      if(ref==0) {
+             		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+                  }
+             	else {
+
+               		if(CheckRefund.isSelected()) {
+               			isselected=true;
+               			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+               			if(orderPrice-ref<=0) {
+               				orderPrice=0;
+               			}else {
+               				orderPrice=orderPrice-ref;
+               			}
+               		}
+               		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+               				isselected=false;}
+               	 	
+               	}
+      	      System.out.println(3);
      				  Stage stage = new Stage();
          	          OrdersDetailsController AFrame=new OrdersDetailsController();
      		          try {
@@ -1167,7 +1412,7 @@ public class PaymentMethodController implements Initializable{
        	    			                 a.showAndWait();
          	       		                }
          	    	    	         else {
-         	    	    	        	    address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+         	    	    	        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
          	    	    	        	    if(DeleiveryType.equals("null"))
          	    	    	        	    {
             	    		        				  Alert a = new Alert(AlertType.ERROR);
@@ -1186,7 +1431,25 @@ public class PaymentMethodController implements Initializable{
             	    	   	    				      pricedeleivery=0;
             	    	   	    				      break;
             	    	   	    			    }
-            	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	    	    	        	      if(ref==0) {
+
+       	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+       	        	                           }
+       	        	                      	else {
+
+     	        	                      		if(CheckRefund.isSelected()) {
+     	        	                      			isselected=true;
+     	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	        	                      			if(orderPrice-ref<=0) {
+     	        	                      				orderPrice=0;
+     	        	                      			}else {
+     	        	                      				orderPrice=orderPrice-ref;
+     	        	                      			}
+     	        	                      		}
+     	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+     	        	                      				isselected=false;}
+     	        	                      	 	
+     	        	                      	}
             	    		        				  Stage stage = new Stage();
             	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
             	    			    		          try {
@@ -1222,7 +1485,25 @@ public class PaymentMethodController implements Initializable{
     	    	   	    				      pricedeleivery=0;
     	    	   	    				      break;
     	    	   	    			    }
-    	    	    	    	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+        	    	        	       if(ref==0) {
+
+	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+	        	                           }
+	        	                      	else {
+
+ 	        	                      		if(CheckRefund.isSelected()) {
+ 	        	                      			isselected=true;
+ 	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      			if(orderPrice-ref<=0) {
+ 	        	                      				orderPrice=0;
+ 	        	                      			}else {
+ 	        	                      				orderPrice=orderPrice-ref;
+ 	        	                      			}
+ 	        	                      		}
+ 	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+ 	        	                      				isselected=false;}
+ 	        	                      	 	
+ 	        	                      	}
     	    		        				  Stage stage = new Stage();
     	    			        	          OrdersDetailsController AFrame=new OrdersDetailsController();
     	    			    		          try {
@@ -1251,7 +1532,7 @@ public class PaymentMethodController implements Initializable{
     		                                a.showAndWait();
     		                             }
        	                else {
-       	        	              address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
+       	                	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
        	        	                  if(DeleiveryType.equals("null"))
     	        	                     {
     	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1270,7 +1551,24 @@ public class PaymentMethodController implements Initializable{
     	    				                         pricedeleivery=0;
     	    				                         break;
     	    			                         }
-     	    	   	                            orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+    	        	                            if(ref==0) {
+         	        	                      		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+         	        	                           }
+         	        	                      	else {
+
+         	        	                      		if(CheckRefund.isSelected()) {
+         	        	                      			isselected=true;
+         	        	                      			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        	                      			if(orderPrice-ref<=0) {
+         	        	                      				orderPrice=0;
+         	        	                      			}else {
+         	        	                      				orderPrice=orderPrice-ref;
+         	        	                      			}
+         	        	                      		}
+         	        	                      		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+         	        	                      				isselected=false;}
+         	        	                      	 	
+         	        	                      	}
     	        			                                     Stage stage = new Stage();
     		        	                                         OrdersDetailsController AFrame=new OrdersDetailsController();
     		    		                                         try {
@@ -1302,7 +1600,25 @@ public class PaymentMethodController implements Initializable{
     				      pricedeleivery=0;
     				      break;
     			    }
-     	   	    orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+      	     if(ref==0) {
+
+            		orderPrice=ItemDetailsController.TotalPrice+pricedeleivery; 
+                 }
+            	else {
+
+               		if(CheckRefund.isSelected()) {
+               			isselected=true;
+               			orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+               			if(orderPrice-ref<=0) {
+               				orderPrice=0;
+               			}else {
+               				orderPrice=orderPrice-ref;
+               			}
+               		}
+               		else {orderPrice=ItemDetailsController.TotalPrice+pricedeleivery;
+               				isselected=false;}
+               	 	
+               	}
      				  Stage stage = new Stage();
          	          OrdersDetailsController AFrame=new OrdersDetailsController();
      		          try {
@@ -1331,9 +1647,21 @@ public class PaymentMethodController implements Initializable{
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
+    	ClientUI.chat.accept(new Message1(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID()));
+    	if(ChatClient.getRefund.getRefund().equals(null)) {
+    		ref=0;
+    		Refundfield.setText(ChatClient.getRefund.getRefund());
+    	}else {
+    	 	ref=Integer.valueOf(ChatClient.getRefund.getRefund());
+        	Refundfield.setText(ChatClient.getRefund.getRefund());
+    	}
+   
+    	if(ref==0)
+    		CheckRefund.setDisable(true);
+    	CityField.setText(ChatClient.accounts.getLocation());
     	
     	if(ChatClient.w4ccard.getAccountType().equals("business")) {
-    		ClientUI.chat.accept(new Message(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));
+    		ClientUI.chat.accept(new Message1(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));
     	}
     	
     	
@@ -1419,6 +1747,8 @@ public class PaymentMethodController implements Initializable{
     	    	Pick3.setVisible(false);
     	    	Pick4.setVisible(false);
     	    	Visa.setVisible(true);
+    	    	Star2.setVisible(false);
+    	    	SharedDelNumfield.setVisible(false);
     	    	////////address
     	    	enterAdresstxt.setVisible(false);
     			citytxt.setVisible(false);
@@ -1438,6 +1768,8 @@ public class PaymentMethodController implements Initializable{
     	    	Pick3.setVisible(false);
     	    	Pick4.setVisible(false);
     	    	Visa.setVisible(false);
+    	    	Star2.setVisible(false);
+    	    	SharedDelNumfield.setVisible(false);
     	        ////////address
     		    enterAdresstxt.setVisible(true);
     			citytxt.setVisible(true);
@@ -1463,6 +1795,8 @@ public class PaymentMethodController implements Initializable{
     	    	Pick3.setVisible(true);
     	    	Pick4.setVisible(false);
     	    	Visa.setVisible(false);
+    	    	Star2.setVisible(false);
+    	    	SharedDelNumfield.setVisible(false);
     	        ////////address
     		    enterAdresstxt.setVisible(true);
     			citytxt.setVisible(true);
@@ -1516,6 +1850,7 @@ public class PaymentMethodController implements Initializable{
     	    	Pick3.setVisible(false);
     	    	Pick4.setVisible(false);
     	    	Visa.setVisible(true);
+    	    	
     	    	 ////////address
     		    enterAdresstxt.setVisible(false);
     			citytxt.setVisible(false);
@@ -1532,6 +1867,7 @@ public class PaymentMethodController implements Initializable{
     			break;
     		}
     	}
+    	
 	}
 	public void start(Stage stage)  throws Exception {
 		// TODO Auto-generated method stub

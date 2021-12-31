@@ -13,6 +13,51 @@ public class Users  implements Serializable{
 	private String passWord;
 	private UserType type;
 	private boolean isLoggedIn;
+	private String Email;
+	private String FirstName;
+	private String LastName;
+	private String PhoneNumber;
+	private String status;
+	
+	
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+	public String getEmail() {
+		return Email;
+	}
+	public void setEmail(String email) {
+		Email = email;
+	}
+	public String getFirstName() {
+		return FirstName;
+	}
+	public void setFirstName(String firstName) {
+		FirstName = firstName;
+	}
+	public String getLastName() {
+		return LastName;
+	}
+	public void setLastName(String lastName) {
+		LastName = lastName;
+	}
+	public String getPhoneNumber() {
+		return PhoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		PhoneNumber = phoneNumber;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
 	
 	public String getId() {
 		return id;
@@ -85,13 +130,18 @@ public class Users  implements Serializable{
 	public void setLoged(boolean isLoged) {
 		this.isLoggedIn = isLoged;
 	}
-	public Users(String id, String userName, String passWord, boolean isLoged, UserType type) {
+	public Users(String id, String userName, String passWord, boolean isLoged, UserType type,String Email,String FirstName,String LastName,String PhoneNumber,String Status) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.passWord = passWord;
 		this.isLoggedIn = isLoged;
 		this.type = type;
+		this.Email=Email;
+		this.FirstName=FirstName;
+		this.LastName=LastName;
+		this.PhoneNumber=PhoneNumber;
+		this.status=Status;
 	}
 
 }

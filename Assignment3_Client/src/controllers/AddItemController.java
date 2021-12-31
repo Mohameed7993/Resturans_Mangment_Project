@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.DishForResturant;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,7 +68,7 @@ public class AddItemController implements Initializable{
 		 }
 
 		 DishForResturant dish=new DishForResturant(ChatClient.resturant.getId(),type.getText(),meal.getText(),optionals.getText(),null,Integer.valueOf(price.getText()));
-		 ClientUI.chat.accept(new Message(MessageType.additem, dish));
+		 ClientUI.chat.accept(new Message1(MessageType.additem, dish));
 		 if(!add)
 		 {
 			 

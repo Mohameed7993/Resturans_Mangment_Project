@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.ItemInCart;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.Resturants;
 import javafx.collections.FXCollections;
@@ -169,7 +169,7 @@ public class ChooseResturantController implements Initializable {
 		StatusCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Status"));
 		PhoneNumberCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("PhoneNumber"));
 
-		ClientUI.chat.accept(new Message(MessageType.ViewResturants,ChatClient.accounts.getLocation()));
+		ClientUI.chat.accept(new Message1(MessageType.ViewResturants,ChatClient.accounts.getLocation()));
 		resturants=FXCollections.observableArrayList(ChatClient.resturants);
 		TablelistID.setItems(resturants);
 

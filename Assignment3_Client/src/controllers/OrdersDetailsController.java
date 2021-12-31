@@ -15,7 +15,7 @@ import client.ChatClient;
 import client.ClientUI;
 import common.Approvedtype;
 import common.ItemList;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 
 import common.OrdersList;
@@ -36,14 +36,14 @@ public class OrdersDetailsController implements Initializable {
 	public static Integer CountParticipants;
 	public static String ArrivalTime;
 	
+	public Integer PricebeforRefund;
 
 	public static String orderTime;
 	public static Integer orderPackageNumber;
 	public static String time;
 	
 
-	public  static LocalDateTime now = LocalDateTime.now();
-	public  static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+	
 	public   long addtionInMilliSeconds ;
 	public   long differenceInHours;
 	public   long differenceInMinutes;
@@ -148,15 +148,18 @@ public class OrdersDetailsController implements Initializable {
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML
     void BackButtonAction(ActionEvent event) {
-    	
+    	PaymentMethodController.ref=Integer.valueOf(ChatClient.getRefund.getRefund());
     	 ((Node) event.getSource()).getScene().getWindow().hide();// get stage
     	PaymentMethodController.IsDeleiveryShared=false;
-    
     }
 
     @FXML
     void ConfirmButtonAction(ActionEvent event) {
-    	time=PaymentMethodController.dtf.format(PaymentMethodController.now);
+    	 LocalDateTime now = LocalDateTime.now();
+    	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+    	 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+    	 
+    	time=dtf.format(now);
     	if(PaymentMethodController.flagDate==1)
     	orderTime=(time);
     	else 
@@ -167,7 +170,7 @@ public class OrdersDetailsController implements Initializable {
     	if(PaymentMethodController.flagDate==1)
     	{
     		try {
-				date2=PaymentMethodController.simpleDateFormat.parse(dtf.format(now));
+				date2=simpleDateFormat.parse(dtf.format(now));
 				dateTemp=3600000*3; ////to add one hour.
 				TimerMath(date2, dateTemp);
 			} catch (ParseException e) {
@@ -176,25 +179,25 @@ public class OrdersDetailsController implements Initializable {
 			}
     		ArrivalTime=(differenceInHours+":"+differenceInMinutes);
     	}else ArrivalTime=PaymentMethodController.Time;
-    
+    	PricebeforRefund=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
     	
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
-    				,time,String.valueOf(orderPrice),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
+    				,time,String.valueOf(PricebeforRefund),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
     				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
     	}
     	else {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
-    				,time,String.valueOf(orderPrice),"NoAddress",PaymentMethodController.DeleiveryType
+    				,time,String.valueOf(PricebeforRefund),"NoAddress",PaymentMethodController.DeleiveryType
     				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
     	}
     	
-    	ClientUI.chat.accept(new Message(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
+    	ClientUI.chat.accept(new Message1(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
     	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
     	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()+" "+orders.getBranchlocation()));
     	
     	
-    	ClientUI.chat.accept(new Message(MessageType.GetOrder,ChatClient.userlogged.getId()));
+    	ClientUI.chat.accept(new Message1(MessageType.GetOrder,ChatClient.userlogged.getId()));
     	
     	System.out.println(ChatClient.order2.getOrderPackageNumber());
 
@@ -217,7 +220,7 @@ public class OrdersDetailsController implements Initializable {
     	
     	for(int i=0;i<Items.size();i++)
     	{
-    		ClientUI.chat.accept(new Message(MessageType.itemsListtoDataBase, Items.get(i).getTheMeal()+" "+ Items.get(i).getTheDish()+" "+
+    		ClientUI.chat.accept(new Message1(MessageType.itemsListtoDataBase, Items.get(i).getTheMeal()+" "+ Items.get(i).getTheDish()+" "+
     		Items.get(i).getIngredient()+" "+ Items.get(i).getQuantity()+" "+ Items.get(i).getPrice()+" "+ Items.get(i).getPackageID()));
     	}
     	
@@ -231,7 +234,7 @@ public class OrdersDetailsController implements Initializable {
 		int orederPrice=Integer.valueOf(orders.getTotalPrice());
 		int x=Integer.valueOf(wallet)-orderPrice;
 		wallet=String.valueOf(x);
-		ClientUI.chat.accept(new Message(MessageType.updateCelling,wallet+" "+ChatClient.w4ccard.getW4cCode()));
+		ClientUI.chat.accept(new Message1(MessageType.updateCelling,wallet+" "+ChatClient.w4ccard.getW4cCode()));
     }
     
 		PaymentMethodController.address=null;
@@ -306,8 +309,18 @@ public class OrdersDetailsController implements Initializable {
 					e.printStackTrace();
 				}
 		}
+		
+		
+		if(PaymentMethodController.isselected==true) {
+			ClientUI.chat.accept(new Message1(MessageType.updateRegund,ChatClient.userlogged.getId()+" "+
+					ChooseResturantController.resturant.getResturantID()+" "+String.valueOf(PaymentMethodController.ref)));
+			
+					System.out.println(String.valueOf(PaymentMethodController.ref));
+		}
+		
+		
+
     	
-		//ClientUI.chat.accept(new Message(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID() ));
 		
 		
 		
@@ -342,14 +355,37 @@ public class OrdersDetailsController implements Initializable {
 		}
 		else requesteddatefield.setText("now");
 		
-		
 		delevfield.setText(PaymentMethodController.DeleiveryType);
-		orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
+		
+		
+		if(PaymentMethodController.isselected) {
+				if(PaymentMethodController.ref==0)
+					{orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;}
+				
+				else {
+					     orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
+						if(orderPrice-PaymentMethodController.ref<=0)
+							{
+							   PaymentMethodController.ref=PaymentMethodController.ref-orderPrice;
+							   orderPrice=0;
+							}
+						
+					   else {
+								orderPrice=orderPrice-PaymentMethodController.ref;
+								PaymentMethodController.ref=0;
+							}
+						
+					}
+				
+		}else orderPrice=ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery;
+
 		
 		if(PaymentMethodController.flagDate==0) {//0->after two hour,1-> now
-			tempPrice=(ItemDetailsController.TotalPrice+PaymentMethodController.pricedeleivery)*0.1;
+			tempPrice=(orderPrice)*0.1;
 			orderPrice=orderPrice-(int)tempPrice;
 		}
+		
+		
 		totalpricefield.setText(String.valueOf(orderPrice));
 		
 		if(PaymentMethodController.DeleiveryType.equals("TakeAway")) {

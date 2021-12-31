@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class AddEmployerController implements Initializable {
 			a.setHeaderText("Error");
 			a.showAndWait();
 		}else {
-			ClientUI.chat.accept(new Message(MessageType.AddEmployer,Identity.getText()+" "+Name.getText()+" "+ChatClient.HR.getID()));
+			ClientUI.chat.accept(new Message1(MessageType.AddEmployer,Identity.getText()+" "+Name.getText()+" "+ChatClient.HR.getID()));
 			success.setVisible(added);
 			
 		}
@@ -50,13 +50,14 @@ public class AddEmployerController implements Initializable {
 
 	@FXML
 	void back(ActionEvent event) {
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		((Node) event.getSource()).getScene().getWindow().hide();// get stage
+		/*Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		HRHomeController HRHome = new HRHomeController();
 		try {
 			HRHome.start(stage);
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
+		}*/
 
 	}
 

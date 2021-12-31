@@ -14,7 +14,7 @@ import client.ClientController;
 import client.ClientUI;
 import common.Client;
 import common.DishForResturant;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -124,7 +124,7 @@ public class UpdateMenuListForResturantController implements Initializable {
 			a.showAndWait();
 		} else {
 			System.out.println(dish_table.getSelectionModel().getSelectedItem());
-			ClientUI.chat.accept(new Message(MessageType.deleteDish, dish_table.getSelectionModel().getSelectedItem()));
+			ClientUI.chat.accept(new Message1(MessageType.deleteDish, dish_table.getSelectionModel().getSelectedItem()));
 			initialize(null, null);
 		}
 	}
@@ -158,7 +158,7 @@ public class UpdateMenuListForResturantController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.YES){
 		// ... user chose YES
-			ClientUI.chat.accept(new Message(MessageType.logout, ChatClient.userlogged));
+			ClientUI.chat.accept(new Message1(MessageType.logout, ChatClient.userlogged));
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			BiteMeLoginController biteMeLoginController=new BiteMeLoginController();
 			try {
@@ -176,7 +176,7 @@ public class UpdateMenuListForResturantController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 	
-		ClientUI.chat.accept(new Message(MessageType.getDishesFromResturant, ChatClient.resturant.getId()));
+		ClientUI.chat.accept(new Message1(MessageType.getDishesFromResturant, ChatClient.resturant.getId()));
 		
 		dish_type_col.setCellValueFactory(new PropertyValueFactory<DishForResturant, String>("mealType"));
 		dish_col.setCellValueFactory(new PropertyValueFactory<DishForResturant, String>("mealName"));

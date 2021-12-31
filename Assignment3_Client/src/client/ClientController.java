@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import client.*;
 import common.ChatIF;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 
 
@@ -52,7 +52,7 @@ public class ClientController implements ChatIF {
 		try {
 			ip = InetAddress.getLocalHost();
 			client = new ChatClient(host, port, this);
-			accept(new Message(MessageType.connect, ip.getHostAddress()+" "+ip.getHostName()+" "+"Connected"));
+			accept(new Message1(MessageType.connect, ip.getHostAddress()+" "+ip.getHostName()+" "+"Connected"));
 		} catch (IOException exception) {
 			System.out.println("Error: Can't setup connection!" + " Terminating client.");
 			System.exit(1);

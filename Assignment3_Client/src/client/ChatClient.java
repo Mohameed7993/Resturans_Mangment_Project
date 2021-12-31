@@ -14,7 +14,7 @@ import common.DishForResturant;
 import common.HoumanResources;
 import common.ItemInCart;
 import common.ItemList;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.OptionalIngredients;
 import common.OrderDish;
@@ -61,7 +61,8 @@ public class ChatClient extends AbstractClient {
 	public static ArrayList<Selection> selection;
 	public static ArrayList<OrdersList> OrderBuild ;
 	public static ArrayList<ItemList> ItemBuild ;
-	public static Refund RefundBuild ;
+	public static Refund getRefund;
+	public static Account GetCustomerDetails;
 	//resturant
 	public static Resturant resturant;
 	public static ArrayList<DishForResturant> dishes;
@@ -112,7 +113,7 @@ public class ChatClient extends AbstractClient {
 		
 		awaitResponse = false;
 		System.out.println("--> handleMessageFromServer");
-		Message m = (Message) msg;
+		Message1 m = (Message1) msg;
 		
 		//System.out.println((String) m.getObject());
 
@@ -176,7 +177,12 @@ public class ChatClient extends AbstractClient {
 		case ItemList:
 			ItemBuild = (ArrayList<ItemList>)m.getObject();
 			break;
-			
+		case getRefund:
+			getRefund=(Refund)m.getObject();
+			break;
+		case getCustomer:
+			GetCustomerDetails= (Account) m.getObject(); 
+			break;
 		case getDishesFromResturant:
 			 dishes = (ArrayList<DishForResturant>)m.getObject();
 			break;

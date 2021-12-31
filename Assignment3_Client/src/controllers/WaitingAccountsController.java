@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.waiting_account;
 import javafx.collections.FXCollections;
@@ -72,7 +72,7 @@ public class WaitingAccountsController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.YES) {
 			// ... user chose YES
-			ClientUI.chat.accept(new Message(MessageType.logout, ChatClient.userlogged));
+			ClientUI.chat.accept(new Message1(MessageType.logout, ChatClient.userlogged));
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			BiteMeLoginController biteMeLoginController = new BiteMeLoginController();
 			try {
@@ -97,7 +97,7 @@ public class WaitingAccountsController implements Initializable {
     	}else {
     		
     		selectedAccount= waitingtbl.getSelectionModel().getSelectedItem();
-    		ClientUI.chat.accept(new Message(MessageType.ApproveaccountB, selectedAccount));
+    		ClientUI.chat.accept(new Message1(MessageType.ApproveaccountB, selectedAccount));
     		initialize(null, null);
     		
     	}
@@ -110,7 +110,7 @@ public class WaitingAccountsController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		ClientUI.chat.accept(new Message(MessageType.GetEmployees, ChatClient.HR.getCompanyName()));
+		ClientUI.chat.accept(new Message1(MessageType.GetEmployees, ChatClient.HR.getCompanyName()));
 		
 		FirstName.setCellValueFactory(new PropertyValueFactory<waiting_account, String>("FirstName"));
 		LastName.setCellValueFactory(new PropertyValueFactory<waiting_account, String>("LastName"));

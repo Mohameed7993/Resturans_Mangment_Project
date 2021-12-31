@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +45,6 @@ public class HRHomeController implements Initializable {
     @FXML
     void NewEmployer(ActionEvent event) {
     	Stage stage=new Stage();
-    	
     	AddEmployerController AddEmployer = new AddEmployerController();
     	
     	try {
@@ -64,7 +63,7 @@ public class HRHomeController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.YES) {
 			// ... user chose YES
-			ClientUI.chat.accept(new Message(MessageType.logout, ChatClient.userlogged));
+			ClientUI.chat.accept(new Message1(MessageType.logout, ChatClient.userlogged));
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			BiteMeLoginController biteMeLoginController = new BiteMeLoginController();
 			try {

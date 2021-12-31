@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,7 +70,7 @@ public class ScanerQrController implements Initializable {
 
     @FXML
     void scanButtonAction(ActionEvent event) {
-    	ClientUI.chat.accept(new Message(MessageType.w4cCard,ChatClient.accounts.getW4C_QrCode()));
+    	ClientUI.chat.accept(new Message1(MessageType.w4cCard,ChatClient.accounts.getW4C_QrCode()));
     	
     		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     		CustomerDetailsController AFrame=new CustomerDetailsController();

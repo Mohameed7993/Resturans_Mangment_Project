@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.DropShadow?>
@@ -20,7 +21,7 @@
             <Image url="@../Images/Paymen.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image1" fitHeight="639.0" fitWidth="839.0" layoutX="427.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image1" fitHeight="639.0" fitWidth="839.0" layoutX="430.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/Layer%204.png" />
          </image>
@@ -52,22 +53,22 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="enterAdresstxt" fill="#79a42b" layoutX="938.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enter address Please:" wrappingWidth="166.0">
+      <Text fx:id="enterAdresstxt" fill="#79a42b" layoutX="941.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enter address Please:" wrappingWidth="166.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="streettxt" fill="#79a42b" layoutX="879.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
+      <Text fx:id="streettxt" fill="#79a42b" layoutX="882.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street:" wrappingWidth="59.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="815.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
+      <Text fx:id="housenumbertxt" fill="#79a42b" layoutX="818.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House number:" wrappingWidth="118.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="citytxt" fill="#79a42b" layoutX="898.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" wrappingWidth="35.0">
+      <Text fx:id="citytxt" fill="#79a42b" layoutX="901.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" wrappingWidth="35.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -387,26 +388,26 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <TextField fx:id="CityField" layoutX="946.0" layoutY="439.0" promptText="City" style="-fx-background-radius: 100;" />
+      <TextField fx:id="CityField" disable="true" layoutX="949.0" layoutY="418.0" promptText="City" style="-fx-background-radius: 100;" />
       <TextField fx:id="orderdateField" layoutX="683.0" layoutY="331.0" prefHeight="35.0" prefWidth="107.0" promptText="HH:MM" style="-fx-background-radius: 100;" />
-      <TextField fx:id="houseNumberField" layoutX="944.0" layoutY="527.0" promptText="House number" style="-fx-background-radius: 100;" />
-      <TextField fx:id="streetField" layoutX="946.0" layoutY="483.0" promptText="Street" style="-fx-background-radius: 100;" />
+      <TextField fx:id="houseNumberField" layoutX="947.0" layoutY="506.0" promptText="House number" style="-fx-background-radius: 100;" />
+      <TextField fx:id="streetField" layoutX="949.0" layoutY="462.0" promptText="Street" style="-fx-background-radius: 100;" />
       <Text fx:id="Discounttxt" fill="#05071f" layoutX="682.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="'Discount 10% on Price'">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
       </Text>
-      <Text fx:id="Star1" fill="#a32c2c" layoutX="934.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star1" fill="#a32c2c" layoutX="937.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Text fx:id="Star11" fill="#a32c2c" layoutX="931.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star11" fill="#a32c2c" layoutX="934.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Text fx:id="Star12" fill="#a32c2c" layoutX="931.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+      <Text fx:id="Star12" fill="#a32c2c" layoutX="934.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -415,6 +416,17 @@
       <Text fx:id="Star2" fill="#a32c2c" layoutX="573.0" layoutY="645.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="CheckRefund" layoutX="802.0" layoutY="548.0" mnemonicParsing="false" onAction="#refundcheckbox" style="-fx-background-color: #79a42b;" textFill="#79a42b" />
+      <Text fx:id="Refundtxt" fill="#79a42b" layoutX="820.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refund:" wrappingWidth="64.5">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="Refundfield" fill="#353f4c" layoutX="879.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="64.5">
+         <font>
+            <Font name="System Bold" size="16.0" />
          </font>
       </Text>
    </children>

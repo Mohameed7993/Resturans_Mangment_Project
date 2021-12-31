@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.ItemInCart;
-import common.Message;
+import common.Message1;
 import common.MessageType;
 import common.Selection;
 import javafx.collections.FXCollections;
@@ -206,7 +206,7 @@ public class OptionalSelectionController implements Initializable{
         resturantnametxt.setText(ChooseResturantController.resturant.getResturantName());
 		SelectionsCol.setCellValueFactory(new PropertyValueFactory<Selection,String>("Selction"));
 		PriceCol.setCellValueFactory(new PropertyValueFactory<Selection,Integer>("SelectionPrice"));
-		ClientUI.chat.accept(new Message(MessageType.ViewSelctionsList,DishController.dish.getDish_ID()));
+		ClientUI.chat.accept(new Message1(MessageType.ViewSelctionsList,DishController.dish.getDish_ID()));
 		Sel=FXCollections.observableArrayList(ChatClient.selection);
 		OptionalSelectionList.setItems(Sel);
 		OptionalSelectionList.setOnMousePressed(new EventHandler<MouseEvent>() {
