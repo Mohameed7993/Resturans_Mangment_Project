@@ -42,11 +42,16 @@ public class OrdersDetailsController implements Initializable {
 	public static Integer orderPackageNumber;
 	public static String time;
 	
+	  public static  Integer day ;
+	  public  static String month ;
+	  public  static String year;
 
 	
 	public   long addtionInMilliSeconds ;
 	public   long differenceInHours;
 	public   long differenceInMinutes;
+	
+	
 	public   Date date1;
 	public  Date date2;
 	public static long dateTemp;
@@ -145,6 +150,18 @@ public class OrdersDetailsController implements Initializable {
    // Calculating the difference in Minutes
 		   differenceInMinutes= (addtionInMilliSeconds / (60 * 1000)) % 60;
  }
+    
+    public static void findDate(String date)
+    {
+        // Splitting the given date by '-'
+        String dateParts[] = date.split("-");
+ 
+        // Getting day, month, and year
+        // from date
+         day =Integer.valueOf(dateParts[0]);
+         month = dateParts[1];
+         year = dateParts[2];
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML
     void BackButtonAction(ActionEvent event) {
@@ -158,6 +175,10 @@ public class OrdersDetailsController implements Initializable {
     	 LocalDateTime now = LocalDateTime.now();
     	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
     	 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+    	 
+    	 LocalDateTime now2 = LocalDateTime.now();
+      	 DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	findDate(dtf2.format(now2));
     	 
     	time=dtf.format(now);
     	if(PaymentMethodController.flagDate==1)
@@ -184,18 +205,23 @@ public class OrdersDetailsController implements Initializable {
     	if(!PaymentMethodController.DeleiveryType.equals("TakeAway")) {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(PricebeforRefund),PaymentMethodController.address.toString(),PaymentMethodController.DeleiveryType
-    				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
+    				,null,ArrivalTime,null,ChatClient.accounts.getLocation(),year,month,day,"0","0");
+    		
+    		
     	}
     	else {
     		orders= new OrdersList(ChatClient.userlogged.getId(),ChooseResturantController.resturant.getResturantID(),orderPackageNumber,orderTime
     				,time,String.valueOf(PricebeforRefund),"NoAddress",PaymentMethodController.DeleiveryType
-    				,null,ArrivalTime,null,ChatClient.accounts.getLocation());
+    				,null,ArrivalTime,null,ChatClient.accounts.getLocation(),year,month,day,"0","0");
+    		System.out.println(orders.getOrderPackageNumber()+" "+orders.getRequestDate());
     	}
     	
-    	ClientUI.chat.accept(new Message1(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()+" "+orders.getOrderPackageNumber()
+    	ClientUI.chat.accept(new Message1(MessageType.OrdersListToDataBase, orders.getCustomer_ID()+" "+orders.getResturant()
     	+" "+orders.getRequestDate()+" "+orders.getOrderedDate()+" "+orders.getTotalPrice()+" "+orders.getAddress()+" "+orders.getDeleiveryService()
-    	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()+" "+orders.getBranchlocation()));
+    	+" "+orders.getStatus()+" "+orders.getArrivalTime()+" "+orders.getApprovalRecieving()+" "+orders.getBranchlocation()+" "+orders.getYear()+" "+orders.getMonth()
+    	+" "+orders.getDay()+" "+orders.getArrivedToCustomerTime()+" "+orders.getOrderReadyTime()));
     	
+    
     	
     	ClientUI.chat.accept(new Message1(MessageType.GetOrder,ChatClient.userlogged.getId()));
     	

@@ -21,9 +21,17 @@ public class OrdersList implements Serializable {
 	private String ArrivalTime;
 	private String ApprovalRecieving;
 	private String Branchlocation;
+	private String year;
+	private String month;
+	private Integer day;
+	private String ArrivedToCustomerTime;
+	private String OrderReadyTime; 
+	
+	
 	public OrdersList(String customer_ID, String resturant, Integer orderPackageNumber, String requestDate,
 			String orderedDate, String totalPrice, String address, String deleiveryService, String status,
-			String arrivalTime, String approvalRecieving, String branchlocation) {
+			String arrivalTime, String approvalRecieving, String branchlocation, String year, String month, Integer day,
+			String arrivedToCustomerTime, String orderReadyTime) {
 		super();
 		Customer_ID = customer_ID;
 		Resturant = resturant;
@@ -37,7 +45,79 @@ public class OrdersList implements Serializable {
 		ArrivalTime = arrivalTime;
 		ApprovalRecieving = approvalRecieving;
 		Branchlocation = branchlocation;
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		ArrivedToCustomerTime = arrivedToCustomerTime;
+		OrderReadyTime = orderReadyTime;
 	}
+
+	
+	
+	
+	public String getYear() {
+		return year;
+	}
+
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+
+
+	public String getMonth() {
+		return month;
+	}
+
+
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+
+
+
+
+
+	public Integer getDay() {
+		return day;
+	}
+
+
+
+	public void setDay(Integer day) {
+		this.day = day;
+	}
+
+
+
+	public String getArrivedToCustomerTime() {
+		return ArrivedToCustomerTime;
+	}
+
+
+
+	public void setArrivedToCustomerTime(String arrivedToCustomerTime) {
+		ArrivedToCustomerTime = arrivedToCustomerTime;
+	}
+
+
+
+	public String getOrderReadyTime() {
+		return OrderReadyTime;
+	}
+
+
+
+	public void setOrderReadyTime(String orderReadyTime) {
+		OrderReadyTime = orderReadyTime;
+	}
+
+
+
 	public String getCustomer_ID() {
 		return Customer_ID;
 	}
