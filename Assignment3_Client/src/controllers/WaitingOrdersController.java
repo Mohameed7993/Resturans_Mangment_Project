@@ -89,7 +89,7 @@ public class WaitingOrdersController implements Initializable {
 				a.showAndWait();
 			} else {
 				/////////////////////////////////////
-			/*	ClientUI.chat.accept(new Message1(MessageType.getCustomer,selctedOrder.getCustomer_ID()));
+				ClientUI.chat.accept(new Message1(MessageType.getCustomer,selctedOrder.getCustomer_ID()));
 				String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
 				System.out.println(number);
 				Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -99,7 +99,7 @@ public class WaitingOrdersController implements Initializable {
 			                "BiteMe Company:\n Thank you for ordering through our app\n"
 			                + "Your order number '"+selctedOrder.getOrderNumber()+"' has been successfully received \n"
 			                		+ "We'll send you when she's ready,Thanks")//message body
-			            .create();*/
+			            .create();
 
 			      //  System.out.println(message1.getSid());
 				

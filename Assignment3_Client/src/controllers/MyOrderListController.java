@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+
 import client.ChatClient;
 import client.ClientUI;
 import common.ItemList;
@@ -85,17 +88,10 @@ public class MyOrderListController implements Initializable {
     @FXML
     private Button AcceptBtn;
     
-    ////////////////////////////////////////////////////////////////////////////////
-    
-    void TimerMath (Date date1,Date date2) {
-  	
-  	   differenceInMilliSeconds = (date2.getTime() - date1.getTime());
-		   differenceInHours = (differenceInMilliSeconds / (60 * 60 * 1000))  % 24;
-    // Calculating the difference in Minutes
-		   differenceInMinutes= (differenceInMilliSeconds / (60 * 1000)) % 60;
-  }
-  
-  ////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+public static final String ACCOUNT_SID = "ACb6bc51f8ca05c4418ecf8b6d280e7768";
+public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
+/////////////////////////////////////////////////////////////////////////////////////
     
     @FXML
     void AcceptedOrder(ActionEvent event) {
@@ -104,8 +100,11 @@ public class MyOrderListController implements Initializable {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
     	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");   	   
     	ItemSelected =OrderList1.getSelectionModel().getSelectedItem();
-		ClientUI.chat.accept(new Message1(MessageType.OrderListBuildEdit, ItemSelected.getOrderPackageNumber()));
+    	System.out.println(ItemSelected.getOrderPackageNumber()+" "+ItemSelected.getCustomer_ID());
+		ClientUI.chat.accept(new Message1(MessageType.OrderListBuildEdit, 
+				ItemSelected.getOrderPackageNumber()+" "+ItemSelected.getCustomer_ID()));
 		Order_list.remove(ItemSelected);
+		
 		ArrivelTime=ItemSelected.getArrivalTime();
 		TimeAccepted=dtf.format(now);
 		try {
@@ -118,10 +117,19 @@ public class MyOrderListController implements Initializable {
 		}
 		
 		refund=Integer.valueOf(ItemSelected.getTotalPrice())/2;
-		System.out.println(refund);
 		if(TimeAccepted1.after(ArrivelTime1)) {
 			ClientUI.chat.accept(new Message1(MessageType.RefundAdd,ItemSelected.getCustomer_ID()+" "+ItemSelected.getResturant()+" "+String.valueOf(refund)));
-			System.out.println(refund);
+		  
+			String number =("+972"+ChatClient.accounts.getPhoneNumber());
+			Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+	        Message message1 = Message.creator(
+	                new com.twilio.type.PhoneNumber(number),//////to
+	                new com.twilio.type.PhoneNumber("+15739933793"),////from
+	                "BiteMe Company:\n"
+	                + "We are sorry for the delay\r\n"
+	                + "You get a refund of "+refund+"$")//message body
+	            .create();
+			
 		}
 		
 		
@@ -195,7 +203,7 @@ public class MyOrderListController implements Initializable {
 		ColStatus.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("Status"));
 		ColService.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("DeleiveryService"));
 		ColTime.setCellValueFactory(new PropertyValueFactory<OrdersList, String>("OrderedDate"));
-		ClientUI.chat.accept(new Message1(MessageType.OrderListBuild, null));
+		ClientUI.chat.accept(new Message1(MessageType.OrderListBuild, ChatClient.userlogged.getId()));
 		Order_list=FXCollections.observableArrayList(ChatClient.OrderBuild); 
 		OrderList1.setItems(Order_list);
 		OrderList1.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -203,6 +211,7 @@ public class MyOrderListController implements Initializable {
 			@Override
 			public void handle(MouseEvent arg0) {
 				OL=OrderList1.getSelectionModel().getSelectedItem();
+			System.out.println(OL.getStatus());	
 				if(OL.getStatus().equals("Ready")) 
 					AcceptBtn.setDisable(false);		
 				else

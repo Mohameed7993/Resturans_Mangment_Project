@@ -133,10 +133,6 @@ public class EchoServer extends AbstractServer {
 				break;
 			case OrdersListToDataBase:
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]+" "+ message[1]+" "+message[2]+" "+ message[3]+" "+
-						message[4]+" "+ message[5]+" "+ message[6]+" "+ message[7]+" "+message[8]+" "+ message[9]+" "+
-						message[10]+" "+message[11]+" "+message[12]+" "+(message[13])+" "+message[14]+" "+message[15]);
-				
 				mysqlConnection.setOrderinDB(message[0], message[1], message[2], message[3],
 						message[4], message[5], message[6], message[7],message[8], message[9],
 						message[10],message[11],message[12],(message[13]),message[14],message[15]);
@@ -147,11 +143,12 @@ public class EchoServer extends AbstractServer {
 				mysqlConnection.SetItemsOfOrderinDB(message[0],message[1], message[2], Integer.valueOf(message[3]),Integer.valueOf(message[4]),message[5]);
 				client.sendToClient(new Message1(MessageType.itemsListtoDataBase, null));
 				break;
-	/*	case OrderListBuild:
+		case OrderListBuild:
+				message=((String)m.getObject()).split(" ");
 				ArrayList<OrdersList> Order_list;
-				Order_list=mysqlConnection.BuildOrderTable();
+				Order_list=mysqlConnection.BuildOrderTable(message[0]);
 				client.sendToClient(new Message1(MessageType.OrderListBuild, Order_list));
-				break;*/
+				break;
 			case ItemList:
 				Integer message1;
 				ArrayList<ItemList> Item_list;
@@ -167,18 +164,16 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message1(MessageType.GetOrder, order));
 				break;
 			case updateCelling:
-				System.out.println(1111);
 				message=((String)m.getObject()).split(" ");
-				System.out.println(message[0]+" "+message[1]);
 				mysqlConnection.updatecelling(message[0],message[1]);
 				client.sendToClient(new Message1(MessageType.updateCelling, null));
 				break;
-			/*case OrderListBuildEdit:
-				Integer message2;
-				message2 =(Integer)m.getObject();
-				Order_list=mysqlConnection.EditBuildOrderTable(message2);
-				client.sendToClient(new Message1(MessageType.OrderListBuild, Order_list));
-				break;*/
+			case OrderListBuildEdit:
+				message=((String)m.getObject()).split(" ");
+				System.out.println(message[0]+" "+message[1]);
+				mysqlConnection.EditBuildOrderTable((message[0]),message[1]);
+				client.sendToClient(new Message1(MessageType.OrderListBuild, null));
+				break;
 			case RefundAdd:
 				message=((String)m.getObject()).split(" ");
 				mysqlConnection.RefundBuild(message[0], message[1], message[2]);

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -38,12 +40,10 @@ import common.waiting_account;
 
 public class mysqlConnection {
 	static Connection conn;
-	private static Users user1=null;
 	public static String db_name;
 	public static String db_user;
 	public static String db_pass;
 	public static Integer PaCkage;
-	private static Boolean Flag=false;
 	
 	public static void connectToDB()   {
 		try {
@@ -88,7 +88,6 @@ public class mysqlConnection {
 			ps.execute();
 			
 			arr.add(user);///0
-			user1=user;
 			/////////////////////////////
 			switch (user.getType()) {
 			case Supplier:
@@ -418,47 +417,7 @@ public class mysqlConnection {
 		}
 		
 		
-	 /* public static ArrayList<OrdersList> BuildOrderTable() {
-		   //TABLE VIEW AND DATA
-		ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
-		PreparedStatement ps;
-		ResultSet res;
-		String S=new String("Take It");
-		if(Flag==true) {
-			try {
-				ps = mysqlConnection.conn.prepareStatement("update bitemedb.order_list set Status=? where OrderPackageNumber =? ");
-				ps.setString(1, S);
-				ps.setInt(2, PaCkage);
-				ps.execute();
-				Flag=false;
-				
-			//	res=ps.getResultSet();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		try {
-			ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
-			ps.setString(1, user1.getId());
-			ps.execute();
-			res=ps.getResultSet();
-			while(res.next()) 
-				 {
-
-				if(res.getInt(3)==39) {
-				}
-					Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
-							res.getString(4), res.getString(5), res.getString(6), res.getString(7),
-								res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12)),);
-				}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return Order_list;
-	}*/
+	
 	
 		public static ArrayList<ItemList> BuildItemList(Integer OrderPackageNumber) {
 			ArrayList<ItemList> Item_list = new ArrayList<ItemList>(); 
@@ -482,11 +441,59 @@ public class mysqlConnection {
 			return Item_list;
 		}
 		
-		/*public static ArrayList<OrdersList> EditBuildOrderTable(Integer Package) {
-			PaCkage=Package;
-			Flag=true;
-			return BuildOrderTable();
-		}*/
+		
+		
+		 public static ArrayList<OrdersList> BuildOrderTable(String CustomerID) {
+			   //TABLE VIEW AND DATA
+			ArrayList<OrdersList> Order_list = new ArrayList<OrdersList>(); 
+			PreparedStatement ps;
+			ResultSet res;
+			
+			try {
+				ps = mysqlConnection.conn.prepareStatement("Select * from bitemedb.order_list where Customer_ID =? ");
+				ps.setString(1,CustomerID );
+				ps.execute();
+				res=ps.getResultSet();
+				while(res.next()) 
+					 {
+						Order_list.add(new OrdersList(res.getString(1), res.getString(2), res.getInt(3),
+								res.getString(4), res.getString(5), res.getString(6), res.getString(7),
+									res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12),res.getString(13)
+									,res.getString(14),res.getInt(15),res.getString(16),res.getString(17)));
+					}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return Order_list;
+		}
+		
+		public static void EditBuildOrderTable(String Package,String customerId) {
+			LocalDateTime now = LocalDateTime.now();
+	    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+			PreparedStatement ps;
+			String time=dtf.format(now);
+			System.out.println(time);
+			try {
+
+						ps = mysqlConnection.conn.prepareStatement("update bitemedb.order_list set Status=? where OrderPackageNumber =? ");
+						ps.setInt(1, 4);
+						ps.setInt(2,Integer.valueOf(Package));
+						ps.execute();
+						System.out.println(11);
+						ps = mysqlConnection.conn.prepareStatement("update bitemedb.order_list set ArrivedToCustomerTime=? where OrderPackageNumber =? ");
+						ps.setString(1, time);
+						ps.setInt(2,Integer.valueOf(Package));
+						ps.execute();
+						
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 
 		public static void RefundBuild(String CustomerID, String ResturantID, String refund) {
 			PreparedStatement ps;
