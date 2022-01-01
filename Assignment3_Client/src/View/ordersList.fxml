@@ -187,7 +187,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="959.0" layoutY="575.0" mnemonicParsing="false" onAction="#StatusUpdate" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Ready" textFill="WHITE">
+      <Button fx:id="Readybutton" layoutX="959.0" layoutY="575.0" mnemonicParsing="false" onAction="#StatusUpdate" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Ready" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>

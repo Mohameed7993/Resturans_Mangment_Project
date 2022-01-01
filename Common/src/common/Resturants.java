@@ -11,14 +11,54 @@ public class Resturants implements Serializable {
 	private String PhoneNumber;
 	private String ResturantID;
 	private String Location;
-	public Resturants(String resturantName, String status, String phoneNumber, String resturantID, String location) {
+	private String branchId;
+	private String year;
+	private String month;
+	
+	
+	public Resturants(String resturantName, String status, String phoneNumber, String resturantID,String branchId, String location,String year,String month) {
 		super();
 		ResturantName = resturantName;
 		Status = status;
 		PhoneNumber = phoneNumber;
 		ResturantID = resturantID;
 		Location = location;
+		this.branchId=branchId;
+		this.year=year;
+		this.month=month;
 	}
+	
+	
+	public String getBranchId() {
+		return branchId;
+	}
+
+
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+
+	public String getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+
 	public String getResturantName() {
 		return ResturantName;
 	}

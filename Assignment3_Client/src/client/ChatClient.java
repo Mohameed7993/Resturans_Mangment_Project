@@ -207,7 +207,7 @@ public class ChatClient extends AbstractClient {
 		case GetWaitingOrders:
 			WaitingOrders=(ArrayList<OrdersForRes>)m.getObject();
 			break;
-		case approveItem:
+		case approveOrder:
 			WaitingOrdersController.approvebool=(Boolean)m.getObject();
 			break;
 		case GetOrdersDishes:

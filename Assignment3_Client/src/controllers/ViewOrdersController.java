@@ -56,6 +56,8 @@ public class ViewOrdersController implements Initializable {
 	
     @FXML
     private TextField keyword;
+    @FXML
+    private Button Readybutton;
 
 	
 /////////////////////////////////////////////////////////////////////////////////////
@@ -87,24 +89,28 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 	void StatusUpdate(ActionEvent event) {
 		
 		if(orders_table.getSelectionModel().getSelectedItem().getStatus().equals("Ready")) {
-			Alert a = new Alert(AlertType.ERROR);
+			Readybutton.setDisable(true);
+			/*Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("this order is ready!");
 			a.setHeaderText("Error");
-			a.showAndWait();
+			a.showAndWait();*/
 			
 		}else if (orders_table.getSelectionModel().getSelectedItem() != null) {
-			
+			System.out.println(11);
+			Readybutton.setDisable(false);
 	   ClientUI.chat.accept(new Message1(MessageType.UpdateStatus, orders_table.getSelectionModel().getSelectedItem().getOrderNumber()+","+"Ready"));
 	   Integer ordernumber =orders_table.getSelectionModel().getSelectedItem().getOrderNumber();
+	   
+	   ClientUI.chat.accept(new Message1(MessageType.getCustomer,orders_table.getSelectionModel().getSelectedItem().getCustomer_ID()));
 		String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
 		System.out.println(number);
-		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		/*Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message1 = Message.creator(
 	                new com.twilio.type.PhoneNumber(number),//////to
 	                new com.twilio.type.PhoneNumber("+15739933793"),////from
 	                "BiteMe Company:\n"
 	                + "Your order number '"+ordernumber+"' Is Ready\n You will receive it soon.Thanks ")//message body
-	            .create();
+	            .create();*/
 		
 		} else {
 			Alert a = new Alert(AlertType.ERROR);
@@ -171,7 +177,9 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 	
-
+		Readybutton.setDisable(true);
+		
+		
 		ClientUI.chat.accept(new Message1(MessageType.GetResturantOrders, ChatClient.resturant));
 
 		System.out.println("done with server");
@@ -194,7 +202,9 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 			if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 				if (orders_table.getSelectionModel().getSelectedItem() != null) {
 					
-
+					if(orders_table.getSelectionModel().getSelectedItem().getStatus().equals("Ready")||orders_table.getSelectionModel().getSelectedItem().getStatus().equals("Take It")) {
+						Readybutton.setDisable(true);
+					}else {Readybutton.setDisable(false);}
 					
 				}
 			}
@@ -202,6 +212,7 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 		
 		orders_table.setItems(Orders);
 
+		
 		
 		
 

@@ -52,12 +52,22 @@ public class BiteMeLoginController implements Initializable {
 			switch(ChatClient.userlogged.getType()) {
 			case Customer:
 				ClientUI.chat.accept(new Message1(MessageType.scan,ChatClient.userlogged.getId()));
+				if(ChatClient.userlogged.getStatus().equals("Frozen"))
+				{
+					Alert a = new Alert(AlertType.ERROR);
+					a.setContentText("Error");
+					a.setHeaderText("this Account is Frozen");
+					a.showAndWait();
+				}
+				else 
+				{
 				CustomerHomeController AFrame=new CustomerHomeController();
 				try {
 					AFrame.start(stage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
 				}
 				break;
 			case HR:

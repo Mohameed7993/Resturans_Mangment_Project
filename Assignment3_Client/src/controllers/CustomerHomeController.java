@@ -41,6 +41,7 @@ public class CustomerHomeController implements Initializable {
     
     @FXML
     void LogoutAction(ActionEvent event) {
+    	ItemDetailsController.itemList.clear();
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
     	BiteMeLoginController AFrame=new BiteMeLoginController();
 		try {

@@ -251,11 +251,11 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message1(MessageType.GetWaitingOrders, Waitingorders));
 				
 				break;
-			case approveItem:
+			case approveOrder:
 			//	String[] split=m.getObject().toString().split(" ");
 				Integer Number=Integer.valueOf(m.getObject().toString());
-				boolean approve = mysqlConnection.ApproveItem(Number);
-				client.sendToClient(new Message1(MessageType.approveItem, approve));
+				boolean approve = mysqlConnection.ApproveOrder(Number);
+				client.sendToClient(new Message1(MessageType.approveOrder, approve));
 				break;
 			case GetOrdersDishes:
 				ArrayList<OrderDish> Orderdishes=mysqlConnection.GetOrdersDishes((int)m.getObject());

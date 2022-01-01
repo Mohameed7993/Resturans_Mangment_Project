@@ -25,12 +25,18 @@ public class OrdersForRes implements Serializable{
 	private String Status;
 	private String ArrivalTime;
 	private String ApprovalStatus;
+	private String Branchlocation;
+	private String year;
+	private String month;
+	private Integer day;
+	private String ArrivedToCustomerTime;
+	private String OrderReadyTime; 
 	
 	
 	
 	public OrdersForRes(String customer_ID, String resturant, int orderNumber, String requestTime, String orderTime,
 			String totalPrice, String address, String deliveryType, String status, String arrivalTime,
-			String approvalStatus) {
+			String approvalStatus,String Branchlocation,String year,String month,Integer day,String ArrivedToCustomerTime,String OrderReadyTime) {
 		super();
 		Customer_ID = customer_ID;
 		this.resturant = resturant;
@@ -43,6 +49,12 @@ public class OrdersForRes implements Serializable{
 		Status = status;
 		ArrivalTime = arrivalTime;
 		ApprovalStatus = approvalStatus;
+		this.Branchlocation = Branchlocation;
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.ArrivedToCustomerTime = ArrivedToCustomerTime;
+		this.OrderReadyTime = ArrivedToCustomerTime;
 	}
 
 

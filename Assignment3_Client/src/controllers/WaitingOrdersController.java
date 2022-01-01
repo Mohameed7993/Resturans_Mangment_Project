@@ -81,7 +81,7 @@ public class WaitingOrdersController implements Initializable {
 			selctedOrder = orders_table.getSelectionModel().getSelectedItem();
 			System.out.println(selctedOrder.getOrderNumber());
 			ClientUI.chat.accept(
-					new Message1(MessageType.approveItem, selctedOrder.getOrderNumber()));
+					new Message1(MessageType.approveOrder, selctedOrder.getOrderNumber()));
 			if (!approvebool) {
 				Alert a = new Alert(AlertType.ERROR);
 				a.setContentText("this order already approved!");
@@ -91,15 +91,14 @@ public class WaitingOrdersController implements Initializable {
 				/////////////////////////////////////
 				ClientUI.chat.accept(new Message1(MessageType.getCustomer,selctedOrder.getCustomer_ID()));
 				String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
-				System.out.println(number);
-				Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+			/*	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 			        Message message1 = Message.creator(
 			                new com.twilio.type.PhoneNumber(number),//////to
 			                new com.twilio.type.PhoneNumber("+15739933793"),////from
 			                "BiteMe Company:\n Thank you for ordering through our app\n"
 			                + "Your order number '"+selctedOrder.getOrderNumber()+"' has been successfully received \n"
 			                		+ "We'll send you when she's ready,Thanks")//message body
-			            .create();
+			            .create();*/
 
 			      //  System.out.println(message1.getSid());
 				
@@ -172,7 +171,6 @@ public class WaitingOrdersController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ClientUI.chat.accept(new Message1(MessageType.GetWaitingOrders, ChatClient.resturant));
-	
 		
 		
 		orderNum.setCellValueFactory(new PropertyValueFactory<OrdersForRes, Integer>("orderNumber"));

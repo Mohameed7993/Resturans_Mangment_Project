@@ -158,9 +158,9 @@ public class OrdersDetailsController implements Initializable {
  
         // Getting day, month, and year
         // from date
-         day =Integer.valueOf(dateParts[0]);
+         day =Integer.valueOf(dateParts[2]);
          month = dateParts[1];
-         year = dateParts[2];
+         year = dateParts[0];
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML

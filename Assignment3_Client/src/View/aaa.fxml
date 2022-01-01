@@ -10,19 +10,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddItemController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddItemController">
    <children>
       <ImageView fx:id="image" fitHeight="727.0" fitWidth="616.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/sub.jpeg" />
+            <Image url="@../../../../../OneDrive/Desktop/Images/WhatsApp%20Image%202021-12-28%20at%2015.23.25.jpeg" />
          </image>
       </ImageView>
       <ImageView fitHeight="696.0" fitWidth="616.0">
          <image>
-            <Image url="@../Images/A.png" />
+            <Image url="@../../../../../OneDrive/Desktop/Images/A.png" />
          </image>
       </ImageView>
-      <Button layoutX="6.0" layoutY="604.0" mnemonicParsing="false" onAction="#back" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
+      <Button layoutX="460.0" layoutY="604.0" mnemonicParsing="false" onAction="#back" prefHeight="41.0" prefWidth="130.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Back" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -54,7 +54,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextArea fx:id="optionals" layoutX="373.0" layoutY="295.0" prefHeight="200.0" prefWidth="200.0" promptText="option  it's price..." />
+      <TextArea fx:id="optionals" layoutX="373.0" layoutY="295.0" prefHeight="200.0" prefWidth="200.0" promptText="option ,it's price..." />
       <Label layoutX="373.0" layoutY="254.0" prefHeight="41.0" prefWidth="112.0" text="meal options" textFill="#79a42b">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -63,7 +63,7 @@
       <TextField fx:id="meal" layoutX="124.0" layoutY="358.0" prefHeight="25.0" prefWidth="157.0" promptText="name..." />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="365.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/Soshi.png" />
+            <Image url="@../../../../../OneDrive/Desktop/Images/Soshi.png" />
          </image>
       </ImageView>
       <Button layoutX="54.0" layoutY="501.0" mnemonicParsing="false" onAction="#add" prefHeight="41.0" prefWidth="227.0" style="-fx-background-color: #79a42b; -fx-background-radius: 100;" text="Add Item" textFill="WHITE">
@@ -71,5 +71,25 @@
             <Font size="17.0" />
          </font>
       </Button>
+      <Text fill="#f80000" layoutX="101.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text fill="#f80000" layoutX="111.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text fill="#f80000" layoutX="109.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text fill="#79a42b" layoutX="485.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="with tomato, 15">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

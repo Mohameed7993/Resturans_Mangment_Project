@@ -9,7 +9,7 @@ public enum MessageType {
 	updateCelling, OrderListBuildEdit,
 	RefundAdd, getRefund, logout, editDishName, getDishesFromResturant,
 	additem, getOptionalIngredients, AddOption, UpdateItem, GetResturantOrders, 
-	approveItem, GetOrdersDishes, GetWaitingOrders, GetEmployees, AddEmployer,
+	approveOrder, GetOrdersDishes, GetWaitingOrders, GetEmployees, AddEmployer,
 	DeleteOption, UpdateStatus, ApproveaccountB, deleteDish, updateRegund, getCustomer;
 	
 }

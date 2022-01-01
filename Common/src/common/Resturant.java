@@ -13,13 +13,20 @@ public class Resturant implements Serializable {
 	private String isOpen;
 	private String resturantPhoneNumber;
 	private String Branch;
-	public Resturant( String resturantName, String isOpen,String resturantPhoneNumber,String id,String Branch) {
+	private String branchId;
+	private String year;
+	private String month;
+	public Resturant( String resturantName, String isOpen,String resturantPhoneNumber,String id,String branchId,String Branch,String year,String month) {
 		super();
 		this.id = id;
 		this.resturantName = resturantName;
 		this.resturantPhoneNumber=resturantPhoneNumber;
 		this.isOpen = isOpen;
 		this.Branch=Branch;
+		this.branchId=branchId;
+		this.year=year;
+		this.month=month;
+		
 	}
 	@Override
 	public int hashCode() {

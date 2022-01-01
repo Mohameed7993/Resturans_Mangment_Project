@@ -215,11 +215,11 @@ public class UpdateMenuListForResturantController implements Initializable {
 			});
 		});
 		
-           delbtn.setVisible(false);
+           delbtn.setDisable(true);
 		dish_table.setOnMouseClicked(mouseEvent -> {
 			 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 				 if(dish_table.getSelectionModel().getSelectedItem()!=null) {
-						delbtn.setVisible(true);
+					 delbtn.setDisable(false);
 					}
 			 }
 		});

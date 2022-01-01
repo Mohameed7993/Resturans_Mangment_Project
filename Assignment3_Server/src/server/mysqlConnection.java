@@ -101,7 +101,7 @@ public class mysqlConnection {
 				System.out.println(res.next());
 				
 
-				resturant = new Resturant(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5));
+				resturant = new Resturant(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8));
 				System.out.println(resturant);
 				arr.add(resturant);///////1
 				break;
@@ -272,9 +272,7 @@ public class mysqlConnection {
 						,res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12),res.getString(13),res.getString(14),res.getInt(15)
 						,res.getString(16),res.getString(17));
 				
-				System.out.println(res.getString(1)+" "+res.getString(2)+" "+res.getInt(3)+" "+res.getString(4)+" "+res.getString(5)+" "+res.getString(6)+" "+res.getString(7)
-						+" "+res.getString(8)+" "+res.getString(9)+" "+res.getString(10)+" "+res.getString(11)+" "+res.getString(12)+" "+res.getString(13)+" "+res.getString(14)+" "+
-						res.getInt(15)+" "+res.getString(16)+" "+res.getString(17));
+	
 				
 				return order;
 				
@@ -403,8 +401,8 @@ public class mysqlConnection {
 				statment=mysqlConnection.conn.createStatement();
 				res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
 				while (res.next()) {
-					if(res.getString(5).equals(Location)) {
-					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5));
+					if(res.getString(6).equals(Location)) {
+					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8));
 					list.add(temp);
 					}
 				}
@@ -548,6 +546,7 @@ public class mysqlConnection {
 			Refund ref=null;
 			try {
 				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.refund where Customer_ID =? and ResturantId =?");
+				System.out.println(customerid);
 				ps.setString(1, customerid);
 				ps.setString(2, resturantid);
 				ps.execute();
@@ -555,6 +554,7 @@ public class mysqlConnection {
 				if(!res.next())
 				{
 					ps1=mysqlConnection.conn.prepareStatement("Insert into bitemedb.refund Values (?,?,?)");
+					System.out.println(customerid);
 					ps1.setString(1,customerid);
 					ps1.setString(2, resturantid);
 					ps1.setString(3, String.valueOf(0));
@@ -563,17 +563,16 @@ public class mysqlConnection {
 						     ps1.setString(1,customerid);
 							 ps1.setString(2, resturantid);
 							 ps1.execute();
-							 res2=ps.getResultSet();
-							 if(!res2.next())
-								 return null;
-							 else
+							 res2=ps1.getResultSet();
+							 res2.next();
 							 ref=new Refund(res2.getString(1),res2.getString(2),res2.getString(3));
-				}
+				}else
 				ref=new Refund(res.getString(1),res.getString(2),res.getString(3));
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();}
+			System.out.println(ref.getCustomerID());
 			return ref;
 		}
 		
@@ -647,7 +646,7 @@ public class mysqlConnection {
 							if(res2.getInt(4)==0) {
 							stringBuilder.append(res2.getString(3));/////////////////////////////////////////////////////
 							stringBuilder.append("\n");}else {
-								stringBuilder.append(res2.getString(3)+" +"+res2.getInt(4));
+								stringBuilder.append(res2.getString(3)+" "+res2.getInt(4));
 								stringBuilder.append("\n");
 							}
 							
@@ -706,14 +705,16 @@ public class mysqlConnection {
 				ps.setString(1, dish.getMealId());
 				ps.execute();
 				
-				ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where DishId=?");
-				ps1.setInt(1, Integer.valueOf(dish.getMealId()));
-				ps1.execute();
+				ps1=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.dish where TypemealId=?");
+				ps1.setString(1, typeID);///////////
+				ps1.execute();////////
 				res1=ps1.getResultSet();
 				
 			if(!res1.next()) {
 				ps = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.typemeal WHERE TypemealId=?");
-				ps.setInt(1, Integer.valueOf(typeID));}
+				ps.setInt(1, Integer.valueOf(typeID));
+			ps.execute();	
+			}
 				
 				res1.close();
 				res.close();
@@ -901,9 +902,10 @@ public class mysqlConnection {
 					 
 					
 					 
-					 orders.add(new OrdersForRes(res.getString(1), resturant.getResturantName(), res.getInt(3), res.getString(4), res.getString(5), res.getString(6),
-							
-							 res.getString(7), res.getString(8), res.getString(9), res.getString(10), res.getString(11)));
+					 orders.add(new OrdersForRes(res.getString(1), res.getString(2), res.getInt(3),
+								res.getString(4), res.getString(5), res.getString(6), res.getString(7),
+								res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12),res.getString(13)
+								,res.getString(14),res.getInt(15),res.getString(16),res.getString(17)));
 					 
 					 
 					 
@@ -930,12 +932,12 @@ public class mysqlConnection {
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////
 
-		public static boolean ApproveItem(int object) {
+		public static boolean ApproveOrder(int OrderNum) {
 			PreparedStatement ps;
 			ResultSet res;
 			try {
 				ps= mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.order_list where OrderPackageNumber=?");
-				ps.setInt(1, object);
+				ps.setInt(1, OrderNum);
 				ps.execute();
 				res=ps.getResultSet();
 				res.next();
@@ -945,7 +947,7 @@ public class mysqlConnection {
 				  ps= mysqlConnection.conn.prepareStatement("update bitemedb.order_list set ApprovalRecieving=? ,Status=?  where OrderPackageNumber=?");
 				  ps.setString(1, "Approved");
 				 ps.setInt(2, 2);
-				  ps.setInt(3, object);
+				  ps.setInt(3, OrderNum);
 				  ps.execute();
 				  
 				  //UPDATE `bitemedb`.`dish` SET `dishprice` = ? WHERE (`dishID` = ?)
@@ -981,13 +983,20 @@ public class mysqlConnection {
 		}
 
 		public static void UpdateStatus(int OrderNumber, String Status) {
+			LocalDateTime now = LocalDateTime.now();
+	    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 			PreparedStatement ps;
-			
+			String time=dtf.format(now);
 			try {
 				 ps= mysqlConnection.conn.prepareStatement("Update bitemedb.order_list set Status=? where OrderPackageNumber=? ");
 				 ps.setString(1, Status);
 				 ps.setInt(2, OrderNumber);
 				 ps.execute();
+				 ps= mysqlConnection.conn.prepareStatement("Update bitemedb.order_list set OrderReadyTime=? where OrderPackageNumber=? ");
+				 ps.setString(1, time);
+				 ps.setInt(2, OrderNumber);
+				 ps.execute();
+				 
 				 
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -1143,9 +1152,10 @@ public class mysqlConnection {
 					 
 					
 					 
-					 orders.add(new OrdersForRes(res.getString(1), resturant.getResturantName(), res.getInt(3), res.getString(4), res.getString(5), res.getString(6),
-							
-							 res.getString(7), res.getString(8), res.getString(9), res.getString(10), res.getString(11)));
+					 orders.add(new OrdersForRes(res.getString(1), res.getString(2), res.getInt(3),
+								res.getString(4), res.getString(5), res.getString(6), res.getString(7),
+								res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12),res.getString(13)
+								,res.getString(14),res.getInt(15),res.getString(16),res.getString(17)));
 					 
 		
 				 }

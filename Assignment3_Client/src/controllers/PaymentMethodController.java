@@ -1,4 +1,4 @@
-package controllers;
+ package controllers;
 
 import java.net.URL;
 import java.sql.Time;
@@ -1648,12 +1648,12 @@ public class PaymentMethodController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	
     	ClientUI.chat.accept(new Message1(MessageType.getRefund,ChatClient.userlogged.getId()+" "+ChooseResturantController.resturant.getResturantID()));
-    	if(ChatClient.getRefund.getRefund().equals(null)) {
+    	if(ChatClient.getRefund.getRefund().equals("null")) {
     		ref=0;
     		Refundfield.setText(ChatClient.getRefund.getRefund());
     	}else {
     	 	ref=Integer.valueOf(ChatClient.getRefund.getRefund());
-        	Refundfield.setText(ChatClient.getRefund.getRefund());
+        	Refundfield.setText(ChatClient.getRefund.getRefund()+"$");
     	}
    
     	if(ref==0)
@@ -1662,11 +1662,6 @@ public class PaymentMethodController implements Initializable{
     	
     	if(ChatClient.w4ccard.getAccountType().equals("business")) {
     		ClientUI.chat.accept(new Message1(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));
-    	}
-    	
-    	
-    	if(ChatClient.w4ccard.getAccountType().equals("business")) {
-    	
     		payprivatebutton1.setVisible(false);
     		payprivatebutton.setVisible(true);
     		paybussinessbutton.setVisible(true);
