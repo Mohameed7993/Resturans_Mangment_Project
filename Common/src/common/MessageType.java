@@ -10,6 +10,6 @@ public enum MessageType {
 	RefundAdd, getRefund, logout, editDishName, getDishesFromResturant,
 	additem, getOptionalIngredients, AddOption, UpdateItem, GetResturantOrders, 
 	approveOrder, GetOrdersDishes, GetWaitingOrders, GetEmployees, AddEmployer,
-	DeleteOption, UpdateStatus, ApproveaccountB, deleteDish, updateRegund, getCustomer;
+	DeleteOption, UpdateStatus, ApproveaccountB, deleteDish, updateRegund, getCustomer, ViewAllResturants;
 	
 }

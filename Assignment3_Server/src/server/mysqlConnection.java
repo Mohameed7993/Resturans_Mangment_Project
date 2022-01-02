@@ -392,6 +392,31 @@ public class mysqlConnection {
 	   }
 	
 	
+	   
+	   public static ArrayList<Resturants> GetAllResturants(){
+			ArrayList<Resturants> list = new ArrayList<Resturants>();
+			Resturants temp;
+			Statement statment;
+			ResultSet res;
+			try {
+				statment=mysqlConnection.conn.createStatement();
+				res=statment.executeQuery("SELECT * FROM bitemedb.resturants");
+				while (res.next()) {
+					temp=new Resturants(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8));
+					list.add(temp);
+				}
+					res.close();
+			} catch (SQLException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		     }
+		       return list;
+		}
+	   
+	   
+	   
+	   
+	   
 	   public static ArrayList<Resturants> getResturantsListFromDB(String Location){
 			ArrayList<Resturants> list = new ArrayList<Resturants>();
 			Resturants temp;

@@ -438,7 +438,7 @@ public class PaymentMethodController implements Initializable{
      	   	                         	   }
      	   	                        		
      	                        		  
-      	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+      	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
         	        	                  if(DeleiveryType.equals("null"))
      	        	                     {
      	        				           Alert a = new Alert(AlertType.ERROR);
@@ -507,7 +507,7 @@ public class PaymentMethodController implements Initializable{
      	                           }
      	    	    	          else
      	    	    	          {
-     	    	    	        	 address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+     	    	    	        	 address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
       	        	                  if(DeleiveryType.equals("null"))
    	        	                     {
    	        				           Alert a = new Alert(AlertType.ERROR);
@@ -676,7 +676,7 @@ public class PaymentMethodController implements Initializable{
    	                        		   
    	                        	   
 	                        		 
-   	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+   	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
      	        	                  if(DeleiveryType.equals("null"))
   	        	                     {
   	        				           Alert a = new Alert(AlertType.ERROR);
@@ -742,7 +742,7 @@ public class PaymentMethodController implements Initializable{
    	                           }
    	                           else
    	                           {
-   	                        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+   	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
 	        	                  if(DeleiveryType.equals("null"))
         	                     {
         				           Alert a = new Alert(AlertType.ERROR);
@@ -959,7 +959,7 @@ public class PaymentMethodController implements Initializable{
          	   	                         	   }
          	   	                        		 
          	                        		  
-         	                        			address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+         	                        			address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
             	        	                  if(DeleiveryType.equals("null"))
          	        	                     {
          	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1026,7 +1026,7 @@ public class PaymentMethodController implements Initializable{
          	                           }
          	    	    	          else
          	    	    	          {
-         	    	    	        	 address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+         	    	    	        	 address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
        	        	                  if(DeleiveryType.equals("null"))
     	        	                     {
     	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1185,7 +1185,7 @@ public class PaymentMethodController implements Initializable{
        	                         	   }
        	                        		
     	                        		 
-       	                        		address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+       	                        		address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
          	        	                  if(DeleiveryType.equals("null"))
       	        	                     {
       	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1242,7 +1242,7 @@ public class PaymentMethodController implements Initializable{
        	                        	   }
        	                           }
        	                           else {
-       	                        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+       	                        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
    	        	                  if(DeleiveryType.equals("null"))
 	        	                     {
 	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1412,7 +1412,7 @@ public class PaymentMethodController implements Initializable{
        	    			                 a.showAndWait();
          	       		                }
          	    	    	         else {
-         	    	    	        	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+         	    	    	        	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
          	    	    	        	    if(DeleiveryType.equals("null"))
          	    	    	        	    {
             	    		        				  Alert a = new Alert(AlertType.ERROR);
@@ -1532,7 +1532,7 @@ public class PaymentMethodController implements Initializable{
     		                                a.showAndWait();
     		                             }
        	                else {
-       	                	address =new Address(ChatClient.accounts.getLocation(), streetField.getText(), houseNumberField.getText());
+       	                	address =new Address(CityField.getText(), streetField.getText(), houseNumberField.getText());
        	        	                  if(DeleiveryType.equals("null"))
     	        	                     {
     	        				           Alert a = new Alert(AlertType.ERROR);
@@ -1658,7 +1658,7 @@ public class PaymentMethodController implements Initializable{
    
     	if(ref==0)
     		CheckRefund.setDisable(true);
-    	CityField.setText(ChatClient.accounts.getLocation());
+    	
     	
     	if(ChatClient.w4ccard.getAccountType().equals("business")) {
     		ClientUI.chat.accept(new Message1(MessageType.bussinessAccounts,ChatClient.accounts.getW4C_QrCode()));

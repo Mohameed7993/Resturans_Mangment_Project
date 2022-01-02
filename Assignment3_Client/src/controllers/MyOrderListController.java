@@ -121,14 +121,14 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 			ClientUI.chat.accept(new Message1(MessageType.RefundAdd,ItemSelected.getCustomer_ID()+" "+ItemSelected.getResturant()+" "+String.valueOf(refund)));
 		  
 			String number =("+972"+ChatClient.accounts.getPhoneNumber());
-			Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+			/*Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message1 = Message.creator(
 	                new com.twilio.type.PhoneNumber(number),//////to
 	                new com.twilio.type.PhoneNumber("+15739933793"),////from
 	                "BiteMe Company:\n"
 	                + "We are sorry for the delay\r\n"
 	                + "You get a refund of "+refund+"$")//message body
-	            .create();
+	            .create();*/
 			
 		}
 		

@@ -34,6 +34,8 @@ public class ChooseResturantController implements Initializable {
 	public static Stage stage1;
     
 	ObservableList<Resturants> resturants;
+	ObservableList<Resturants> allresturants;
+	public boolean locationflag =false;
 
 	public static Resturants resturant;
 
@@ -48,6 +50,9 @@ public class ChooseResturantController implements Initializable {
 
 	@FXML
 	private TableColumn<Resturants, String> PhoneNumberCol;
+	
+	@FXML
+	private TableColumn<Resturants, String> Location;
 
 	@FXML
 	private ImageView Image1;
@@ -75,10 +80,13 @@ public class ChooseResturantController implements Initializable {
     
 	@FXML
 	private Button MyCartButton;
+	
+	@FXML
+	private Text selectone;
 
 	@FXML
 	void BackButtonAction(ActionEvent event) {
-
+		locationflag=false;
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		CustomerDetailsController AFrame=new CustomerDetailsController();
 		try {
@@ -147,26 +155,29 @@ public class ChooseResturantController implements Initializable {
 			}
 		}
 		else {
+			if(!locationflag) {
+				Alert a = new Alert(AlertType.ERROR);
+				a.setContentText("Error");
+				a.setHeaderText("Select your Location Sreach");
+				a.showAndWait();
+				selectone.setVisible(true);
+			}
+			else {
 			Alert a = new Alert(AlertType.ERROR);
 			a.setContentText("Error");
 			a.setHeaderText("should you Select a resturant:");
 			a.showAndWait();
+			}
+			
 		}
 	}
 
-
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		if(ItemDetailsController.itemList.size()==0) {
-			MyCartButton.setVisible(false);
-			Image5.setVisible(false);
-		}
-		else { MyCartButton.setVisible(true); Image5.setVisible(true);}
-		ResturantFrom.setText("From :" + ChatClient.accounts.getLocation() );
-		System.out.println(ChatClient.accounts.getLocation());
+    @FXML
+    void MylocationAction(ActionEvent event) {
+    	locationflag=true;
 		ResturanNameCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("ResturantName"));
 		StatusCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Status"));
+		Location.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Location"));
 		PhoneNumberCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("PhoneNumber"));
 
 		ClientUI.chat.accept(new Message1(MessageType.ViewResturants,ChatClient.accounts.getLocation()));
@@ -182,6 +193,42 @@ public class ChooseResturantController implements Initializable {
 			}
 
 		});
+    }
+    
+    @FXML
+    void AllLocationAction(ActionEvent event) {
+    	locationflag=true;
+    	ResturanNameCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("ResturantName"));
+		StatusCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Status"));
+		Location.setCellValueFactory(new PropertyValueFactory<Resturants,String>("Location"));
+		PhoneNumberCol.setCellValueFactory(new PropertyValueFactory<Resturants,String>("PhoneNumber"));
+    	
+    	ClientUI.chat.accept(new Message1(MessageType.ViewAllResturants,null));
+    	allresturants=FXCollections.observableArrayList(ChatClient.allresturants);
+		TablelistID.setItems(allresturants);
+
+		TablelistID.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				resturant=TablelistID.getSelectionModel().getSelectedItem();
+
+			}
+
+		});
+    	
+    }
+    
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		selectone.setVisible(false);
+		if(ItemDetailsController.itemList.size()==0) {
+			MyCartButton.setVisible(false);
+			Image5.setVisible(false);
+		}
+		else { MyCartButton.setVisible(true); Image5.setVisible(true);}
+		
 
 	}
 

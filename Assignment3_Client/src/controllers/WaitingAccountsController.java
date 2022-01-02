@@ -6,11 +6,14 @@ import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
+import common.Client;
 import common.Message1;
 import common.MessageType;
 import common.waiting_account;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +35,7 @@ public class WaitingAccountsController implements Initializable {
 	
 	public static ObservableList<waiting_account> WaitingAccounts;
 	public static waiting_account selectedAccount; 
-		
+
 	
 	
 	 @FXML
@@ -120,6 +123,9 @@ public class WaitingAccountsController implements Initializable {
 		Ceilingcol.setCellValueFactory(new PropertyValueFactory<waiting_account, Integer>("ceiling"));
 		
 		BranchCol.setCellValueFactory(new PropertyValueFactory<waiting_account, String>("Address"));
+		
+
+
 		
 		
 		

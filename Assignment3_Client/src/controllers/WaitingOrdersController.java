@@ -10,10 +10,13 @@ import java.util.ResourceBundle;
 import client.ChatClient;
 import client.ClientUI;
 import common.OrdersForRes;
+import common.Client;
 import common.Message1;
 import common.MessageType;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,8 +49,6 @@ public class WaitingOrdersController implements Initializable {
 	    public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 /////////////////////////////////////////////////////////////////////////////////////
 	public static ObservableList<OrdersForRes> WaitingOrders;
-	
-	
 	
    
 	@FXML
@@ -91,7 +92,7 @@ public class WaitingOrdersController implements Initializable {
 				/////////////////////////////////////
 				ClientUI.chat.accept(new Message1(MessageType.getCustomer,selctedOrder.getCustomer_ID()));
 				String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
-			/*	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+				/*Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 			        Message message1 = Message.creator(
 			                new com.twilio.type.PhoneNumber(number),//////to
 			                new com.twilio.type.PhoneNumber("+15739933793"),////from
@@ -171,30 +172,26 @@ public class WaitingOrdersController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ClientUI.chat.accept(new Message1(MessageType.GetWaitingOrders, ChatClient.resturant));
-		
-		
 		orderNum.setCellValueFactory(new PropertyValueFactory<OrdersForRes, Integer>("orderNumber"));
 		time.setCellValueFactory(new PropertyValueFactory<OrdersForRes, String>("requestTime"));
 		Total.setCellValueFactory(new PropertyValueFactory<OrdersForRes, String>("totalPrice"));
 		Approval.setCellValueFactory(new PropertyValueFactory<OrdersForRes, String>("approvalStatus"));
-		
-		
 		WaitingOrders=FXCollections.observableArrayList(ChatClient.WaitingOrders);
-		
 		orders_table.setItems(WaitingOrders);
+		System.out.println(99);
+		
 	}
-	
 	
 	
 	public void start(Stage primaryStage) throws Exception {
 
 		Parent root = FXMLLoader.load(getClass().getResource("/View/WaitingOrders.fxml"));
-		
 		Scene scene = new Scene(root);
-
 		primaryStage.setScene(scene);
 		primaryStage.centerOnScreen();
 		primaryStage.show();
+		
+		
 
 		
 	}

@@ -32,6 +32,8 @@ import controllers.AddEmployerController;
 import controllers.AddItemController;
 import controllers.EditOptionalIngredientsController;
 import controllers.WaitingOrdersController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ import java.util.ArrayList;
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
 	//customer
+	//public static ArrayList<OrdersForRes> LisenerObservableList =new ArrayList<>() ;
 	public static Users userlogged;
 	public static W4C_Card w4ccard;
 	public static Account accounts;
@@ -56,6 +59,7 @@ public class ChatClient extends AbstractClient {
 	public static OrdersList order2;
 	public static ItemList items;
 	public static ArrayList<Resturants> resturants;
+	public static ArrayList<Resturants> allresturants;
 	public static ArrayList<TybeMeal> tybemeal;
 	public static ArrayList<Dish> dish;
 	public static ArrayList<Selection> selection;
@@ -149,6 +153,9 @@ public class ChatClient extends AbstractClient {
 			break;
 		case ViewResturants:
 			resturants=(ArrayList<Resturants>)m.getObject();
+			break;
+		case ViewAllResturants:
+			allresturants=(ArrayList<Resturants>)m.getObject();
 			break;
 		case ViewTybeMeallist:
 			tybemeal=(ArrayList<TybeMeal>)m.getObject();

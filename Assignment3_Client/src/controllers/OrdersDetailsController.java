@@ -17,7 +17,7 @@ import common.Approvedtype;
 import common.ItemList;
 import common.Message1;
 import common.MessageType;
-
+import common.OrdersForRes;
 import common.OrdersList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -344,13 +344,12 @@ public class OrdersDetailsController implements Initializable {
 					System.out.println(String.valueOf(PaymentMethodController.ref));
 		}
 		
+		/*ChatClient.LisenerObservableList.add(new OrdersForRes(orders.getCustomer_ID(), orders.getResturant(), ChatClient.order2.getOrderPackageNumber(),
+				orders.getRequestDate(), orders.getOrderedDate(), orders.getTotalPrice(), orders.getAddress(), orders.getDeleiveryService(), orders.getStatus(),
+				orders.getArrivalTime(), orders.getApprovalRecieving(), orders.getBranchlocation(), orders.getYear(), orders.getMonth(), orders.getDay(),
+				orders.getArrivedToCustomerTime(), orders.getOrderReadyTime()));
 		
-
-    	
-		
-		
-		
-		
+System.out.println(ChatClient.LisenerObservableList.get(0).getCustomer_ID());*/
 		
 		
     }

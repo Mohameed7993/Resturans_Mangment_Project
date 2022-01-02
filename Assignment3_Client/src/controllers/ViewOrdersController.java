@@ -104,13 +104,26 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 	   ClientUI.chat.accept(new Message1(MessageType.getCustomer,orders_table.getSelectionModel().getSelectedItem().getCustomer_ID()));
 		String number =("+972"+ChatClient.GetCustomerDetails.getPhoneNumber());
 		System.out.println(number);
-		/*Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-	        Message message1 = Message.creator(
-	                new com.twilio.type.PhoneNumber(number),//////to
-	                new com.twilio.type.PhoneNumber("+15739933793"),////from
-	                "BiteMe Company:\n"
-	                + "Your order number '"+ordernumber+"' Is Ready\n You will receive it soon.Thanks ")//message body
-	            .create();*/
+		/* if(orders_table.getSelectionModel().getSelectedItem().getDeliveryType().equals("TakeAway")) {
+			 Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		        Message message1 = Message.creator(
+		       
+		                new com.twilio.type.PhoneNumber(number),//////to
+		                new com.twilio.type.PhoneNumber("+15739933793"),////from
+		                "BiteMe Company:\n"
+		                + "Your order number '"+ordernumber+"' Is Ready To Pick up.\n Thanks. ")//message body
+		            .create();
+	        }else {
+	        	 Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+			        Message message1 = Message.creator(
+			                new com.twilio.type.PhoneNumber(number),//////to
+			                new com.twilio.type.PhoneNumber("+15739933793"),////from
+			                "BiteMe Company:\n"
+			                + "Your order number '"+ordernumber+"' Is Ready, The delivery person on the way to you\n"
+			                		+ "He arrives at"+ orders_table.getSelectionModel().getSelectedItem().getArrivalTime())//message body
+			            .create();
+	        }*/
+		
 		
 		} else {
 			Alert a = new Alert(AlertType.ERROR);

@@ -199,7 +199,10 @@ public class EchoServer extends AbstractServer {
 				Account customer=mysqlConnection.getCustomerDetails(message[0]);
 				client.sendToClient(new Message1(MessageType.getCustomer, customer));
 				break;
-				
+			case ViewAllResturants:
+				ArrayList<Resturants> allresturant=mysqlConnection.GetAllResturants();
+				client.sendToClient(new Message1(MessageType.ViewAllResturants, allresturant));
+				break;
 				
 			case getDishesFromResturant:
 				ArrayList<DishForResturant> dishes = mysqlConnection.getResturantDishes((String) m.getObject());
