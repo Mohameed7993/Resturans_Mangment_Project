@@ -7,21 +7,27 @@ package client;
 import ocsf.client.*;
 import client.*;
 import common.Account;
+import common.BranchManager;
+import common.BranchQaurter;
 import common.Business;
 import common.ChatIF;
 import common.Dish;
 import common.DishForResturant;
+import common.Employer;
+import common.HistogramValues;
 import common.HoumanResources;
 import common.ItemInCart;
 import common.ItemList;
 import common.Message1;
 import common.MessageType;
+import common.MyFile;
 import common.OptionalIngredients;
 import common.OrderDish;
 import common.OrdersForRes;
 import common.OrdersList;
 import common.Refund;
 import common.Resturant;
+import common.ResturantForBM;
 import common.Resturants;
 import common.Selection;
 import common.TybeMeal;
@@ -30,6 +36,7 @@ import common.W4C_Card;
 import common.waiting_account;
 import controllers.AddEmployerController;
 import controllers.AddItemController;
+import controllers.CreatePrivateAccountController;
 import controllers.EditOptionalIngredientsController;
 import controllers.WaitingOrdersController;
 import javafx.collections.FXCollections;
@@ -37,6 +44,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /** majd
  * This class overrides some of the methods defined in the abstract superclass
@@ -77,6 +85,20 @@ public class ChatClient extends AbstractClient {
 	//hr
 	public static ArrayList<waiting_account> WaitingAccounts;
 	public static HoumanResources HR;
+	////branchmanger&ceo
+	public static ResturantForBM resturantForBM;
+	public static ArrayList<Object> dataforaccount;
+	public static ArrayList<Object> temp;
+	public static ArrayList<Employer> notApprovedEmployers;
+	public static ArrayList<Users> users;
+	public static ArrayList<ResturantForBM> resturantsForBM;
+	public static ArrayList<String> dataForFiles;
+	public static HashMap<String, ArrayList<String>> hashMap;
+	public static ArrayList<BranchQaurter> branchQaurters;
+	public static ArrayList<BranchManager> branchManagers;
+	public static ArrayList<HistogramValues>histogramValues;
+	public static MyFile myfile;
+	public static boolean uploaded;
 	
 	
 	
@@ -133,8 +155,6 @@ public class ChatClient extends AbstractClient {
 					break;
 				case HR:
 					HR=(HoumanResources)arr.get(1);
-					System.out.println(HR.getID());
-					System.out.println(HR.getCompanyName());
 					break;
 				default:
 					break;
@@ -206,7 +226,7 @@ public class ChatClient extends AbstractClient {
 			break;
 			
 		case UpdateItem:
-			EditOptionalIngredientsController.Update=(boolean)m.getObject();
+			EditOptionalIngredientsController.Update1=(boolean)m.getObject();
 			break;
 		case GetResturantOrders:
 			orders=(ArrayList<OrdersForRes>)m.getObject();
@@ -226,13 +246,70 @@ public class ChatClient extends AbstractClient {
 		case AddEmployer:
 			AddEmployerController.added=(Boolean)m.getObject();
 			break;
-			
-			
-			
-			
-	
-		/*case:
-			break;*/
+			///////////////////////abosale7
+		case addPrivateAccount:
+			CreatePrivateAccountController.val = (boolean) m.getObject();
+			// CreatePrivateAccountController.message=(String)m.getObject();
+			break;
+
+		case getDataForAccount:
+			dataforaccount = (ArrayList<Object>) m.getObject();
+			break;
+		case getDataForBusinessAccount:
+			dataforaccount = (ArrayList<Object>) m.getObject();
+			break;
+		case addBusinessAccount:
+			temp = (ArrayList<Object>) m.getObject();
+			break;
+		case getNotApprovedEmployers:
+
+			notApprovedEmployers = (ArrayList<Employer>) m.getObject();
+			break;
+		case getDataForUser:
+			temp = (ArrayList<Object>) m.getObject();
+			break;
+		case getUsersForChangePermission:
+			users = (ArrayList<Users>) m.getObject();
+			break;
+		case getResturantsForBranch:
+			resturantsForBM = (ArrayList<ResturantForBM>) m.getObject();
+			System.out.println(resturantsForBM);
+			break;
+		case getIncomeFile:
+			temp = (ArrayList<Object>) m.getObject();
+			break;
+		case getDataForIncomeFile:
+			dataForFiles = (ArrayList<String>) m.getObject();
+			break;
+
+		case getOredersFile:
+			temp = (ArrayList<Object>) m.getObject();
+			break;
+		case getDataForOrdersFile:
+			hashMap = (HashMap<String, ArrayList<String>>) m.getObject();
+			break;
+		case getPerformanceFile:
+			temp = (ArrayList<Object>) m.getObject();
+			break;
+		case getDataForPerformanceFile:
+			dataForFiles = (ArrayList<String>) m.getObject();
+			break;
+		case uploadReport:
+			uploaded = (boolean) m.getObject();
+
+			break;
+		case getQuarterlyReports:
+			branchQaurters = (ArrayList<BranchQaurter>) m.getObject();
+			break;
+		case viewQuatrelyReport:
+			myfile = (MyFile) m.getObject();
+			break;
+		case getAllBrancheManagers:
+			branchManagers=(ArrayList<BranchManager>)m.getObject();
+			break;
+		case getHistogramValues:
+			histogramValues=(ArrayList<HistogramValues>)m.getObject();
+			break;
 			
 		default:
 			break;
@@ -250,9 +327,7 @@ public class ChatClient extends AbstractClient {
 		
 	
 		}
-		/*if (m.getMessageType().equals(MessageType.RefundAdd)) {
-			RefundBuild = (Refund)m.getObject();
-		}*/
+	
 
 
 

@@ -156,6 +156,64 @@ public static final String AUTH_TOKEN = "7dd4f6a98cf75305855d72605a7a7b90";
 		}
 
 	}
+	
+	
+	
+	   @FXML
+	    void menuSettings(ActionEvent event) {
+	    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+	    	UpdateMenuListForResturantController updateMenuListForResturantController= new UpdateMenuListForResturantController();
+	    	try {
+				updateMenuListForResturantController.start(stage);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+
+	    @FXML
+	    void viewOrderList(ActionEvent event) {
+	    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+	    	ViewOrdersController ViewOrders =new ViewOrdersController();
+	    	try {
+	    		System.out.println("try to run view interface");
+	    		ViewOrders.start(stage);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+	    	
+
+	    }
+	    
+	    
+	    @FXML
+	    void Home(ActionEvent event) {
+	    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+	    	ResturantHomeController Home= new ResturantHomeController();
+	    	try {
+				Home.start(stage);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	    }
+	    
+	    
+	    @FXML
+	    void WaitingOrders(ActionEvent event) {
+	    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+	    	WaitingOrdersController waitingOrders = new WaitingOrdersController();
+	    	
+	    	try {
+				waitingOrders.start(stage);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+	    	
+
+	    }
+	    
 
 	@FXML
 	void LogOut(ActionEvent event) {

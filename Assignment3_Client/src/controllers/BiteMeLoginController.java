@@ -22,7 +22,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class BiteMeLoginController implements Initializable {
-
+	public static boolean isCEO;
+	
 	@FXML
 	private TextField Username;
 
@@ -34,7 +35,7 @@ public class BiteMeLoginController implements Initializable {
 
 	@FXML
 	private Button Loginbtn1;
-
+	
 	@FXML
 	void LoginAction(ActionEvent event) {
 	
@@ -80,7 +81,13 @@ public class BiteMeLoginController implements Initializable {
 				}
 				break;
 			case BranchManager:
-				System.out.println(ChatClient.userlogged.getPassWord() + "3");
+				ManagerHomeController managerHomeController = new ManagerHomeController();
+				try {
+					managerHomeController.start(stage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case Supplier:
 				ResturantHomeController resturantHomeController=new ResturantHomeController();
@@ -91,6 +98,17 @@ public class BiteMeLoginController implements Initializable {
 					e.printStackTrace();
 				}
 				break;
+			case CEO:
+				CEOHomeController.ceoID=ChatClient.userlogged.getId();
+				CEOHomeController ceoHomeController=new CEOHomeController();
+				try {
+					ceoHomeController.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+				
 			default:
 				break;
 			}

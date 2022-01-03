@@ -1,5 +1,6 @@
 package server;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -7,34 +8,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
-import common.Account;
-import common.Business;
-import common.Dish;
-import common.DishForResturant;
-import common.HoumanResources;
-import common.ItemList;
-import common.MessageType;
-import common.OptionalIngredients;
-import common.OrderDish;
-import common.OrdersForRes;
-import common.OrdersList;
-import common.Refund;
-import common.Resturant;
-import common.Resturants;
-import common.Selection;
-import common.TybeMeal;
-import common.UserType;
-import common.Users;
-import common.W4C_Card;
-import common.waiting_account;
+import common.*;
 
 
 
@@ -64,6 +50,27 @@ public class mysqlConnection {
 			System.out.println("SQL connection succeed");
 		
 	}
+	
+	
+	/*public static void updateMonthlyceiling() {
+		PreparedStatement ps;
+		PreparedStatement ps1;
+		ResultSet res;
+		String temp;
+		try {
+			ps=mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.business");
+	        ps.execute();	
+	        res=ps.getResultSet();
+	        while(res.next()) {
+	        	ps1=mysqlConnection.conn.prepareStatement("SELECT staticCeiling FROM bitemedb.business");
+	        	ps1.execute();
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Object checkUserLogIn(String userName,String passWord) {
@@ -82,11 +89,11 @@ public class mysqlConnection {
 			user=new Users(res.getString(1),res.getString(2),res.getString(3),true ,UserType.valueOf(res.getString(5))
 					,res.getString(6),res.getString(7),res.getString(8),res.getString(9),res.getString(10));
 			System.out.println(res.toString());
-			ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET IsloggedIN =? where username=?");
-			ps.setInt(1, 0); //// changed to 1
-			ps.setString(2, userName);
-			ps.execute();
-			
+			if(!user.getStatus().equals("Frozen")) {
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET IsLoggedIN =1 where username=?");
+				ps.setString(1, userName);
+				ps.execute();
+			}
 			arr.add(user);///0
 			/////////////////////////////
 			switch (user.getType()) {
@@ -94,13 +101,10 @@ public class mysqlConnection {
 				Resturant resturant = null;
 				System.out.println(user.getId());
 				ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.resturants where ResturantId=?");
-
 				ps.setString(1, user.getId());
 				ps.execute();
 				res = ps.getResultSet();
 				System.out.println(res.next());
-				
-
 				resturant = new Resturant(res.getString(1), res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8));
 				System.out.println(resturant);
 				arr.add(resturant);///////1
@@ -117,20 +121,50 @@ public class mysqlConnection {
 				arr.add(HR);//////////2
 				break;
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return arr;
+	}
+	
+	
+	
+	public static void importExternalDB() {
+		PreparedStatement ps, ps1;
+		ResultSet res;
+		try {
+			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.external");
+			ps.execute();
+			res = ps.getResultSet();
+			while (res.next()) {
+				ps1 = mysqlConnection.conn.prepareStatement("insert into bitemedb.users values (?,?,?,?,?,?,?,?,?,?)");
+				ps1.setString(1, res.getString(1));
+				ps1.setString(2, res.getString(2));
+				ps1.setString(3, res.getString(3));
+				ps1.setInt(4, 0);
+				ps1.setString(5, res.getString(8));
+				ps1.setString(6, res.getString(4));
+				ps1.setString(7, res.getString(5));
+				ps1.setString(8, res.getString(6));
+				ps1.setString(9, res.getString(7));
+				ps1.setString(10, "Active");
+				ps1.execute();
+			}
+			ps = mysqlConnection.conn.prepareStatement("Select * From bitemedb.external_hr");
+			ps.execute();
+			res = ps.getResultSet();
+			while (res.next()) {
+				ps1 = mysqlConnection.conn.prepareStatement("insert into bitemedb.human_resources values (?,?)");
+				ps1.setString(1, res.getString(1));
+				ps1.setString(2, res.getString(2));
+				ps.execute();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Business getBussinessInformationfromDB (String w4c_code) {
@@ -1101,20 +1135,22 @@ public class mysqlConnection {
 				 }
 				
 				 
-				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.account values(?,?,?,?,?,?)");
+				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.account values(?,?,?,?,?,?,?)");
 				 ps.setString(1, account.getID());
 				 ps.setString(2, account.getFirstName());
 				 ps.setString(3, account.getLastName());
 				 ps.setString(4, account.getPhoneNumber());
 				 ps.setString(5, account.getEmail());
 				 ps.setString(6, W4C);
+				 ps.setString(7, account.getAddress());////////////ibraheem
 				 ps.execute();
 				
-				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.business values(?,?,?,?)");
+				 ps=mysqlConnection.conn.prepareStatement("insert into bitemedb.business values(?,?,?,?,?)");
 				 ps.setString(1, W4C);
 				 ps.setString(2, account.getEmplyerID());
 				 ps.setString(3, account.getCompanyName());
 				 ps.setString(4, String.valueOf(account.getCeiling()));
+				 ps.setString(5, String.valueOf(account.getCeiling()));
 				 ps.execute();
 				 
 				 
@@ -1146,7 +1182,7 @@ public class mysqlConnection {
 					ps.setString(1, ID);
 					ps.setString(2, Name);
 					ps.setString(3, HRID);
-					ps.setInt(4, 1);
+					ps.setInt(4, 0);//////ibraheem
 					ps.execute();
 				}
 				
@@ -1219,5 +1255,1000 @@ public class mysqlConnection {
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/*abosale7*/
+		
+		/**
+		 * functionality: this method checks if there is an account with the same id
+		 * that was deleted by the same branch, if yes the boolean value will be false
+		 * else check if there is an existing account with the same id ,if yes the
+		 * boolean value will be false else check if the id is existed in database, if
+		 * not the boolean value will be false else the method gets the user's data from
+		 * the database by the user id and return all the relevant data
+		 * 
+		 * @param ID:user   id
+		 * @param branchID: branch manager id
+		 * @return false with relevant message or true with the user's data
+		 */
+		public static ArrayList<Object> getDataForAccount(String ID, String branchID) {
+			PreparedStatement ps;
+			ResultSet res;
+			Users user;
+			ArrayList<Object> arr = new ArrayList<Object>();
+
+			///// this could be deleted, duplicated code
+			try {
+				ps = mysqlConnection.conn
+						.prepareStatement("SELECT * FROM bitemedb.deleted_customers where customerID=? and branchID=?");
+				ps.setString(1, ID);
+				ps.setString(2, branchID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("this customer has been deleted from this branch");
+					return arr;
+				}
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.account where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("There is account with the same id");
+					return arr;
+				}
+	////////////////////
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.users where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {
+					arr.add(false);
+					arr.add("There is no user with this id");
+					return arr;
+				} else {
+					boolean isLogged = res.getInt(4) == 1 ? true : false;
+					user = new Users(res.getString(1), res.getString(2), res.getString(3), isLogged,
+							UserType.valueOf(res.getString(5)), res.getString(6), res.getString(7), res.getString(8),
+							res.getString(9), res.getString(10));
+					if (!user.getType().equals(UserType.UnKnown)) {
+						arr.add(false);
+						arr.add("there is an account for this user");
+						return arr;
+					}
+					arr.add(true);
+					arr.add(user);
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		/**
+		 * functionality: this method checks if the credit card number is used for
+		 * another user in database, if yes it returns false , else the method add the
+		 * user as private account to the relevant tables in database
+		 * 
+		 * @param user:             object the holds all the user's data
+		 * @param creditCardNumber: credit card number for the user
+		 * @param location:         the location of the user
+		 * @return boolean
+		 */
+		public static boolean addPrivateAccount(Users user, String creditCardNumber, String location) {
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.w4c_card where CreditCard= ?");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next())
+					return false;
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.waiting_accounts where CridetCard= ?");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next())
+					return false;
+
+				ps = mysqlConnection.conn
+						.prepareStatement("INSERT INTO bitemedb.w4c_card (CreditCard, accounttype) VALUES (?, 'Private')");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.w4c_card where CreditCard= ?");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				res = ps.getResultSet();
+				res.next();
+				String w4c = res.getString(1);
+				ps = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.account VALUES (?,?,?,?,?,?,?)");
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getFirstName());
+				ps.setString(3, user.getLastName());
+				ps.setString(4, user.getPhoneNumber());
+				ps.setString(5, user.getEmail());
+				ps.setString(6, w4c);
+				ps.setString(7, location);
+				ps.execute();
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET `userType` = 'Customer' WHERE ID =?");
+				ps.setString(1, user.getId());
+				ps.execute();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		public static ArrayList<Object> getDataForBusinessAccount(String ID, String branchID) {
+			PreparedStatement ps, ps1;
+			ResultSet res, res1;
+			Users user;
+
+			ArrayList<Object> arr = new ArrayList<Object>();
+			try {// waiting_accounts
+
+				ps = mysqlConnection.conn
+						.prepareStatement("SELECT * FROM bitemedb.deleted_customers where customerID=? and branchID=?");
+				ps.setString(1, ID);
+				ps.setString(2, branchID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("this customer has been deleted from this branch");
+					return arr;
+				}
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.waiting_accounts where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("There is already Business account that's waiting for approval");
+					return arr;
+				}
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.account where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+
+				if (res.next()) {
+					System.out.println(res.getString(6));
+					ps1 = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.w4c_card where W4CCode=?");
+					ps1.setString(1, res.getString(6));
+					ps1.execute();
+					res1 = ps1.getResultSet();
+					if (res1.next()) {
+						System.out.println(res1.getString(3));
+
+						if (res1.getString(3).equals("Business")) {
+							arr.add(false);
+							arr.add("There is already Business account with this ID");
+							return arr;
+						}
+					}
+				}
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.users where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {
+					arr.add(false);
+					arr.add("There is no user with this id");
+					return arr;
+				} else {
+					boolean isLogged = res.getInt(4) == 1 ? true : false;
+					user = new Users(res.getString(1), res.getString(2), res.getString(3), isLogged,
+							UserType.valueOf(res.getString(5)), res.getString(6), res.getString(7), res.getString(8),
+							res.getString(9), res.getString(10));
+					if (!user.getType().equals(UserType.UnKnown)) {
+						arr.add(false);
+						arr.add("there is an account for this user");
+						return arr;
+					}
+					arr.add(true);
+					arr.add(user);
+
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		public static ArrayList<Object> addBusinessAccount(Users user, String creditCardNumber, String companyName,
+				String EmployerID, int ceiling, String location) {
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<Object> arr = new ArrayList<Object>();
+
+			try {
+
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.employer where EmployerID=? and CompanyName=? and isApproved=1");
+				ps.setString(1, EmployerID);
+				ps.setString(2, companyName);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {
+					arr.add(false);
+					arr.add("there is no data for this employer in our system");
+					return arr;
+				}
+				ps.execute();
+				ps = mysqlConnection.conn
+						.prepareStatement("SELECT * FROM bitemedb.w4c_card where CreditCard= ? and accounttype='Business'");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("this cridet card already taken for existing business account");
+					return arr;
+				}
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.waiting_accounts where CridetCard= ?");
+				ps.setString(1, creditCardNumber);
+				ps.execute();
+				res = ps.getResultSet();
+				if (res.next()) {
+					arr.add(false);
+					arr.add("this cridet card already used in the waiting list");
+					return arr;
+				}
+
+	//;
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET userType = 'Waiting' WHERE ID = ?");
+				ps.setString(1, user.getId());
+				ps.execute();
+				ps = mysqlConnection.conn
+						.prepareStatement("INSERT INTO bitemedb.waiting_accounts VALUES (?,?,?,?,?,?,?,?,?,?)");
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getFirstName());
+				ps.setString(3, user.getLastName());
+				ps.setString(4, user.getPhoneNumber());
+				ps.setString(5, user.getEmail());
+				ps.setString(6, companyName);
+				ps.setString(7, EmployerID);
+				ps.setString(8, creditCardNumber);
+				ps.setInt(9, ceiling);
+				ps.setString(10, location);
+				ps.execute();
+				arr.add(true);
+				arr.add("your account is waiting for approval");
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		public static ArrayList<Object> getDataForUser(String ID) {
+			PreparedStatement ps;
+			ResultSet res;
+			Users user;
+			ArrayList<Object> arr = new ArrayList<Object>();
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.users where ID=?");
+				ps.setString(1, ID);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {
+					arr.add(false);
+					arr.add("There is no user with this id");
+					return arr;
+				} else {
+					boolean isLogged = res.getInt(4) == 1 ? true : false;
+					user = new Users(res.getString(1), res.getString(2), res.getString(3), isLogged,
+							UserType.valueOf(res.getString(5)), res.getString(6), res.getString(7), res.getString(8),
+							res.getString(9), res.getString(10));
+					if (!user.getType().equals(UserType.UnKnown)) {
+						arr.add(false);
+						arr.add("there is an account for this user");
+						return arr;
+					}
+					arr.add(true);
+					arr.add(user);
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+		
+		/**
+		 * functionality: this method gets all the employers that still not approved
+		 * (isApproved =0) from the employers table from the data base,and returns them
+		 * 
+		 * @return list of not approved employers
+		 */
+		public static ArrayList<Employer> getNotApprovedEmployers() {
+			ArrayList<Employer> employers = new ArrayList<Employer>();
+			Employer employer;
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.employer where isApproved=0");
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					employer = new Employer(res.getString(1), res.getString(2), res.getString(3), false);
+					employers.add(employer);
+				}
+				res.close();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return employers;
+		}
+
+		/**
+		 * functionality: this method updates the isApproved value to 1 in the data base
+		 * 
+		 * @param employer: object the holds all the employer's data
+		 */
+		public static void approveEmployer(Employer employer) {
+			PreparedStatement ps;
+			try {
+				ps = mysqlConnection.conn
+						.prepareStatement("UPDATE bitemedb.employer SET isApproved = '1' WHERE EmployerID = ?");
+				ps.setString(1, employer.getEmployerID());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		/**
+		 * functionality:this method is executed whe the
+		 * @param employer: object the holds all the employer's data
+		 */
+		public static void declineEmployer(Employer employer) {
+			PreparedStatement ps;
+			//
+			try {
+				ps = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.employer WHERE EmployerID = ?");
+				ps.setString(1, employer.getEmployerID());
+				ps.execute();
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET userType = 'UnKnown' WHERE ID = ?");
+				ps.setString(1, employer.getEmployerID());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public static void resturantRegistration(Users user, String resturantName, String phoneNumber, String location,
+				String branchID) {
+			PreparedStatement ps;
+			try {
+
+				ps = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.resturants VALUES (?,?,?,?,?,?,?,?)");
+				ps.setString(1, resturantName);
+				ps.setString(2, "Open");
+				ps.setString(3, phoneNumber);
+				ps.setString(4, user.getId());
+				ps.setString(5, branchID);
+				ps.setString(6, location);
+				String[] str = LocalDate.now().toString().split("-");
+				ps.setString(7, str[0]);
+				ps.setString(8, str[1]);
+				ps.execute();
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET userType = 'Supplier' WHERE ID = ?");
+				ps.setString(1, user.getId());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public static ArrayList<Users> getUsersForChangePermission() {
+			ArrayList<Users> arr = new ArrayList<Users>();
+			Users user;
+			// SELECT * FROM bitemedb.users where userType="Customer" or
+			// userType="Supplier";
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.users where userType='Customer'");
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					boolean isLogged = res.getInt(4) == 1 ? true : false;
+					user = new Users(res.getString(1), res.getString(2), res.getString(3), isLogged,
+							UserType.valueOf(res.getString(5)), res.getString(6), res.getString(7), res.getString(8),
+							res.getString(9), res.getString(10));
+					arr.add(user);
+				}
+				res.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		public static void changePermission(String userID, String newStatus) {
+			PreparedStatement ps;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET status =? WHERE ID = ?");
+				ps.setString(1, newStatus);
+				ps.setString(2, userID);
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public static void deleteCustomer(String userID, String branchID) {
+			PreparedStatement ps1;
+			ResultSet res1;
+			String accountType;
+			try {
+				ps1 = mysqlConnection.conn.prepareStatement("select * from bitemedb.account where ID=?");
+				ps1.setString(1, userID);
+				ps1.execute();
+				res1 = ps1.getResultSet();
+				res1.next();
+				ps1 = mysqlConnection.conn.prepareStatement("select * from bitemedb.w4c_card where W4CCode=?");
+				ps1.setInt(1, res1.getInt(6));
+				ps1.execute();
+				res1 = ps1.getResultSet();
+				res1.next();
+				accountType = res1.getString(3);
+				// DELETE FROM `bitemedb`.`w4c_card` WHERE (`W4CCode` = '2');
+				ps1 = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.w4c_card WHERE W4CCode = ?");
+				ps1.setInt(1, res1.getInt(1));
+				ps1.execute();
+
+				if (accountType.equals("Business")) {
+					ps1 = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.business WHERE w4cCode = ?");
+					ps1.setInt(1, res1.getInt(1));
+					ps1.execute();
+				}
+
+				ps1 = mysqlConnection.conn.prepareStatement("DELETE FROM bitemedb.account WHERE ID = ?");
+				ps1.setString(1, userID);
+				ps1.execute();
+				// ;
+				ps1 = mysqlConnection.conn.prepareStatement("UPDATE bitemedb.users SET userType = 'UnKnown' WHERE ID = ?");
+				ps1.setString(1, userID);
+				ps1.execute();
+				ps1 = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.deleted_customers VALUES (?,?)");
+				ps1.setString(1, userID);
+				ps1.setString(2, branchID);
+				ps1.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		public static ArrayList<ResturantForBM> getResturantsForBranch(String branchID) {
+			ArrayList<ResturantForBM> arr = new ArrayList<ResturantForBM>();
+			ResturantForBM resturant;
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.resturants where branchID=?");
+				ps.setString(1, branchID);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					boolean isOpen = res.getString(2).equals("Open");
+					resturant = new ResturantForBM(res.getString(1), isOpen, res.getString(3), res.getString(4), branchID,
+							res.getString(6), Integer.parseInt(res.getString(7)), Integer.parseInt(res.getString(8)));
+					arr.add(resturant);
+				}
+				res.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(arr);
+			return arr;
+		}
+
+		public static ArrayList<Object> getIncomeFile(String fileName) {
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<Object> arr = new ArrayList<Object>();
+			MyFile myFile = new MyFile(fileName);
+			byte[] mybytearray;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.income where fileName=?");
+				ps.setString(1, fileName);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {// if file not exist
+					arr.add(false);
+					return arr;
+				}
+				arr.add(true);
+				mybytearray = new byte[(int) res.getBlob(6).length()];
+				mybytearray = res.getBytes(6);
+				myFile.initArray(mybytearray.length);
+				myFile.setSize(mybytearray.length);
+				myFile.setMybytearray(mybytearray);
+				arr.add(myFile);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		public static ArrayList<String> getDataForIncomeFile(String resurantID, String year, String month) {
+			ArrayList<String> arr = new ArrayList<String>();
+			PreparedStatement ps;
+			ResultSet res;
+			int sum = 0, rev_week = 0;
+			try {
+				arr.add("week 1:");
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=? and day >=1 and day<=7");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					rev_week += Integer.parseInt(res.getString(6));
+					sum += Integer.parseInt(res.getString(6));
+					arr.add("order package number: " + res.getInt(3) + ", total price: " + res.getString(6));
+				}
+				arr.add("\ntotal income for week 1: " + rev_week + "\n\n==============================");
+				rev_week = 0;
+
+				arr.add("week 2:");
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=? and day >=8 and day<=14");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					rev_week += Integer.parseInt(res.getString(6));
+					sum += Integer.parseInt(res.getString(6));
+					arr.add("order package number: " + res.getInt(3) + ", total price: " + res.getString(6));
+				}
+				arr.add("\ntotal income for week 2: " + rev_week + "\n\n==============================");
+				rev_week = 0;
+				arr.add("week 3:");
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=? and day >=15 and day<=21");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					rev_week += Integer.parseInt(res.getString(6));
+					sum += Integer.parseInt(res.getString(6));
+					arr.add("order package number: " + res.getInt(3) + ", total price: " + res.getString(6));
+				}
+				arr.add("\ntotal income for week 3: " + rev_week + "\n\n==============================");
+				rev_week = 0;
+				//////
+				arr.add("week 4:");
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=? and day >=22 and day<=28");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					rev_week += Integer.parseInt(res.getString(6));
+					sum += Integer.parseInt(res.getString(6));
+					arr.add("order package number: " + res.getInt(3) + ", total price: " + res.getString(6));
+				}
+				arr.add("\ntotal income for week 4: " + rev_week + "\n\n==============================");
+				rev_week = 0;
+				arr.add("week 5:");
+				ps = mysqlConnection.conn.prepareStatement(
+						"SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=? and day >=29 and day<=31");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					rev_week += Integer.parseInt(res.getString(6));
+					sum += Integer.parseInt(res.getString(6));
+					arr.add("order package number: " + res.getInt(3) + ", total price: " + res.getString(6));
+				}
+				arr.add("\ntotal income for week 5: " + rev_week + "\n\n==============================");
+				rev_week = 0;
+				arr.add("\n\n\ntotal income for month " + month + " in year " + year + " => " + sum);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		public static void saveIncomeFile(String branchID, String resturantName, int month, int year, String fileName,
+				InputStream inputStream) {
+			PreparedStatement ps;
+
+			try {
+				ps = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.income values(?,?,?,?,?,?)");
+				ps.setString(1, branchID);
+				ps.setString(2, resturantName);
+				ps.setInt(3, month);
+				ps.setInt(4, year);
+				ps.setString(5, fileName);
+				ps.setBlob(6, inputStream);
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		// getOredersFile
+		public static ArrayList<Object> getOredersFile(String fileName) {
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<Object> arr = new ArrayList<Object>();
+			MyFile myFile = new MyFile(fileName);
+			byte[] mybytearray;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.orders_reports where fileName=?");
+				ps.setString(1, fileName);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {// if file not exist
+					arr.add(false);
+					return arr;
+				}
+				arr.add(true);
+				mybytearray = new byte[(int) res.getBlob(6).length()];
+				mybytearray = res.getBytes(6);
+				myFile.initArray(mybytearray.length);
+				myFile.setSize(mybytearray.length);
+				myFile.setMybytearray(mybytearray);
+				arr.add(myFile);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		// getDataForOrdersFile
+		public static HashMap<String, ArrayList<String>> getDataForOrdersFile(String resurantID, String year,
+				String month) {
+			HashMap<String, ArrayList<String>> hashMap = new HashMap<String, ArrayList<String>>();
+			PreparedStatement ps1, ps2;
+			ResultSet res1, res2;
+			try {
+				ps1 = mysqlConnection.conn
+						.prepareStatement("SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=?");
+				ps1.setString(1, resurantID);
+				ps1.setString(2, year);
+				ps1.setString(3, month);
+				ps1.execute();
+				res1 = ps1.getResultSet();
+				while (res1.next()) {
+					System.out.println("pack " + res1.getInt(3));
+					ps2 = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.item_list where packageID=?");
+					ps2.setInt(1, res1.getInt(3));
+					ps2.execute();
+					res2 = ps2.getResultSet();
+					if (res2.next()) {
+						if (!hashMap.keySet().contains(res2.getString(1))) {
+							hashMap.put(res2.getString(1), new ArrayList<String>());
+						}
+						hashMap.get(res2.getString(1))
+								.add("PackageID: " + res2.getInt(6) + ", The Dish: " + res2.getString(2) + ", Ingerient: "
+										+ res2.getString(3) + ", Quantity: " + res2.getInt(4));
+						// res2.close();
+					}
+
+				}
+				res1.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return hashMap;
+		}
+
+		// saveOrdersFile
+		public static void saveOrdersFile(String branchID, String resturantName, int month, int year, String fileName,
+				InputStream inputStream) {
+			PreparedStatement ps;
+
+			try {
+				ps = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.orders_reports values(?,?,?,?,?,?)");
+				ps.setString(1, branchID);
+				ps.setString(2, resturantName);
+				ps.setInt(3, month);
+				ps.setInt(4, year);
+				ps.setString(5, fileName);
+				ps.setBlob(6, inputStream);
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		// getPerformanceFile
+		public static ArrayList<Object> getPerformanceFile(String fileName) {
+			PreparedStatement ps;
+			ResultSet res;
+			ArrayList<Object> arr = new ArrayList<Object>();
+			MyFile myFile = new MyFile(fileName);
+			byte[] mybytearray;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("SELECT * FROM bitemedb.performance_reports where fileName=?");
+				ps.setString(1, fileName);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {// if file not exist
+					arr.add(false);
+					return arr;
+				}
+				arr.add(true);
+				mybytearray = new byte[(int) res.getBlob(6).length()];
+				mybytearray = res.getBytes(6);
+				myFile.initArray(mybytearray.length);
+				myFile.setSize(mybytearray.length);
+				myFile.setMybytearray(mybytearray);
+				arr.add(myFile);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		// getDataForPerformanceFile
+		public static ArrayList<String> getDataForPerformanceFile(String resurantID, String year, String month) {
+			ArrayList<String> arr = new ArrayList<String>();
+			PreparedStatement ps;
+			ResultSet res;
+			int temp = 0;
+			int numberOfOrders = 0;
+			int late = 0;
+			try {
+				ps = mysqlConnection.conn
+						.prepareStatement("SELECT * FROM bitemedb.order_list where Resturant=? and year=? and month=?");
+				ps.setString(1, resurantID);
+				ps.setString(2, year);
+				ps.setString(3, month);
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					numberOfOrders++;
+					Time arrivalToCustomerTime = res.getTime(16);
+					Time requestedTime = res.getTime(4);
+					@SuppressWarnings("deprecation")
+
+					LocalTime localTime = LocalTime.of(arrivalToCustomerTime.getHours(), arrivalToCustomerTime.getMinutes(),
+							arrivalToCustomerTime.getSeconds());
+
+					if (localTime.minusHours(requestedTime.getHours()).minusMinutes(requestedTime.getMinutes())
+							.minusSeconds(requestedTime.getMinutes()).getHour() >= 1)
+						late++;
+					Time OrderReadyTime = res.getTime(17);
+					Time OrderTime = res.getTime(5);
+					LocalTime localTime1 = LocalTime.of(OrderReadyTime.getHours(), OrderReadyTime.getMinutes(),
+							OrderReadyTime.getSeconds());
+					localTime1 = localTime1.minusHours(OrderTime.getHours()).minusMinutes(OrderTime.getMinutes())
+							.minusSeconds(OrderTime.getMinutes());
+					// System.out.println(localTime1.getHour()*60+localTime1.getMinute());
+					temp += localTime1.getHour() * 60 + localTime1.getMinute() + 1;
+
+				}
+				res.close();
+				System.out.println(temp);
+				if (numberOfOrders != 0) {
+					arr.add("Late orders percentege = " + ((float) late / numberOfOrders) * 100 + "%");
+					temp = temp / numberOfOrders;
+				}
+
+				else
+					arr.add("Late orders percentege = 0%");
+
+				arr.add("Average preparation time = " + LocalTime.of(temp / 60, temp % 60));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arr;
+		}
+
+		// savePerformanceFile
+		public static void savePerformanceFile(String branchID, String resturantName, int month, int year, String fileName,
+				InputStream inputStream) {
+			PreparedStatement ps;
+
+			try {
+				ps = mysqlConnection.conn.prepareStatement("INSERT INTO bitemedb.performance_reports values(?,?,?,?,?,?)");
+				ps.setString(1, branchID);
+				ps.setString(2, resturantName);
+				ps.setInt(3, month);
+				ps.setInt(4, year);
+				ps.setString(5, fileName);
+				ps.setBlob(6, inputStream);
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public static boolean uploadReport(String branchID, String fileName, InputStream inputStream, int year,
+				String quarter) {
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement(
+						"select * from quarertly_reports where branchID=? and fileName=? and year=? and quarter=?");
+				ps.setString(1, branchID);
+				ps.setString(2, fileName);
+				ps.setInt(3, year);
+				ps.setString(4, quarter);
+				ps.execute();
+				res = ps.getResultSet();
+				if (!res.next()) {
+					ps = mysqlConnection.conn.prepareStatement("insert into quarertly_reports values (?,?,?,?,?)");
+					ps.setString(1, branchID);
+					ps.setString(2, fileName);
+					ps.setBlob(3, inputStream);
+					ps.setInt(4, year);
+					ps.setString(5, quarter);
+					ps.execute();
+					return true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println("finish");
+			return false;
+		}
+
+	////////////////////////////////////////////////////////////////////
+		///// CEO
+		public static ArrayList<BranchQaurter> getQuarterlyReports() {
+			ArrayList<BranchQaurter> arrayList = new ArrayList<BranchQaurter>();
+			BranchQaurter branchQaurter;
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("select * from quarertly_reports");
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					branchQaurter = new BranchQaurter(res.getString(1), res.getInt(4), res.getString(5), res.getString(2));
+					arrayList.add(branchQaurter);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arrayList;
+		}
+
+		public static MyFile viewQuatrelyReport(String fileName) {
+
+			MyFile myFile = new MyFile(fileName);
+			byte[] mybytearray;
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("select * from quarertly_reports where fileName=?");
+				ps.setString(1, fileName);
+				ps.execute();
+				res = ps.getResultSet();
+				res.next();
+				mybytearray = new byte[(int) res.getBlob(3).length()];
+				mybytearray = res.getBytes(3);
+				myFile.setFileName(res.getString(2));
+				myFile.initArray(mybytearray.length);
+				myFile.setSize(mybytearray.length);
+				myFile.setMybytearray(mybytearray);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return myFile;
+		}
+
+		public static ArrayList<BranchManager> getAllBrancheManagers() {
+			BranchManager branchManager;
+			ArrayList<BranchManager> arrayList = new ArrayList<BranchManager>();
+			PreparedStatement ps;
+			ResultSet res;
+			try {
+				ps = mysqlConnection.conn.prepareStatement("select * from users where userType='BranchManager'");
+				ps.execute();
+				res = ps.getResultSet();
+				while (res.next()) {
+					branchManager = new BranchManager(res.getString(1), res.getString(2));
+					arrayList.add(branchManager);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arrayList;
+		}
+
+		public static ArrayList<HistogramValues> getHistogramValues(int year, int month) {
+			ArrayList<HistogramValues> arrayList = new ArrayList<HistogramValues>();
+			HistogramValues histogramValues;
+			int sum = 0;
+			PreparedStatement ps1, ps2, ps3;
+			ResultSet res1, res2, res3;
+			try {
+				ps1 = mysqlConnection.conn.prepareStatement("select * from resturants");
+				ps1.execute();
+				res1 = ps1.getResultSet();
+				while (res1.next()) {
+					ps2 = mysqlConnection.conn.prepareStatement(
+							"select * from order_list where resturant=? and year =? and(month=? or month =? or month=?)");
+					ps2.setString(1, res1.getString(4));
+					ps2.setInt(2, year);
+					ps2.setInt(3, month);
+					ps2.setInt(4, month + 1);
+					ps2.setInt(5, month + 2);
+					ps2.execute();
+					res2 = ps2.getResultSet();
+					while (res2.next()) {
+						sum += Integer.parseInt(res2.getString(6));
+					}
+					ps3 = mysqlConnection.conn.prepareStatement(
+							"select count(*) from order_list where resturant=? and year =? and(month=? or month =? or month=?)");
+					ps3.setString(1, res1.getString(4));
+					ps3.setInt(2, year);
+					ps3.setInt(3, month);
+					ps3.setInt(4, month + 1);
+					ps3.setInt(5, month + 2);
+					ps3.execute();
+					res3 = ps3.getResultSet();
+					res3.next();
+					histogramValues = new HistogramValues(res1.getString(1), res3.getInt(1), sum);
+					sum = 0;
+					arrayList.add(histogramValues);
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return arrayList;
+		}
+		
+		
+		
 }

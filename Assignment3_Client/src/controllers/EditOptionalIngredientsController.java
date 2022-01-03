@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Button;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -36,8 +37,11 @@ public class EditOptionalIngredientsController implements Initializable{
 
 	public static ObservableList<OptionalIngredients> optionalIngredients;
 	public static boolean AddOption;
-	public static boolean Update;
+	public static boolean Update1;
     
+
+    @FXML
+    private Button update; 
 
     @FXML
     private TextField mealName_txt;
@@ -62,6 +66,7 @@ public class EditOptionalIngredientsController implements Initializable{
     
     @FXML
     private Text success;
+
 
     
 
@@ -145,6 +150,62 @@ public class EditOptionalIngredientsController implements Initializable{
 		}
     }
    
+    
+    
+    @FXML
+    void menuSettings(ActionEvent event) {
+    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+    	UpdateMenuListForResturantController updateMenuListForResturantController= new UpdateMenuListForResturantController();
+    	try {
+			updateMenuListForResturantController.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void viewOrderList(ActionEvent event) {
+    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+    	ViewOrdersController ViewOrders =new ViewOrdersController();
+    	try {
+    		System.out.println("try to run view interface");
+    		ViewOrders.start(stage);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	
+
+    }
+    
+    
+    @FXML
+    void Home(ActionEvent event) {
+    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+    	ResturantHomeController Home= new ResturantHomeController();
+    	try {
+			Home.start(stage);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    }
+    
+    
+    @FXML
+    void WaitingOrders(ActionEvent event) {
+    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+    	WaitingOrdersController waitingOrders = new WaitingOrdersController();
+    	
+    	try {
+			waitingOrders.start(stage);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	
+ }
+    
 
     
     @FXML
@@ -169,9 +230,9 @@ public class EditOptionalIngredientsController implements Initializable{
     	
      ClientUI.chat.accept(new Message1(MessageType.UpdateItem, dish));
     		 
-    	if(Update==true)
+    	if(Update1==true)
     	{
-    		 		success.setVisible(Update);
+    		 		success.setVisible(Update1);
     	}
     	else {
     		Alert a = new Alert(AlertType.ERROR);
@@ -200,7 +261,6 @@ public class EditOptionalIngredientsController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		ClientUI.chat.accept(new Message1(MessageType.getOptionalIngredients, UpdateMenuListForResturantController.selectedDish));
-		
 		option_col.setCellValueFactory(new PropertyValueFactory<OptionalIngredients, String>("option"));
 		price_col.setCellValueFactory(new PropertyValueFactory<OptionalIngredients, Integer>("price"));
 		optionalIngredients=FXCollections.observableArrayList(ChatClient.optionalIngredients);
@@ -208,7 +268,10 @@ public class EditOptionalIngredientsController implements Initializable{
 		
 		mealName_txt.setText(UpdateMenuListForResturantController.selectedDish.getMealName());
 		mealPrice_txt.setText(String.valueOf(UpdateMenuListForResturantController.selectedDish.getPrice()));
-		success.setVisible(Update);
+		success.setVisible(Update1);
+		
+		
+                                                		
 		
 		
 		

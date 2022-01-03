@@ -47,7 +47,7 @@ public class ResturantHomeController implements Initializable{
     }
 
     @FXML
-    void meunSettings(ActionEvent event) {
+    void menuSettings(ActionEvent event) {
     	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
     	UpdateMenuListForResturantController updateMenuListForResturantController= new UpdateMenuListForResturantController();
     	try {
@@ -71,6 +71,18 @@ public class ResturantHomeController implements Initializable{
 		}
     	
 
+    }
+    
+    
+    @FXML
+    void Home(ActionEvent event) {
+    	Stage stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+    	ResturantHomeController Home= new ResturantHomeController();
+    	try {
+			Home.start(stage);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
     }
     
     

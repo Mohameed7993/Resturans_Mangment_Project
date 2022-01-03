@@ -1,0 +1,32 @@
+week 1:
+order package number: 141, total price: 100
+
+total income for week 1: 100
+
+==============================
+week 2:
+order package number: 142, total price: 200
+
+total income for week 2: 200
+
+==============================
+week 3:
+
+total income for week 3: 0
+
+==============================
+week 4:
+order package number: 143, total price: 80
+
+total income for week 4: 80
+
+==============================
+week 5:
+
+total income for week 5: 0
+
+==============================
+
+
+
+total income for month 12 in year 2021 => 380

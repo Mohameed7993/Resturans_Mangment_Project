@@ -62,9 +62,10 @@ public class EchoServer extends AbstractServer {
 	 * @param
 	 */
 	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
-
+		
 		Message1 m = (Message1) msg;
 		String message[];
+		ArrayList <Object> arr;
 		try {
 			switch (m.getMessageType()) {
 			
@@ -203,14 +204,12 @@ public class EchoServer extends AbstractServer {
 				ArrayList<Resturants> allresturant=mysqlConnection.GetAllResturants();
 				client.sendToClient(new Message1(MessageType.ViewAllResturants, allresturant));
 				break;
-				
 			case getDishesFromResturant:
 				ArrayList<DishForResturant> dishes = mysqlConnection.getResturantDishes((String) m.getObject());
 				client.sendToClient(new Message1(MessageType.getDishesFromResturant, dishes));
 				break;
-	
+	/////////////////////////////////////////////////
 			case deleteDish:
-
 				System.out.println(((DishForResturant) m.getObject()).getMealId());
 				mysqlConnection.deleteDish((DishForResturant) m.getObject());
 				client.sendToClient(new Message1(MessageType.deleteDish, null));
@@ -289,7 +288,164 @@ public class EchoServer extends AbstractServer {
 				boolean added=mysqlConnection.AddEmployer(split2[0],split2[1],split2[2]);
 				client.sendToClient(new Message1(MessageType.AddEmployer, added));
 				break;
-				
+				////////////////////////////////////////////////////////////////////
+			case getDataForAccount:
+				arr = (ArrayList<Object>) m.getObject();
+				arr = mysqlConnection.getDataForAccount((String) arr.get(0), (String) arr.get(1));
+				client.sendToClient(new Message1(MessageType.getDataForAccount, arr));
+
+				break;
+			case addPrivateAccount:
+				arr = (ArrayList<Object>) m.getObject();
+
+				boolean val = mysqlConnection.addPrivateAccount((Users) arr.get(0), (String) arr.get(1),
+						(String) arr.get(2));
+				client.sendToClient(new Message1(MessageType.addPrivateAccount, val));
+				break;
+			case getDataForBusinessAccount:
+				arr = (ArrayList<Object>) m.getObject();
+				arr = mysqlConnection.getDataForBusinessAccount((String) arr.get(0), (String) arr.get(1));
+				client.sendToClient(new Message1(MessageType.getDataForAccount, arr));
+				break;
+
+			case addBusinessAccount:
+				arr = (ArrayList<Object>) m.getObject();
+				arr = mysqlConnection.addBusinessAccount((Users) arr.get(0), (String) arr.get(1), (String) arr.get(2),
+						(String) arr.get(3), (Integer) arr.get(4), (String) arr.get(5));
+				client.sendToClient(new Message1(MessageType.addBusinessAccount, arr));
+				break;
+
+			case getNotApprovedEmployers:
+				client.sendToClient(
+						new Message1(MessageType.getNotApprovedEmployers, mysqlConnection.getNotApprovedEmployers()));
+				break;
+			case approveEmployer:
+				mysqlConnection.approveEmployer((Employer) m.getObject());
+				client.sendToClient(new Message1(MessageType.approveEmployer, null));
+				break;
+			case declineEmployer:
+				mysqlConnection.declineEmployer((Employer) m.getObject());
+				client.sendToClient(new Message1(MessageType.declineEmployer, null));
+				break;
+
+			case getDataForUser:
+				client.sendToClient(new Message1(MessageType.getDataForUser,
+						mysqlConnection.getDataForUser((String) m.getObject())));
+				break;
+
+			case resturantRegistration:
+				arr = (ArrayList<Object>) m.getObject();
+				mysqlConnection.resturantRegistration((Users) arr.get(0), (String) arr.get(1), (String) arr.get(2),
+						(String) arr.get(3), (String) arr.get(4));
+				client.sendToClient(new Message1(MessageType.resturantRegistration, null));
+				break;
+			case getUsersForChangePermission:
+				client.sendToClient(new Message1(MessageType.getUsersForChangePermission,
+						mysqlConnection.getUsersForChangePermission()));
+				break;
+			case changePermission:
+				arr = (ArrayList<Object>) m.getObject();
+				mysqlConnection.changePermission((String) arr.get(0), (String) arr.get(1));
+				client.sendToClient(new Message1(MessageType.changePermission, null));
+				break;
+			case getResturantsForBranch:
+
+				client.sendToClient(new Message1(MessageType.getResturantsForBranch,
+						mysqlConnection.getResturantsForBranch((String) m.getObject())));
+				System.out.println(2);
+				break;
+			case getIncomeFile:
+				client.sendToClient(
+						new Message1(MessageType.getIncomeFile, mysqlConnection.getIncomeFile((String) m.getObject())));
+				break;
+
+			case getDataForIncomeFile:
+				arr = (ArrayList<Object>) m.getObject();
+				client.sendToClient(new Message1(MessageType.getDataForIncomeFile, mysqlConnection
+						.getDataForIncomeFile((String) arr.get(0), (String) arr.get(1), (String) arr.get(2))));
+				break;
+			case saveIncomeFile:
+				arr = (ArrayList<Object>) m.getObject();
+				InputStream is = new ByteArrayInputStream(((MyFile) arr.get(5)).getMybytearray());
+
+				mysqlConnection.saveIncomeFile((String) arr.get(0), (String) arr.get(1),
+						Integer.parseInt((String) arr.get(2)), Integer.parseInt((String) arr.get(3)),
+						(String) arr.get(4), is);
+				client.sendToClient(new Message1(MessageType.saveIncomeFile, null));
+				break;
+			case getOredersFile:
+				client.sendToClient(new Message1(MessageType.getOredersFile,
+						mysqlConnection.getOredersFile((String) m.getObject())));
+				break;
+			case getDataForOrdersFile:
+				System.out.println(1515151);
+				arr = (ArrayList<Object>) m.getObject();
+				client.sendToClient(new Message1(MessageType.getDataForOrdersFile, mysqlConnection
+						.getDataForOrdersFile((String) arr.get(0), (String) arr.get(1), (String) arr.get(2))));
+				break;
+			case saveOrdersFile:
+				arr = (ArrayList<Object>) m.getObject();
+				InputStream is1 = new ByteArrayInputStream(((MyFile) arr.get(5)).getMybytearray());
+
+				mysqlConnection.saveOrdersFile((String) arr.get(0), (String) arr.get(1),
+						Integer.parseInt((String) arr.get(2)), Integer.parseInt((String) arr.get(3)),
+						(String) arr.get(4), is1);
+				client.sendToClient(new Message1(MessageType.saveOrdersFile, null));
+				break;
+			case getPerformanceFile:
+				client.sendToClient(new Message1(MessageType.getPerformanceFile,
+						mysqlConnection.getPerformanceFile((String) m.getObject())));
+				break;
+			case getDataForPerformanceFile:
+				arr = (ArrayList<Object>) m.getObject();
+				client.sendToClient(new Message1(MessageType.getDataForPerformanceFile, mysqlConnection
+						.getDataForPerformanceFile((String) arr.get(0), (String) arr.get(1), (String) arr.get(2))));
+				break;
+			case savePerformanceFile:
+				arr = (ArrayList<Object>) m.getObject();
+				InputStream is2 = new ByteArrayInputStream(((MyFile) arr.get(5)).getMybytearray());
+
+				mysqlConnection.savePerformanceFile((String) arr.get(0), (String) arr.get(1),
+						Integer.parseInt((String) arr.get(2)), Integer.parseInt((String) arr.get(3)),
+						(String) arr.get(4), is2);
+				client.sendToClient(new Message1(MessageType.savePerformanceFile, null));
+				break;
+
+			case deleteCustomer:
+				arr = (ArrayList<Object>) m.getObject();
+				mysqlConnection.deleteCustomer((String) arr.get(0), (String) arr.get(1));
+				client.sendToClient(new Message1(MessageType.deleteCustomer, null));
+				break;
+			case uploadReport:
+				System.out.println(55555);
+				arr = (ArrayList<Object>) m.getObject();
+				InputStream is3 = new ByteArrayInputStream(((MyFile) arr.get(2)).getMybytearray());
+
+				client.sendToClient(
+						new Message1(MessageType.uploadReport, mysqlConnection.uploadReport((String) arr.get(0),
+								(String) arr.get(1), is3, Integer.parseInt((String) arr.get(3)), (String) arr.get(4))));
+				break;
+
+			case getQuarterlyReports:
+				client.sendToClient(
+						new Message1(MessageType.getQuarterlyReports, mysqlConnection.getQuarterlyReports()));
+				break;
+
+			case viewQuatrelyReport:
+
+				client.sendToClient(new Message1(MessageType.viewQuatrelyReport,
+						mysqlConnection.viewQuatrelyReport((String) m.getObject())));
+				break;
+			case getAllBrancheManagers:
+				client.sendToClient(
+						new Message1(MessageType.getAllBrancheManagers, mysqlConnection.getAllBrancheManagers()));
+				break;
+			case getHistogramValues:
+				arr = (ArrayList<Object>) m.getObject();
+				client.sendToClient(new Message1(MessageType.getHistogramValues,
+						mysqlConnection.getHistogramValues((int) arr.get(0), (int) arr.get(1))));
+
+				break;
 				
 				
 			default:

@@ -1,0 +1,2 @@
+Late orders percentege = 100.0%
+Average preparation time = 01:56

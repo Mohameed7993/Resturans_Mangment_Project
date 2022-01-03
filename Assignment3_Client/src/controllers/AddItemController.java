@@ -60,34 +60,59 @@ public class AddItemController implements Initializable{
 	
 	 @FXML
 	    void add(ActionEvent event) {
-		 if(type.getText().equals("")||meal.getText().equals("")||price.getText().equals("")) {
-			 Alert a = new Alert(AlertType.ERROR);
+		 
+		 
+		 if (type.getText().equals("") || meal.getText().equals("") || price.getText().equals("")) {
+				Alert a = new Alert(AlertType.ERROR);
 				a.setContentText("Error");
 				a.setHeaderText("You must add meal details!");
 				a.showAndWait();
-		 }
+			} else if (optionals.getText().equals("")) {
 
-		 DishForResturant dish=new DishForResturant(ChatClient.resturant.getId(),type.getText(),meal.getText(),optionals.getText(),null,Integer.valueOf(price.getText()));
-		 ClientUI.chat.accept(new Message1(MessageType.additem, dish));
-		 if(!add)
-		 {
-			 
-			 success.setVisible(add);
-			 Alert a = new Alert(AlertType.ERROR);
-				a.setContentText("Error");
-				a.setHeaderText("can't add this item!");
-				a.showAndWait();
-				
-		 }else {
-			 success.setVisible(add);
-			 
-			 //initialize(null, null);
-		 }
-		 
-		// System.out.println(dish.getMealName()+dish.getMealType());
-		 
+				DishForResturant dish = new DishForResturant(ChatClient.resturant.getId(), type.getText(), meal.getText(),
+						optionals.getText(), null, Integer.valueOf(price.getText()));
+				ClientUI.chat.accept(new Message1(MessageType.additem, dish));
 
-	    }
+				if (!add) {
+
+					success.setVisible(add);
+					Alert a = new Alert(AlertType.ERROR);
+					a.setContentText("Error");
+					a.setHeaderText("can't add this item!");
+					a.showAndWait();
+
+				} else {
+					success.setVisible(add);
+				}
+
+			}
+
+			else {
+				String[] split1 = optionals.getText().split(",");
+				if (split1.length % 2 == 1) {
+					Alert a = new Alert(AlertType.ERROR);
+					a.setContentText("Error");
+					a.setHeaderText("enter option as\n''option,12 \n another,20...''");
+					a.showAndWait();
+				} else {
+					DishForResturant dish = new DishForResturant(ChatClient.resturant.getId(), type.getText(),
+							meal.getText(), optionals.getText(), null, Integer.valueOf(price.getText()));
+					ClientUI.chat.accept(new Message1(MessageType.additem, dish));
+					if (!add) {
+
+						success.setVisible(add);
+						Alert a = new Alert(AlertType.ERROR);
+						a.setContentText("Error");
+						a.setHeaderText("can't add this item!");
+						a.showAndWait();
+
+					} else {
+						success.setVisible(add);
+					}
+				}
+			}
+		 
+	 }
 	
 	
 	

@@ -1,0 +1,9 @@
+salad:
+orders of salad percentage = 66.66667%
+PackageID: 141, The Dish: home, Ingerient: NoExtra, Quantity: 2
+PackageID: 143, The Dish: green, Ingerient: [nuts-Price:10], Quantity: 2
+=========================================
+meat:
+orders of meat percentage = 33.333336%
+PackageID: 142, The Dish: sex, Ingerient: NoExtra, Quantity: 2
+=========================================

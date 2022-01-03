@@ -1876,3 +1876,4 @@ public class PaymentMethodController implements Initializable{
 	}
 
 }
+

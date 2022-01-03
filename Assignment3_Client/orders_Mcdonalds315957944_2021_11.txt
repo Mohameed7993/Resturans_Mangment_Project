@@ -1,0 +1,6 @@
+meat:
+orders of meat percentage = 100.0%
+PackageID: 138, The Dish: sex, Ingerient: NoExtra, Quantity: 1
+PackageID: 139, The Dish: sex, Ingerient: NoExtra, Quantity: 2
+PackageID: 140, The Dish: sex, Ingerient: NoExtra, Quantity: 2
+=========================================
